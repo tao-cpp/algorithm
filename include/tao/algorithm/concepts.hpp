@@ -1,3 +1,16 @@
+//! \file tao/algorithm/concepts.hpp
+// Tao.Algorithm
+//
+// Copyright Fernando Pelliccioni, 2016
+//
+// Distributed under the Boost Software License, Version 1.0. (See accompanying
+// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+
+#ifndef TAO_ALGORITHM_CONCEPTS_HPP
+#define TAO_ALGORITHM_CONCEPTS_HPP
+
+
 #ifndef LIBNAME_CONCEPTS_HPP_
 #define LIBNAME_CONCEPTS_HPP_
 
@@ -23,4 +36,4 @@
 
 #define StrictWeakOrdering typename
 
-#endif //LIBNAME_CONCEPTS_HPP_
+#endif /*TAO_ALGORITHM_CONCEPTS_HPP*/
