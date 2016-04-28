@@ -6,7 +6,6 @@
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-
 #ifndef TAO_ALGORITHM_SHIFT_HPP
 #define TAO_ALGORITHM_SHIFT_HPP
 
@@ -16,6 +15,9 @@
 
 #include <tao/algorithm/concepts.hpp>
 #include <tao/algorithm/type_attributes.hpp>
+
+namespace tao { namespace algorithm
+{
 
 template <ForwardIterator I>
 void shift_right_by_one_forward_unguarded(I first, I last) {
@@ -68,5 +70,7 @@ inline
 I shift_right(I first, I last, N n) {
     return shift_right(first, last, n, IteratorCategory<I>{});
 }
+
+} /*tao::algorithm*/
 
 #endif /*TAO_ALGORITHM_SHIFT_HPP*/
