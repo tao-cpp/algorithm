@@ -14,7 +14,7 @@
 
 TEST_CASE("first_test", "first test example") {
 
-    list<int> c = { 1, 2, 3, 4, 5, 6, 7, 8 };
+    std::list<int> c = { 1, 2, 3, 4, 5, 6, 7, 8 };
 
     auto r = tao::algorithm::shift_right(std::begin(c), std::end(c), 3);
 
