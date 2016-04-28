@@ -71,6 +71,6 @@ I shift_right(I first, I last, N n) {
     return shift_right(first, last, n, IteratorCategory<I>{});
 }
 
-} /*tao::algorithm*/
+}} /*tao::algorithm*/
 
 #endif /*TAO_ALGORITHM_SHIFT_HPP*/

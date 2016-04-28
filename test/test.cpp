@@ -18,7 +18,6 @@ TEST_CASE("first_test", "first test example") {
 
     auto r = tao::algorithm::shift_right(std::begin(c), std::end(c), 3);
 
-
     REQUIRE(*r == 1);
     // CHECK(*r == 1);
 }
