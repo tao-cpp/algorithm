@@ -15,6 +15,7 @@
 #include <utility>
 
 #include <tao/algorithm/concepts.hpp>
+#include <tao/algorithm/type_attributes.hpp>
 
 template <ForwardIterator I>
 void shift_right_by_one_forward_unguarded(I first, I last) {
