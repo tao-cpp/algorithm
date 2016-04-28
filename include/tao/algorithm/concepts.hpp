@@ -10,12 +10,7 @@
 #ifndef TAO_ALGORITHM_CONCEPTS_HPP
 #define TAO_ALGORITHM_CONCEPTS_HPP
 
-
-#ifndef LIBNAME_CONCEPTS_HPP_
-#define LIBNAME_CONCEPTS_HPP_
-
 #define Integral typename
-
 
 #define Iterator typename
 
