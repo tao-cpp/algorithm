@@ -34,8 +34,9 @@ void shift_right_by_one_forward_unguarded(I first, I last) {
 //          O(1)
 template <ForwardIterator I, Integral N>
 I shift_right(I first, I last, N n, std::forward_iterator_tag) {
-    //precondition: [first, n) is a valid range
-    while (n != 0) {
+    //precondition: n >= 0 &&
+    //              std::distance(first, last) >= n (so [first, n) is a valid range)
+    while (n > 0) {
         shift_right_by_one_forward_unguarded(first, last);
         ++first;
         --n;
@@ -51,7 +52,8 @@ I shift_right(I first, I last, N n, std::forward_iterator_tag) {
 //          O(1)
 template <BidirectionalIterator I, Integral N>
 I shift_right(I first, I last, N n, std::bidirectional_iterator_tag) {
-    //precondition: std::distance(first, last) >= n
+    //precondition: n >= 0 && 
+    //              std::distance(first, last) >= n (so [first, n) is a valid range)
     I butlast = std::prev(last, n);
     return std::move_backward(first, butlast, last);
 }
