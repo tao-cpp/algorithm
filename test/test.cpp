@@ -7,17 +7,89 @@
 
 #include <tao/algorithm.hpp>
 #include <iterator>
+
+#include <forward_list>
 #include <list>
 
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 
-TEST_CASE("first_test", "first test example") {
+using namespace std;
+using namespace tao::algorithm;
 
-    std::list<int> c = { 1, 2, 3, 4, 5, 6, 7, 8 };
+template <Iterator I, Integral N>
+void check(I first, I last, N n, ValueType<I> const& expected_value) {
+    auto m = shift_right(first, last, n);
+    REQUIRE(*m == expected_value);
+    REQUIRE(&*m == &*next(first, n));
+}
 
-    auto r = tao::algorithm::shift_right(std::begin(c), std::end(c), 3);
+TEST_CASE("shift_right_forward", "shift_right on ForwardIterator's") {
+
+    forward_list<int> c = { 1, 2, 3, 4, 5, 6, 7, 8 };
+
+    check(begin(c), end(c), 0);
+    check(begin(c), end(c), 1);
+    check(begin(c), end(c), 2);
+    check(begin(c), end(c), 3);
+    check(begin(c), end(c), 4);
+    check(begin(c), end(c), 5);
+    check(begin(c), end(c), 6);
+    check(begin(c), end(c), 7);
+    check(begin(c), end(c), 8);
+
+
+    // auto r = shift_right(begin(c), end(c), 0);
+    // REQUIRE(*r == 1);
+    // REQUIRE(&*r == &*begin(c));
+
+    // r = shift_right(begin(c), end(c), 1);
+    // REQUIRE(*r == 1);
+    // REQUIRE(&*r == &*next(begin(c), 1));
+
+    // r = shift_right(begin(c), end(c), 2);
+    // REQUIRE(*r == 1);
+    // REQUIRE(&*r == &*next(begin(c), 2));
+
+    // r = shift_right(begin(c), end(c), 3);
+    // REQUIRE(*r == 1);
+    // REQUIRE(&*r == &*next(begin(c), 3));
+
+    // r = shift_right(begin(c), end(c), 3);
+    // REQUIRE(*r == 1);
+    // REQUIRE(&*r == &*next(begin(c), 3));
+
+    // r = shift_right(begin(c), end(c), 3);
+    // REQUIRE(*r == 1);
+    // REQUIRE(&*r == &*next(begin(c), 3));
+
+    // r = shift_right(begin(c), end(c), 3);
+    // REQUIRE(*r == 1);
+    // REQUIRE(&*r == &*next(begin(c), 3));
+
+    // r = shift_right(begin(c), end(c), 3);
+    // REQUIRE(*r == 1);
+    // REQUIRE(&*r == &*next(begin(c), 3));
+
+    // r = shift_right(begin(c), end(c), 3);
+    // REQUIRE(*r == 1);
+    // REQUIRE(&*r == &*next(begin(c), 3));
+
+    // r = shift_right(begin(c), end(c), 3);
+    // REQUIRE(*r == 1);
+    // REQUIRE(&*r == &*next(begin(c), 3));
+
+    // CHECK(*r == 1);
+}
+
+
+TEST_CASE("shift_right_bidirectional", "shift_right on BidirectionalIterator's") {
+
+    list<int> c = { 1, 2, 3, 4, 5, 6, 7, 8 };
+
+    auto r = shift_right(begin(c), end(c), 3);
 
     REQUIRE(*r == 1);
     // CHECK(*r == 1);
 }
+
