@@ -25,8 +25,8 @@ void check(I first, I last, N n, bool expected_empty, ValueType<I> const& expect
         REQUIRE(expected_empty);
     } else {
         REQUIRE(!expected_empty);
-        REQUIRE((*m) == expected_value);
-        REQUIRE((&*m) == (&*next(first, n)));
+        REQUIRE((*m == expected_value));
+        REQUIRE((&*m == &*next(first, n)));
     }
 }
 
