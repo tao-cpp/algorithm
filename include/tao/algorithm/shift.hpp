@@ -51,7 +51,7 @@ I shift_right(I first, I last, N n, std::forward_iterator_tag) {
 //          O(1)
 template <BidirectionalIterator I, Integral N>
 I shift_right(I first, I last, N n, std::bidirectional_iterator_tag) {
-    //precondition: distance(first, last) >= n
+    //precondition: std::distance(first, last) >= n
     I butlast = std::prev(last, n);
     return std::move_backward(first, butlast, last);
 }
