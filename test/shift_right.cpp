@@ -34,6 +34,9 @@ TEST_CASE("shift_right_forward", "shift_right on ForwardIterator's") {
 
     forward_list<int> c = { 1, 2, 3, 4, 5, 6, 7, 8 };
 
+    // For n < 0 or n > std::distance(first, last) it is a violation of the precondition of the function. 
+    // No need to check these cases 
+
     check(begin(c), end(c), 0, false, 1);
     check(begin(c), end(c), 1, false, 1);
     check(begin(c), end(c), 2, false, 1);
@@ -44,48 +47,6 @@ TEST_CASE("shift_right_forward", "shift_right on ForwardIterator's") {
     check(begin(c), end(c), 7, false, 1);
     check(begin(c), end(c), 8, true, 0);
 
-
-
-    // auto r = shift_right(begin(c), end(c), 0);
-    // REQUIRE(*r == 1);
-    // REQUIRE(&*r == &*begin(c));
-
-    // r = shift_right(begin(c), end(c), 1);
-    // REQUIRE(*r == 1);
-    // REQUIRE(&*r == &*next(begin(c), 1));
-
-    // r = shift_right(begin(c), end(c), 2);
-    // REQUIRE(*r == 1);
-    // REQUIRE(&*r == &*next(begin(c), 2));
-
-    // r = shift_right(begin(c), end(c), 3);
-    // REQUIRE(*r == 1);
-    // REQUIRE(&*r == &*next(begin(c), 3));
-
-    // r = shift_right(begin(c), end(c), 3);
-    // REQUIRE(*r == 1);
-    // REQUIRE(&*r == &*next(begin(c), 3));
-
-    // r = shift_right(begin(c), end(c), 3);
-    // REQUIRE(*r == 1);
-    // REQUIRE(&*r == &*next(begin(c), 3));
-
-    // r = shift_right(begin(c), end(c), 3);
-    // REQUIRE(*r == 1);
-    // REQUIRE(&*r == &*next(begin(c), 3));
-
-    // r = shift_right(begin(c), end(c), 3);
-    // REQUIRE(*r == 1);
-    // REQUIRE(&*r == &*next(begin(c), 3));
-
-    // r = shift_right(begin(c), end(c), 3);
-    // REQUIRE(*r == 1);
-    // REQUIRE(&*r == &*next(begin(c), 3));
-
-    // r = shift_right(begin(c), end(c), 3);
-    // REQUIRE(*r == 1);
-    // REQUIRE(&*r == &*next(begin(c), 3));
-
     // CHECK(*r == 1);
 }
 
@@ -94,9 +55,20 @@ TEST_CASE("shift_right_bidirectional", "shift_right on BidirectionalIterator's")
 
     list<int> c = { 1, 2, 3, 4, 5, 6, 7, 8 };
 
-    auto r = shift_right(begin(c), end(c), 3);
+    // For n < 0 or n > std::distance(first, last) it is a violation of the precondition of the function. 
+    // No need to check these cases 
 
-    REQUIRE(*r == 1);
+    check(begin(c), end(c), 0, false, 1);
+    check(begin(c), end(c), 1, false, 1);
+    check(begin(c), end(c), 2, false, 1);
+    check(begin(c), end(c), 3, false, 1);
+    check(begin(c), end(c), 4, false, 1);
+    check(begin(c), end(c), 5, false, 1);
+    check(begin(c), end(c), 6, false, 1);
+    check(begin(c), end(c), 7, false, 1);
+    check(begin(c), end(c), 8, true, 0);
+
+    // auto r = shift_right(begin(c), end(c), 3);
+    // REQUIRE(*r == 1);
     // CHECK(*r == 1);
 }
-
