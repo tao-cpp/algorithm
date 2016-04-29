@@ -28,15 +28,16 @@ TEST_CASE("shift_right_forward", "shift_right on ForwardIterator's") {
 
     forward_list<int> c = { 1, 2, 3, 4, 5, 6, 7, 8 };
 
-    check(begin(c), end(c), 0);
-    check(begin(c), end(c), 1);
-    check(begin(c), end(c), 2);
-    check(begin(c), end(c), 3);
-    check(begin(c), end(c), 4);
-    check(begin(c), end(c), 5);
-    check(begin(c), end(c), 6);
-    check(begin(c), end(c), 7);
-    check(begin(c), end(c), 8);
+    check(begin(c), end(c), 0, 1);
+    check(begin(c), end(c), 1, 1);
+    check(begin(c), end(c), 2, 1);
+    check(begin(c), end(c), 3, 1);
+    check(begin(c), end(c), 4, 1);
+    check(begin(c), end(c), 5, 1);
+    check(begin(c), end(c), 6, 1);
+    check(begin(c), end(c), 7, 1);
+    check(begin(c), end(c), 8, 1);
+
 
 
     // auto r = shift_right(begin(c), end(c), 0);
