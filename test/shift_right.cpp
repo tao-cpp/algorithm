@@ -32,20 +32,25 @@ void check(I first, I last, N n, bool expected_empty, ValueType<I> const& expect
 
 TEST_CASE("shift_right_forward", "shift_right on ForwardIterator's") {
 
-    forward_list<int> c = { 1, 2, 3, 4, 5, 6, 7, 8 };
+    forward_list<int> c = { 1, 2, 3 };
 
     // For n < 0 or n > std::distance(first, last) it is a violation of the precondition of the function. 
     // No need to check these cases 
 
-    check(begin(c), end(c), 0, false, 1);
-    check(begin(c), end(c), 1, false, 1);
-    check(begin(c), end(c), 2, false, 1);
-    check(begin(c), end(c), 3, false, 1);
-    check(begin(c), end(c), 4, false, 1);
-    check(begin(c), end(c), 5, false, 1);
-    check(begin(c), end(c), 6, false, 1);
-    check(begin(c), end(c), 7, false, 1);
-    check(begin(c), end(c), 8, true, 0);
+
+    SECTION( "for 0" ) {
+        check(begin(c), end(c), 0, false, 1);
+    }
+    SECTION( "for 1" ) {
+        check(begin(c), end(c), 1, false, 1);
+    }
+    SECTION( "for 2" ) {
+        check(begin(c), end(c), 2, false, 1);
+    }
+    SECTION( "for 3" ) {
+        check(begin(c), end(c), 3, true, 0);
+    }
+
 
     // CHECK(*r == 1);
 }
@@ -53,20 +58,24 @@ TEST_CASE("shift_right_forward", "shift_right on ForwardIterator's") {
 
 TEST_CASE("shift_right_bidirectional", "shift_right on BidirectionalIterator's") {
 
-    list<int> c = { 1, 2, 3, 4, 5, 6, 7, 8 };
+    list<int> c = { 1, 2, 3 };
 
     // For n < 0 or n > std::distance(first, last) it is a violation of the precondition of the function. 
     // No need to check these cases 
 
-    check(begin(c), end(c), 0, false, 1);
-    check(begin(c), end(c), 1, false, 1);
-    check(begin(c), end(c), 2, false, 1);
-    check(begin(c), end(c), 3, false, 1);
-    check(begin(c), end(c), 4, false, 1);
-    check(begin(c), end(c), 5, false, 1);
-    check(begin(c), end(c), 6, false, 1);
-    check(begin(c), end(c), 7, false, 1);
-    check(begin(c), end(c), 8, true, 0);
+    SECTION( "for 0" ) {
+        check(begin(c), end(c), 0, false, 1);
+    }
+    SECTION( "for 1" ) {
+        check(begin(c), end(c), 1, false, 1);
+    }
+    SECTION( "for 2" ) {
+        check(begin(c), end(c), 2, false, 1);
+    }
+    SECTION( "for 3" ) {
+        check(begin(c), end(c), 3, true, 0);
+    }
+
 
     // auto r = shift_right(begin(c), end(c), 3);
     // REQUIRE(*r == 1);
