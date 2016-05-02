@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 #
-# Copyright Louis Dionne 2013-2016
+# Copyright Fernando Pelliccioni 2016
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 #
@@ -26,28 +26,6 @@ def split_at(n, list)
   before = list[0...n] || []
   after = list[n..-1] || []
   return [before, after]
-end
-
-# types : A sequence of strings to put in the mpl::vector.
-# Using this method requires including
-#   - <boost/mpl/vector.hpp>
-#   - <boost/mpl/push_back.hpp>
-def mpl_vector(types)
-  fast, rest = split_at(20, types)
-  rest.inject("boost::mpl::vector#{fast.length}<#{fast.join(', ')}>") { |v, t|
-    "boost::mpl::push_back<#{v}, #{t}>::type"
-  }
-end
-
-# types : A sequence of strings to put in the mpl::list.
-# Using this method requires including
-#   - <boost/mpl/list.hpp>
-#   - <boost/mpl/push_front.hpp>
-def mpl_list(types)
-  prefix, fast = split_at([types.length - 20, 0].max, types)
-  prefix.reverse.inject("boost::mpl::list#{fast.length}<#{fast.join(', ')}>") { |l, t|
-    "boost::mpl::push_front<#{l}, #{t}>::type"
-  }
 end
 
 # values : A sequence of strings representing values to put in the fusion::vector.
