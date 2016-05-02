@@ -5,8 +5,6 @@
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 language: c++
-compiler: clang
-os: linux
 sudo: false
 
 matrix:
@@ -123,17 +121,17 @@ matrix:
       addons: *xcode7
 
 
-    ##########################################################################
-    # Benchmarks
-    ##########################################################################
-    - env: BENCHMARKS=true COMPILER=clang++-3.6 CMAKE_OPTIONS="-DCMAKE_BUILD_TYPE=Release"
-    - env: BENCHMARKS=true COMPILER=clang++-3.6 CMAKE_OPTIONS="-DCMAKE_BUILD_TYPE=Debug"
+    # ##########################################################################
+    # # Benchmarks
+    # ##########################################################################
+    # - env: BENCHMARKS=true COMPILER=clang++-3.6 CMAKE_OPTIONS="-DCMAKE_BUILD_TYPE=Release"
+    # - env: BENCHMARKS=true COMPILER=clang++-3.6 CMAKE_OPTIONS="-DCMAKE_BUILD_TYPE=Debug"
 
-    - env: BENCHMARKS=true COMPILER=clang++-3.7 CMAKE_OPTIONS="-DCMAKE_BUILD_TYPE=Release"
-    - env: BENCHMARKS=true COMPILER=clang++-3.7 CMAKE_OPTIONS="-DCMAKE_BUILD_TYPE=Debug"
+    # - env: BENCHMARKS=true COMPILER=clang++-3.7 CMAKE_OPTIONS="-DCMAKE_BUILD_TYPE=Release"
+    # - env: BENCHMARKS=true COMPILER=clang++-3.7 CMAKE_OPTIONS="-DCMAKE_BUILD_TYPE=Debug"
 
-    - env: BENCHMARKS=true COMPILER=clang++-3.8 CMAKE_OPTIONS="-DCMAKE_BUILD_TYPE=Release"
-    - env: BENCHMARKS=true COMPILER=clang++-3.8 CMAKE_OPTIONS="-DCMAKE_BUILD_TYPE=Debug"
+    # - env: BENCHMARKS=true COMPILER=clang++-3.8 CMAKE_OPTIONS="-DCMAKE_BUILD_TYPE=Release"
+    # - env: BENCHMARKS=true COMPILER=clang++-3.8 CMAKE_OPTIONS="-DCMAKE_BUILD_TYPE=Debug"
 
 
 branches:
