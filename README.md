@@ -5,7 +5,7 @@ Tao.Algorithm
 [![Travis Build Status](https://travis-ci.org/tao-cpp/algorithm.svg?branch=master)](https://travis-ci.org/tao-cpp/algorithm)
 [![Appveyor Build Status](https://ci.appveyor.com/api/projects/status/github/tao-cpp/algorithm?svg=true&branch=master)](https://ci.appveyor.com/project/fpelliccioni/algorithm)
 [![Code Climate](https://codeclimate.com/github/tao-cpp/algorithm/badges/gpa.svg)](https://codeclimate.com/github/tao-cpp/algorithm)
-<a target="_blank" href="http://melpon.org/wandbox/permlink/MZqKhMF7tiaNZdJg">![Try it online][badge.wandbox]</a>
+<!-- <a target="_blank" href="http://melpon.org/wandbox/permlink/MZqKhMF7tiaNZdJg">![Try it online][badge.wandbox]</a> -->
 <a target="_blank" href="https://gitter.im/tao-cpp/algorithms">![Gitter Chat][badge.Gitter]</a>
 
 > C++11/14/17 Algorithms Library
