@@ -5,12 +5,15 @@ Tao.Algorithm
 [![Travis Build Status](https://travis-ci.org/tao-cpp/algorithm.svg?branch=master)](https://travis-ci.org/tao-cpp/algorithm)
 [![Appveyor Build Status](https://ci.appveyor.com/api/projects/status/github/tao-cpp/algorithm?svg=true&branch=master)](https://ci.appveyor.com/project/fpelliccioni/algorithm)
 [![Code Climate](https://codeclimate.com/github/tao-cpp/algorithm/badges/gpa.svg)](https://codeclimate.com/github/tao-cpp/algorithm)
-<a target="_blank" href="https://badge.fury.io/gh/tao-cpp%2Falgorithm">![GitHub version]https://badge.fury.io/gh/tao-cpp%2Falgorithm.svg</a>
-<a target="_blank" href="https://travis-ci.org/tao-cpp/algorithm">![Travis Build Status]https://travis-ci.org/tao-cpp/algorithm.svg?branch=master</a>
-<a target="_blank" href="https://ci.appveyor.com/project/fpelliccioni/algorithm">![Appveyor Build Status]https://ci.appveyor.com/api/projects/status/github/tao-cpp/algorithm?svg=true&branch=master</a>
-<a target="_blank" href="https://codeclimate.com/github/tao-cpp/algorithm">![Code Climate]https://codeclimate.com/github/tao-cpp/algorithm/badges/gpa.svg</a>
+<a target="_blank" href="https://badge.fury.io/gh/tao-cpp%2Falgorithm">![GitHub version][badge.Version]</a>
+<a target="_blank" href="https://travis-ci.org/tao-cpp/algorithm">![Travis Build Status][badge.Travis]</a>
+<a target="_blank" href="https://ci.appveyor.com/project/fpelliccioni/algorithm">![Appveyor Build Status][badge.Appveyor]</a>
+<a target="_blank" href="https://codeclimate.com/github/tao-cpp/algorithm">![Code Climate][badge.Codeclimate]</a>
 <a target="_blank" href="https://gitter.im/tao-cpp/algorithms">![Gitter Chat][badge.Gitter]</a>
 <!-- <a target="_blank" href="http://melpon.org/wandbox/permlink/MZqKhMF7tiaNZdJg">![Try it online][badge.wandbox]</a> -->
+
+
+
 
 > C++11/14/17 Algorithms Library
 
@@ -49,6 +52,11 @@ Please see [LICENSE.md](LICENSE.md).
 
 
 <!-- Links -->
+
+[badge.Version]: https://badge.fury.io/gh/tao-cpp%2Falgorithm.svg
+[badge.Travis]: https://travis-ci.org/tao-cpp/algorithm.svg?branch=master
+[badge.Appveyor]: https://ci.appveyor.com/api/projects/status/github/tao-cpp/algorithm?svg=true&branch=master
+[badge.Codeclimate]: https://codeclimate.com/github/tao-cpp/algorithm/badges/gpa.svg
 [badge.Gitter]: https://img.shields.io/badge/gitter-join%20chat-blue.svg
 [badge.Wandbox]: https://img.shields.io/badge/try%20it-online-blue.svg
 [C++Now]: http://cppnow.org
