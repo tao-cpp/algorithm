@@ -151,7 +151,7 @@ install:
   ############################################################################
   - DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
   - mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
-    
+
   ############################################################################
   # Install a recent CMake
   ############################################################################
@@ -163,6 +163,12 @@ install:
     else
       brew install cmake
     fi
+
+  ############################################################################
+  # Install and use a more recent Ruby and install the gems for the benchmarks
+  ############################################################################
+  - rvm use 2.1 --install --binary --fuzzy
+  - gem install ruby-progressbar tilt
 
 # install:
 #   - mkdir build
@@ -184,7 +190,7 @@ before_script:
   - cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_CXX_FLAGS="${CXX_FLAGS}" ..
 
 script:
-  - make benchmarks 
+  - make benchmarks -k
   - make tests -k
 
 notifications:
