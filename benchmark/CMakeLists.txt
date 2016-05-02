@@ -38,7 +38,7 @@ endif()
 # endif()
 
 # boost_hana_append_flag(BOOST_HANA_HAS_FTEMPLATE_DEPTH -ftemplate-depth=-1)
-# include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 ##############################################################################
 # Configure the measure.rb script
