@@ -2,14 +2,9 @@ Tao.Algorithm
 =============
 
 [![GitHub version](https://badge.fury.io/gh/tao-cpp%2Falgorithm.svg)](https://badge.fury.io/gh/tao-cpp%2Falgorithm)
-[![Gem Version](https://badge.fury.io/rb/gemfury.svg)](http://badge.fury.io/rb/gemfury)
-[![Build Status](https://secure.travis-ci.org/gemfury/gemfury.svg?branch=master)](https://travis-ci.org/gemfury/gemfury)
+[![Travis Build Status](https://travis-ci.org/tao-cpp/algorithm.svg?branch=master)](https://travis-ci.org/tao-cpp/algorithm)
+[![Appveyor Build Status](https://ci.appveyor.com/api/projects/status/github/tao-cpp/algorithm?svg=true&branch=master)](https://ci.appveyor.com/project/fpelliccioni/algorithm)
 [![Code Climate](https://codeclimate.com/github/tao-cpp/algorithm/badges/gpa.svg)](https://codeclimate.com/github/tao-cpp/algorithm)
-
-
-<a target="_blank" href="http://semver.org">![Version][badge.version]</a>
-<a target="_blank" href="https://travis-ci.org/tao-cpp/algorithm">![Travis status][badge.Travis]</a>
-<a target="_blank" href="https://ci.appveyor.com/project/fpelliccioni/algorithm">![Appveyor status][badge.Appveyor]</a>
 <a target="_blank" href="http://melpon.org/wandbox/permlink/MZqKhMF7tiaNZdJg">![Try it online][badge.wandbox]</a>
 <a target="_blank" href="https://gitter.im/tao-cpp/algorithms">![Gitter Chat][badge.Gitter]</a>
 
@@ -50,10 +45,7 @@ Please see [LICENSE.md](LICENSE.md).
 
 
 <!-- Links -->
-[badge.Appveyor]: https://ci.appveyor.com/api/projects/status/github/tao-cpp/algorithm?svg=true&branch=master
 [badge.Gitter]: https://img.shields.io/badge/gitter-join%20chat-blue.svg
-[badge.Travis]: https://travis-ci.org/tao-cpp/algorithm.svg?branch=master
-[badge.version]: https://badge.fury.io/gh/tao-cpp%2Falgorithm.svg
 [badge.Wandbox]: https://img.shields.io/badge/try%20it-online-blue.svg
 [C++Now]: http://cppnow.org
 [CMake]: http://www.cmake.org
