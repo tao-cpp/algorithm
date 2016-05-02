@@ -1,4 +1,4 @@
-# Tao.Algorithm <a target="_blank" href="http://semver.org">![Version][badge.version]</a> <a target="_blank" href="https://travis-ci.org/tao-cpp/algorithm">![Travis status][badge.Travis]</a> <a target="_blank" href="https://ci.appveyor.com/project/ldionne/algorithm">![Appveyor status][badge.Appveyor]</a> <a target="_blank" href="http://melpon.org/wandbox/permlink/MZqKhMF7tiaNZdJg">![Try it online][badge.wandbox]</a> <a target="_blank" href="https://gitter.im/tao-cpp/algorithm">![Gitter Chat][badge.Gitter]</a>
+# Tao.Algorithm <a target="_blank" href="http://semver.org">![Version][badge.version]</a> <a target="_blank" href="https://travis-ci.org/tao-cpp/algorithm">![Travis status][badge.Travis]</a> <a target="_blank" href="https://ci.appveyor.com/project/ldionne/algorithm">![Appveyor status][badge.Appveyor]</a> <a target="_blank" href="http://melpon.org/wandbox/permlink/MZqKhMF7tiaNZdJg">![Try it online][badge.wandbox]</a> <a target="_blank" href="https://gitter.im/tao-cpp/algorithms">![Gitter Chat][badge.Gitter]</a>
 
 > C++11/14/17 Algorithms Library
 
