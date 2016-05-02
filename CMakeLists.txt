@@ -9,11 +9,11 @@ project(Tao.Algorithm CXX)
 cmake_minimum_required(VERSION 2.8)
 
 
-find_package(Ruby 2.1)
-if(NOT ${RUBY_FOUND})
-    message(WARNING "Ruby >= 2.1 was not found; the benchmarks will be unavailable.")
-    return()
-endif()
+# find_package(Ruby 2.1)
+# if(NOT ${RUBY_FOUND})
+#     message(WARNING "Ruby >= 2.1 was not found; the benchmarks will be unavailable.")
+#     return()
+# endif()
 
 
 include_directories(include)
