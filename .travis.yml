@@ -160,8 +160,11 @@ before_script:
   ############################################################################
   - export CXX_FLAGS="${CXX_FLAGS} -Wall -Wextra -Werror"
   - cd ${TRAVIS_BUILD_DIR}
-  - (mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_CXX_FLAGS="${CXX_FLAGS}" ..)
-
+  # - (mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_CXX_FLAGS="${CXX_FLAGS}" ..)
+  - mkdir build
+  - cd build
+  - export CXX_FLAGS="${CXX_FLAGS} -Wall -Wextra -Werror"
+  - cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_CXX_FLAGS="${CXX_FLAGS}" ..
 
 script: make tests -k
 
