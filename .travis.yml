@@ -164,7 +164,9 @@ before_script:
   - export CXX_FLAGS="${CXX_FLAGS} -Wall -Wextra -Werror"
   - cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_CXX_FLAGS="${CXX_FLAGS}" ..
 
-script: make tests -k
+script:
+  - make benchmarks 
+  - make tests -k
 
 notifications:
   email: false
