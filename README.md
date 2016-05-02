@@ -1,19 +1,17 @@
 Tao.Algorithm
 =============
 
-[![GitHub version](https://badge.fury.io/gh/tao-cpp%2Falgorithm.svg)](https://badge.fury.io/gh/tao-cpp%2Falgorithm)
-[![Travis Build Status](https://travis-ci.org/tao-cpp/algorithm.svg?branch=master)](https://travis-ci.org/tao-cpp/algorithm)
-[![Appveyor Build Status](https://ci.appveyor.com/api/projects/status/github/tao-cpp/algorithm?svg=true&branch=master)](https://ci.appveyor.com/project/fpelliccioni/algorithm)
-[![Code Climate](https://codeclimate.com/github/tao-cpp/algorithm/badges/gpa.svg)](https://codeclimate.com/github/tao-cpp/algorithm)
 <a target="_blank" href="https://badge.fury.io/gh/tao-cpp%2Falgorithm">![GitHub version][badge.Version]</a>
 <a target="_blank" href="https://travis-ci.org/tao-cpp/algorithm">![Travis Build Status][badge.Travis]</a>
 <a target="_blank" href="https://ci.appveyor.com/project/fpelliccioni/algorithm">![Appveyor Build Status][badge.Appveyor]</a>
 <a target="_blank" href="https://codeclimate.com/github/tao-cpp/algorithm">![Code Climate][badge.Codeclimate]</a>
 <a target="_blank" href="https://gitter.im/tao-cpp/algorithms">![Gitter Chat][badge.Gitter]</a>
 <!-- <a target="_blank" href="http://melpon.org/wandbox/permlink/MZqKhMF7tiaNZdJg">![Try it online][badge.wandbox]</a> -->
-
-
-
+<!-- [![GitHub version](https://badge.fury.io/gh/tao-cpp%2Falgorithm.svg)](https://badge.fury.io/gh/tao-cpp%2Falgorithm)
+[![Travis Build Status](https://travis-ci.org/tao-cpp/algorithm.svg?branch=master)](https://travis-ci.org/tao-cpp/algorithm)
+[![Appveyor Build Status](https://ci.appveyor.com/api/projects/status/github/tao-cpp/algorithm?svg=true&branch=master)](https://ci.appveyor.com/project/fpelliccioni/algorithm)
+[![Code Climate](https://codeclimate.com/github/tao-cpp/algorithm/badges/gpa.svg)](https://codeclimate.com/github/tao-cpp/algorithm)
+ -->
 
 > C++11/14/17 Algorithms Library
 
