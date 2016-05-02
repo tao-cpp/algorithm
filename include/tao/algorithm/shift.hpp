@@ -75,51 +75,51 @@ I shift_right(I first, I last, N n) {
 
 //TODO: shift_left
 
-//Complexity: 
-//      Runtime:
-//          Amortized: O(n)
-//          Exact:     (n * distance(first, last) - (n * (n-1)) / 2) swaps
-//      Space:
-//          O(1)
-template <ForwardIterator I, Integral N>
-I shift_left(I first, I last, N n, std::forward_iterator_tag) {
-    // //precondition: n >= 0 &&
-    // //              std::distance(first, last) >= n (so [first, n) is a valid range)
-    // while (n > 0) {
-    //     shift_right_by_one_forward_unguarded(first, last);
-    //     ++first;
-    //     --n;
-    // }
-    // return first;
-}
+// //Complexity: 
+// //      Runtime:
+// //          Amortized: O(n)
+// //          Exact:     (n * distance(first, last) - (n * (n-1)) / 2) swaps
+// //      Space:
+// //          O(1)
+// template <ForwardIterator I, Integral N>
+// I shift_left(I first, I last, N n, std::forward_iterator_tag) {
+//     // //precondition: n >= 0 &&
+//     // //              std::distance(first, last) >= n (so [first, n) is a valid range)
+//     // while (n > 0) {
+//     //     shift_right_by_one_forward_unguarded(first, last);
+//     //     ++first;
+//     //     --n;
+//     // }
+//     // return first;
+// }
 
 
-//Complexity: 
-//      Runtime:
-//          Amortized: O(n)
-//          Exact:     (distance(first, last) - n) move-assigments or copy-assigments (depending of the ValueType<I> object)
-//      Space:
-//          O(1)
-template <BidirectionalIterator I, Integral N>
-I shift_left(I first, I last, N n, std::bidirectional_iterator_tag) {
-    //precondition: n >= 0 && 
-    //              std::distance(first, last) >= n (so [first, n) is a valid range)
-    //return std::move(first, std::next(first, n), last);
-}
+// //Complexity: 
+// //      Runtime:
+// //          Amortized: O(n)
+// //          Exact:     (distance(first, last) - n) move-assigments or copy-assigments (depending of the ValueType<I> object)
+// //      Space:
+// //          O(1)
+// template <BidirectionalIterator I, Integral N>
+// I shift_left(I first, I last, N n, std::bidirectional_iterator_tag) {
+//     //precondition: n >= 0 && 
+//     //              std::distance(first, last) >= n (so [first, n) is a valid range)
+//     //return std::move(first, std::next(first, n), last);
+// }
 
-//Complexity: 
-//      Runtime:
-//          Amortized: O(n)
-//          Exact:     
-//              for ForwardIterator:       (n * distance(first, last) - (n * (n-1)) / 2) swaps
-//              for BidirectionalIterator: (distance(first, last) - n) move-assigments or copy-assigments (depending of the ValueType<I> object)
-//      Space:
-//          O(1)
-template <ForwardIterator I, Integral N>
-inline
-I shift_left(I first, I last, N n) {
-    return shift_left(first, last, n, IteratorCategory<I>{});
-}
+// //Complexity: 
+// //      Runtime:
+// //          Amortized: O(n)
+// //          Exact:     
+// //              for ForwardIterator:       (n * distance(first, last) - (n * (n-1)) / 2) swaps
+// //              for BidirectionalIterator: (distance(first, last) - n) move-assigments or copy-assigments (depending of the ValueType<I> object)
+// //      Space:
+// //          O(1)
+// template <ForwardIterator I, Integral N>
+// inline
+// I shift_left(I first, I last, N n) {
+//     return shift_left(first, last, n, IteratorCategory<I>{});
+// }
 
 }} /*tao::algorithm*/
 
