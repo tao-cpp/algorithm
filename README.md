@@ -1,4 +1,17 @@
-# Tao.Algorithm <a target="_blank" href="http://semver.org">![Version][badge.version]</a> <a target="_blank" href="https://travis-ci.org/tao-cpp/algorithm">![Travis status][badge.Travis]</a> <a target="_blank" href="https://ci.appveyor.com/project/fpelliccioni/algorithm">![Appveyor status][badge.Appveyor]</a> <a target="_blank" href="http://melpon.org/wandbox/permlink/MZqKhMF7tiaNZdJg">![Try it online][badge.wandbox]</a> <a target="_blank" href="https://gitter.im/tao-cpp/algorithms">![Gitter Chat][badge.Gitter]</a>
+Tao.Algorithm
+=============
+
+[![GitHub version](https://badge.fury.io/gh/tao-cpp%2Falgorithm.svg)](https://badge.fury.io/gh/tao-cpp%2Falgorithm)
+[![Gem Version](https://badge.fury.io/rb/gemfury.svg)](http://badge.fury.io/rb/gemfury)
+[![Build Status](https://secure.travis-ci.org/gemfury/gemfury.svg?branch=master)](https://travis-ci.org/gemfury/gemfury)
+[![Code Climate](https://codeclimate.com/github/tao-cpp/algorithm/badges/gpa.svg)](https://codeclimate.com/github/tao-cpp/algorithm)
+
+
+<a target="_blank" href="http://semver.org">![Version][badge.version]</a>
+<a target="_blank" href="https://travis-ci.org/tao-cpp/algorithm">![Travis status][badge.Travis]</a>
+<a target="_blank" href="https://ci.appveyor.com/project/fpelliccioni/algorithm">![Appveyor status][badge.Appveyor]</a>
+<a target="_blank" href="http://melpon.org/wandbox/permlink/MZqKhMF7tiaNZdJg">![Try it online][badge.wandbox]</a>
+<a target="_blank" href="https://gitter.im/tao-cpp/algorithms">![Gitter Chat][badge.Gitter]</a>
 
 > C++11/14/17 Algorithms Library
 
