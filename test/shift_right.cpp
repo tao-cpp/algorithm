@@ -37,7 +37,6 @@ TEST_CASE("shift_right_forward", "shift_right on ForwardIterator's") {
     // For n < 0 or n > std::distance(first, last) it is a violation of the precondition of the function. 
     // No need to check these cases 
 
-
     SECTION( "for 0" ) {
         check(begin(c), end(c), 0, false, 1);
     }
@@ -51,10 +50,8 @@ TEST_CASE("shift_right_forward", "shift_right on ForwardIterator's") {
         check(begin(c), end(c), 3, true, 0);
     }
 
-
     // CHECK(*r == 1);
 }
-
 
 TEST_CASE("shift_right_bidirectional", "shift_right on BidirectionalIterator's") {
 
@@ -75,7 +72,6 @@ TEST_CASE("shift_right_bidirectional", "shift_right on BidirectionalIterator's")
     SECTION( "for 3" ) {
         check(begin(c), end(c), 3, true, 0);
     }
-
 
     // auto r = shift_right(begin(c), end(c), 3);
     // REQUIRE(*r == 1);
