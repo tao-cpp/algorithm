@@ -27,29 +27,6 @@ def split_at(n, list)
   after = list[n..-1] || []
   return [before, after]
 end
-
-# values : A sequence of strings representing values to put in the fusion::vector.
-# Using this method requires including
-#   - <boost/fusion/include/make_vector.hpp>
-#   - <boost/fusion/include/push_back.hpp>
-def fusion_vector(values)
-  fast, rest = split_at(10, values)
-  rest.inject("boost::fusion::make_vector(#{fast.join(', ')})") { |xs, v|
-    "boost::fusion::push_back(#{xs}, #{v})"
-  }
-end
-
-# values : A sequence of strings representing values to put in the fusion::list.
-# Using this method requires including
-#   - <boost/fusion/include/make_list.hpp>
-#   - <boost/fusion/include/push_back.hpp>
-def fusion_list(values)
-  fast, rest = split_at(10, values)
-  rest.inject("boost::fusion::make_list(#{fast.join(', ')})") { |xs, v|
-    "boost::fusion::push_back(#{xs}, #{v})"
-  }
-end
-
 # Turns a CMake-style boolean into a Ruby boolean.
 def cmake_bool(b)
   return true if b.is_a? String and ["true", "yes", "1"].include?(b.downcase)
@@ -59,8 +36,25 @@ end
 
 # aspect must be one of :compilation_time, :bloat, :execution_time
 def measure(aspect, template_relative, range, env = {})
+  # print "aspect:            " + aspect + "\n"
+  print "template_relative: " + template_relative + "\n"
+  # print "range:             " + range + "\n"
+  # print "env:               " + env + "\n"
+
+
+
+
   measure_file = Pathname.new("#{MEASURE_FILE}")
   template = Pathname.new(template_relative).expand_path
+
+  print "template: " + template.to_s + "\n"
+  print "----------------------------------\n"
+
+  print "MEASURE_TARGET: " + "#{MEASURE_TARGET}" + "\n"
+  # print "target: " + "#{target}" + "\n"
+  print "----------------------------------\n"
+
+
   range = range.to_a
 
   if ENV["BOOST_HANA_JUST_CHECK_BENCHMARKS"] && range.length >= 2
@@ -123,12 +117,17 @@ ensure
 end
 
 def time_execution(erb_file, range, env = {})
+
+  print "erb_file: " + erb_file + "\n"
+  # print "range:    " + range + "\n"
+  # print "env:      " + env + "\n"
+
   measure(:execution_time, erb_file, range, env)
 end
 
-def time_compilation(erb_file, range, env = {})
-  measure(:compilation_time, erb_file, range, env)
-end
+# def time_compilation(erb_file, range, env = {})
+#   measure(:compilation_time, erb_file, range, env)
+# end
 
 if __FILE__ == $0
   command = ARGV.join(' ')

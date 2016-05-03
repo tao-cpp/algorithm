@@ -14,9 +14,9 @@ int main() {
     boost::hana::benchmark::measure([] {
         long double result = 0;
         for (int iteration = 0; iteration < 1 << 10; ++iteration) {
-            auto values = std::make_tuple(
-                <%= input_size.times.map { 'std::rand()' }.join(', ') %>
-            );
+            // auto values = std::make_tuple(
+            //     <%= input_size.times.map { 'std::rand()' }.join(', ') %>
+            // );
 
             // auto values = boost::hana::make_tuple(
             //     <%= input_size.times.map { 'std::rand()' }.join(', ') %>
