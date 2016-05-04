@@ -42,7 +42,8 @@ add_custom_target(travis_config_slug USES_TERMINAL
 file(GLOB_RECURSE TAO_ALGORITHM_BENCHMARKS 
      RELATIVE ${CMAKE_CURRENT_LIST_DIR}
      *.cpp)
-foreach(benchmark IN LISTS TAO_ALGORITHM_BENCHMARKS)
+
+foreach(file IN LISTS TAO_ALGORITHM_BENCHMARKS)
     string(REGEX REPLACE "\\.cpp$" "" name ${file})
     string(REGEX REPLACE "/" "." name ${name})
 
