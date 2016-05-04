@@ -28,10 +28,10 @@
                             {"c":[{"v":"8,192"},{"v": 102.57},{"v": 101.37},{"v": 103.77},{"v": 69.11},{"v": 67.77},{"v": 70.45},{"v": 2.84246},{"v": 2.80},{"v": 2.89},{"v": 8.73745},{"v": 8.62},{"v": 8.85}]}
                       ]
                 },
-    "options": {"title": "Performance comparison", 
-              "intervals": {"style": "bars"},
-              "hAxis": { "title": "# elements"},
-              "vAxis": { "title": "Time (ns)"}
-            },
-    "containerId": "chart_lines"
-  }
+  "options": {"title": "Performance comparison", 
+            "intervals": {"style": "bars"},
+            "hAxis": { "title": "# elements"},
+            "vAxis": { "title": "Time (ns)"}
+          },
+  "containerId": "chart_lines"
+}
