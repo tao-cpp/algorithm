@@ -51,9 +51,9 @@ matrix:
     #   os: linux
     #   addons: *clang36
 
-    # - env: CLANG_VERSION=3.6 CXX_FLAGS="-std=c++14" BUILD_TYPE=Release
-    #   os: linux
-    #   addons: *clang36
+    - env: CLANG_VERSION=3.6 CXX_FLAGS="-std=c++14" BUILD_TYPE=Release
+      os: linux
+      addons: *clang36
 
     # # gcc-4.9
     # - env: GCC_VERSION=4.9 CXX_FLAGS="-std=c++11" BUILD_TYPE=Debug
