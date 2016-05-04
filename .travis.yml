@@ -182,8 +182,7 @@ before_script:
   # Set the git identity (for pushing the documentation and the benchmarks)
   ############################################################################
   - git config --global user.name "Travis bot"
-
-
+  - git config --global user.email travis-bot@travis-ci.org
 
   ############################################################################
   # Go back to the root of the project and setup the build directory
@@ -218,7 +217,7 @@ script:
         git clone https://fpelliccioni:${GITHUB_TOKEN}@github.com/tao-cpp/algorithm --depth 1 --branch=gh-pages doc/html &>/dev/null
         rm -rf doc/html/benchmarks/${config_slug}/${compiler_slug}/
         mkdir -p doc/html/benchmarks/${config_slug}/${compiler_slug}/
-        for benchmark in $(ls build/benchmark/*.json | grep -v ".erb"); do
+        for benchmark in $(ls build/benchmark/*.exe | grep -v ".erb"); do
           cp ${benchmark} doc/html/benchmarks/${config_slug}/${compiler_slug}/
         done
 
