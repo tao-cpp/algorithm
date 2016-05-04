@@ -9,17 +9,15 @@ enable_testing()
 add_custom_target(benchmarks ALL
     COMMAND ${CMAKE_CTEST_COMMAND} -C Release --output-on-failure -R "test.+"
     COMMENT "Build and run all the benchmarks."
-    DEPENDS ${UNIT_TEST_TARGETS}
+    # DEPENDS ${UNIT_TEST_TARGETS}
 )
 
 function(tao_algorithm_add_test name)
     message("name1: " ${name})
 
     add_executable(test.${name} EXCLUDE_FROM_ALL ${name}.cpp)
-
     # add_test(NAME test.${name} COMMAND test.${name})
     add_dependencies(benchmarks test.${name})
-
     message("name2: " ${name})
 
     # add_custom_command(
@@ -29,19 +27,19 @@ function(tao_algorithm_add_test name)
     #   VERBATIM
     # )    
 
-    add_custom_command(
-        TARGET benchmarks
-        COMMENT "Run tests"
-        POST_BUILD COMMAND test.${name}
-        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    # add_custom_command(
+    #     TARGET benchmarks
+    #     COMMENT "Run tests"
+    #     POST_BUILD COMMAND test.${name}
+    #     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+    # )
 
-    message("name3: " ${name})
+    # message("name3: " ${name})
 
 
-    set(UNIT_TEST_TARGETS ${UNIT_TEST_TARGETS} ${name} PARENT_SCOPE)
+    # set(UNIT_TEST_TARGETS ${UNIT_TEST_TARGETS} ${name} PARENT_SCOPE)
 
-    message("UNIT_TEST_TARGETS: " ${UNIT_TEST_TARGETS})
-)
+    # message("UNIT_TEST_TARGETS: " ${UNIT_TEST_TARGETS})
 
 endfunction()
 

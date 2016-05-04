@@ -195,7 +195,6 @@ before_script:
   # - cd build
   # - cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_CXX_FLAGS="${CXX_FLAGS}" ..
   - (mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_CXX_FLAGS="${CXX_FLAGS}" ..)
-  - pwd
 
 script:
   ############################################################################
@@ -210,8 +209,8 @@ script:
   - |
     if [[ "${BENCHMARKS}" == "true" ]]; then
       if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "master" ]]; then
-        pwd
         (cd build && make benchmarks) || exit 1
+        pwd
         compiler_slug=$(cd build && make travis_compiler_slug | grep 'travis_compiler_slug:' | cut -d ' ' -f 2)
         config_slug=$(cd build && make travis_config_slug | grep 'travis_config_slug:' | cut -d ' ' -f 2)
 
