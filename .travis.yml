@@ -32,16 +32,16 @@ matrix:
     #   os: linux
     #   addons: *clang35
 
-    # # clang-3.6
-    # - env: CLANG_VERSION=3.6 CXX_FLAGS="-std=c++11" BUILD_TYPE=Debug
-    #   os: linux
-    #   addons: &clang36
-    #     apt:
-    #       packages:
-    #         - clang-3.6
-    #       sources:
-    #         - ubuntu-toolchain-r-test
-    #         - llvm-toolchain-precise-3.6
+    # clang-3.6
+    - env: CLANG_VERSION=3.6 CXX_FLAGS="-std=c++11" BUILD_TYPE=Debug
+      os: linux
+      addons: &clang36
+        apt:
+          packages:
+            - clang-3.6
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.6
 
     # - env: CLANG_VERSION=3.6 CXX_FLAGS="-std=c++11" BUILD_TYPE=Release
     #   os: linux
