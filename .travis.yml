@@ -226,20 +226,21 @@ script:
         compiler_slug=$(cd build && make travis_compiler_slug | grep 'travis_compiler_slug:' | cut -d ' ' -f 2)
         config_slug=$(cd build && make travis_config_slug | grep 'travis_config_slug:' | cut -d ' ' -f 2)
         cpu_arch=$(uname -m)
+        os_name==$(uname -s)
 
         # Suppress output to avoid leaking the token when the command fails
         git clone https://fpelliccioni:${GITHUB_TOKEN}@github.com/tao-cpp/algorithm --depth 1 --branch=gh-pages doc/html &>/dev/null
-        rm -rf doc/html/benchmarks/${config_slug}/${compiler_slug}/
-        mkdir -p doc/html/benchmarks/${config_slug}/${compiler_slug}/
+        rm -rf doc/html/benchmarks/${config_slug}/${os_name}-${cpu_arch}/${compiler_slug}/
+        mkdir -p doc/html/benchmarks/${config_slug}/${os_name}-${cpu_arch}/${compiler_slug}/
 
-        ls doc/html/benchmarks/${config_slug}/${compiler_slug}/
+        ls doc/html/benchmarks/${config_slug}/${os_name}-${cpu_arch}/${compiler_slug}/
 
         # for benchmark in $(ls build/benchmark/*.exe | grep -v ".erb"); do
         for benchmark in $(ls build/benchmark/bench.*); do
-          cp ${benchmark} doc/html/benchmarks/${config_slug}/${compiler_slug}/
+          cp ${benchmark} doc/html/benchmarks/${config_slug}/${os_name}-${cpu_arch}/${compiler_slug}/
         done
 
-        ls doc/html/benchmarks/${config_slug}/${compiler_slug}/
+        ls doc/html/benchmarks/${config_slug}/${os_name}-${cpu_arch}/${compiler_slug}/
 
         pushd doc/html
         git add --all .
