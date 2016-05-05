@@ -14,7 +14,7 @@
 
 #include <tao/algorithm/concepts.hpp>
 
-
+namespace tao { namespace algorithm {
 
 // ---------------------------------------------------------------------
 // Declarations in the C++17 Standard 
@@ -42,5 +42,7 @@ I successor(I x) noexcept { return ++x; }
 template <BidirectionalIterator I>
 inline constexpr 
 I predecessor(I x) noexcept { return --x; }
+
+}} /*tao::algorithm*/
 
 #endif //TAO_ALGORITHM_ITERATOR_HPP

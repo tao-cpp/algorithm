@@ -14,6 +14,8 @@
 #include <tao/algorithm/iterator.hpp>
 #include <tao/algorithm/type_attributes.hpp>
 
+namespace tao { namespace algorithm {
+
 // ------------------------------------------------------------------------
 // Mean
 // ------------------------------------------------------------------------
@@ -237,5 +239,7 @@ double combine_std_dev_2(int n1, double u1, double s1, int n2, double u2, double
 	auto res = std::sqrt(num / den);
 	return res;
 }
+
+}} /*tao::algorithm*/
 
 #endif /*TAOCPP_BENCHMARK_STATISTICS_HPP_*/

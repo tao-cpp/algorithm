@@ -16,8 +16,7 @@
 #include <tao/algorithm/concepts.hpp>
 #include <tao/algorithm/type_attributes.hpp>
 
-namespace tao { namespace algorithm
-{
+namespace tao { namespace algorithm {
 
 template <ForwardIterator I>
 void shift_right_by_one_forward_unguarded(I first, I last) {

@@ -20,7 +20,12 @@ using namespace tao::algorithm;
 
 TEST_CASE("mean_forward", "mean on ForwardIterator's") {
     forward_list<int> c = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-    REQUIRE(mean_c(c) == 5.5);
+    
+    // std::forward_list doesn't have size() member function, so doesn't meet the requirements of Container concept.
+    // We can't use mean_c
+    // REQUIRE(mean_c(c) == 5.5);
+
+    REQUIRE(mean(begin(c), end(c)) == 5.5);
 }
 
 TEST_CASE("mean_bidirectional", "mean on BidirectionalIterator's") {
