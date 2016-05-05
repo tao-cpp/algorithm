@@ -204,7 +204,6 @@ script:
   # Note: The benchmarks associated to a version of the documentation are
   #       stored in `doc/html/benchmarks/`.
   ############################################################################
-  # 1f0f5ee77d9d28f0e767a95a5019141423fe4497
   - |
     if [[ "${BENCHMARKS}" == "true" ]]; then
       if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "master" ]]; then
