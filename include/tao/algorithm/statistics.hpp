@@ -11,6 +11,7 @@
 #include <tao/algorithm/accumulate.hpp>
 #include <tao/algorithm/concepts.hpp>
 #include <tao/algorithm/for_each.hpp>
+#include <tao/algorithm/iterator.hpp>
 #include <tao/algorithm/type_attributes.hpp>
 
 // ------------------------------------------------------------------------
