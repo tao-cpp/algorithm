@@ -32,6 +32,8 @@
 #define StrictWeakOrdering typename
 
 #define Procedure typename
+#define BinaryOperation typename
+#define UnaryFunction typename
 
             
 
