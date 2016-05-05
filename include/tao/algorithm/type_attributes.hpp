@@ -11,6 +11,7 @@
 #define TAO_ALGORITHM_TYPE_ATTRIBUTES_HPP
 
 #include <iterator>
+#include <type_traits>
 
 #include <tao/algorithm/concepts.hpp>
 
@@ -31,6 +32,28 @@ using DistanceType = typename std::iterator_traits<I>::difference_type;
 // Containers
 template <Container C>
 using SizeType = typename C::size_type;
+
+template <Container C>
+using IteratorType = typename std::remove_reference<decltype(std::begin(std::declval<C>()))>::type;
+
+
+// template <Container C>
+// struct iterator_for {
+//     typedef typename C::iterator type;
+// };
+
+// template <typename T>
+// struct iterator_for<T*>
+// {
+//     typedef T* type;
+// };
+
+// template <typename T, std::size_t N>
+// struct iterator_for<T (&)[N]>
+// {
+//     typedef T*  type;
+// };
+
 
 
 #endif //TAO_ALGORITHM_TYPE_ATTRIBUTES_HPP
