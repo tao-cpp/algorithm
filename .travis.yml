@@ -213,6 +213,13 @@ script:
         # ls
         # ls build
         # ls build/benchmark
+
+        uname -a
+        pwd
+        uname -i
+        pwd
+        uname -m
+
         compiler_slug=$(cd build && make travis_compiler_slug | grep 'travis_compiler_slug:' | cut -d ' ' -f 2)
         config_slug=$(cd build && make travis_config_slug | grep 'travis_config_slug:' | cut -d ' ' -f 2)
 
