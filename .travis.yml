@@ -204,7 +204,7 @@ script:
   # Note: The benchmarks associated to a version of the documentation are
   #       stored in `doc/html/benchmarks/`.
   ############################################################################
-  # 2a23abcabd9ad20bcbfcbbbc0bcde87ba95db7f6
+  # 1f0f5ee77d9d28f0e767a95a5019141423fe4497
   - |
     if [[ "${BENCHMARKS}" == "true" ]]; then
       if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "master" ]]; then
@@ -219,9 +219,12 @@ script:
         uname -i
         pwd
         uname -m
+        pwd
+        getconf LONG_BIT
 
         compiler_slug=$(cd build && make travis_compiler_slug | grep 'travis_compiler_slug:' | cut -d ' ' -f 2)
         config_slug=$(cd build && make travis_config_slug | grep 'travis_config_slug:' | cut -d ' ' -f 2)
+        cpu_arch=$(uname -m)
 
         # Suppress output to avoid leaking the token when the command fails
         git clone https://fpelliccioni:${GITHUB_TOKEN}@github.com/tao-cpp/algorithm --depth 1 --branch=gh-pages doc/html &>/dev/null
