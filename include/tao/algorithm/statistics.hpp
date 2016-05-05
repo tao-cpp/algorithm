@@ -28,6 +28,16 @@ auto mean_n(I f, N n) {
 	return accumulate_n(f, n, R(0)) / n;
 }
 
+template <Iterator I, Integral N, Real R = double>
+inline
+auto mean(I f, I l, N n) {
+	//precondition: [f, l) is a valid range &&
+	//				std::distance(f, l) == n 
+	//              ValueType<I> is convertible to R      
+	//              TODO: mutable or read-only range?
+	return std::accumulate(f, l, R(0)) / n;
+}
+
 template <Iterator I, Real R = double>
 inline
 auto mean(I f, I l) {
@@ -36,20 +46,10 @@ auto mean(I f, I l) {
 	return std::accumulate(f, l, R(0)) / std::distance(f, l);
 }
 
-template <Iterator I, Integral N, Real R = double>
-inline
-auto mean(I f, I l, N n) {
-	//precondition: [f, l) is a valid range &&
-	//				std::distance(f, l) == n 
-	//              TODO: mutable or read-only range?
-	//              ValueType<I> is convertible to R      
-	return std::accumulate(f, l, R(0)) / n;
-}
-
 template <Container C, Real R = double>
 inline
 auto mean_c(C const& c) {
-	//precondition: ValueType<I> is convertible to R      
+	//precondition: ValueType<C> is convertible to R      
 	return mean<IteratorType<C>, SizeType<C>, R>(std::begin(c), std::end(c), size(c));
 }
 

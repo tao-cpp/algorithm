@@ -10,6 +10,7 @@
 // #include <iterator>
 #include <forward_list>
 #include <list>
+#include <vector>
 
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
@@ -30,4 +31,22 @@ TEST_CASE("mean_forward", "mean on ForwardIterator's") {
 TEST_CASE("mean_bidirectional", "mean on BidirectionalIterator's") {
     list<int> c = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
     REQUIRE(mean_c(c) == 5.5);
+}
+
+TEST_CASE("mean_random_access", "mean on RandomAccessIterator's") {
+    vector<int> c = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    REQUIRE(mean_c(c) == 5.5);
+}
+
+
+TEST_CASE("median", "median") {
+    vector<int> c1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    REQUIRE(median_c(c1) == 5);
+
+    vector<int> c2 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    REQUIRE(median_c(c2) == 5);
+
+    vector<int> c3 = { 2, 1, 5, 4, 3, 7, 9, 8, 6 };
+    REQUIRE(median_c(c3) == 5);
+
 }
