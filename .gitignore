@@ -277,3 +277,13 @@ build/CMakeFiles/3.5.2/CompilerIdCXX/CMakeCXXCompilerId.cpp
 build/CMakeFiles/CMakeDirectoryInformation.cmake
 build/CMakeFiles/CMakeRuleHashes.txt
 build/CMakeFiles/Makefile.cmake
+build/benchmark/CMakeFiles/travis_compiler_slug.dir/DependInfo.cmake
+build/benchmark/CMakeFiles/travis_compiler_slug.dir/build.make
+build/benchmark/CMakeFiles/travis_compiler_slug.dir/cmake_clean.cmake
+build/benchmark/CMakeFiles/travis_compiler_slug.dir/depend.internal
+build/benchmark/CMakeFiles/travis_compiler_slug.dir/depend.make
+build/benchmark/CMakeFiles/travis_compiler_slug.dir/progress.make
+build/benchmark/CMakeFiles/travis_config_slug.dir/DependInfo.cmake
+build/benchmark/CMakeFiles/travis_config_slug.dir/build.make
+build/benchmark/CMakeFiles/travis_config_slug.dir/cmake_clean.cmake
+build/benchmark/CMakeFiles/travis_config_slug.dir/progress.make
