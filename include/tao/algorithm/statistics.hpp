@@ -27,7 +27,7 @@
 // Mean
 // ------------------------------------------------------------------------
 
-template <Iterator I, Integer N>
+template <Iterator I, Integral N>
 inline
 auto mean_n(I f, N n) {
 	//precondition: [f, n) is a valid range. TODO: mutable or read-only range?
@@ -44,7 +44,7 @@ auto mean(I f, I l) {
 	return std::accumulate(f, l, T(0)) / std::distance(f, l);
 }
 
-template <Iterator I, Integer N>
+template <Iterator I, Integral N>
 inline
 auto mean(I f, I l, N n) {
 	//precondition: [f, l) is a valid range &&
@@ -56,7 +56,7 @@ auto mean(I f, I l, N n) {
 
 template <Container C>
 inline
-auto mean_c(Container const& c) {
+auto mean_c(C const& c) {
 	return mean(std::begin(c), std::end(c), size(c));
 }
 
@@ -65,7 +65,7 @@ auto mean_c(Container const& c) {
 // ------------------------------------------------------------------------
 
 //Warning: Sorts the range [f, l)
-template <Iterator I, Integer N>
+template <Iterator I, Integral N>
 // requires Mutable<I>
 inline
 auto median(I f, I l, N n) {
@@ -80,7 +80,7 @@ auto median(I f, I l, N n) {
 //Warning: Sorts the contain of the Container
 template <Container C>
 inline
-auto median_c(Container& c) {
+auto median_c(C& c) {
 	return median(std::begin(c), std::end(c), size(c));
 }
 
@@ -88,7 +88,7 @@ auto median_c(Container& c) {
 // ------------------------------------------------------------------------
 // ------------------------------------------------------------------------
 
-template <Iterator I, Integer N>
+template <Iterator I, Integral N>
 inline
 auto variance_helper_n(I f, N n, ValueType<I> mean) {
 	using T = ValueType<I>;
@@ -105,7 +105,7 @@ auto variance_helper_n(I f, N n, ValueType<I> mean) {
 
 
 //Note: it requires ForwardIterator because we are doing 2 passes over the range.
-template <ForwardIterator I, Integer N>
+template <ForwardIterator I, Integral N>
 inline
 auto variance_helper_n(I f, N n) {
 	using T = ValueType<I>;
@@ -137,42 +137,42 @@ Sum(i, n) (Xi - X)^2
 Sum(i, n) (Xi - (Sum(i, n) Xi) / n) ^ 2
 */
 
-template <Iterator I, Integer N>
+template <Iterator I, Integral N>
 inline
 auto population_variance_n(I f, N n, ValueType<I> mean) {
 	//precondition: [f, n) is a valid range.
 	return variance_helper_n(f, n, mean) / n;
 }
 
-template <ForwardIterator I, Integer N>
+template <ForwardIterator I, Integral N>
 inline
 auto population_variance_n(I f, N n) {
 	//precondition: [f, n) is a valid range.
 	return variance_helper_n(f, n) / n;
 }
 
-template <Iterator I, Integer N>
+template <Iterator I, Integral N>
 inline
 auto sample_variance_n(I f, N n, ValueType<I> mean) { 
 	//precondition: [f, n) is a valid range.
 	return variance_helper_n(f, n, mean) / (n - 1); 
 }
 
-template <ForwardIterator I, Integer N>
+template <ForwardIterator I, Integral N>
 inline
 auto sample_variance_n(I f, N n) { 
 	//precondition: [f, n) is a valid range.
 	return variance_helper_n(f, n) / (n - 1); 
 }
 
-template <Iterator I, Integer N>
+template <Iterator I, Integral N>
 inline
 auto sample_std_dev_n(I f, N n, ValueType<I> mean) {
 	//precondition: [f, n) is a valid range.
 	return std::sqrt(sample_variance_n(f, n, mean));
 }
 
-template <ForwardIterator I, Integer N>
+template <ForwardIterator I, Integral N>
 inline
 auto sample_std_dev_n(I f, N n) {
 	//precondition: [f, n) is a valid range.

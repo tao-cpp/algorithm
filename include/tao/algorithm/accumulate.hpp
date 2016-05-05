@@ -20,7 +20,6 @@ namespace tao { namespace algorithm
 {
 
 
-//Note: for_each_n was added in C++17
 
 //Complexity: 
 //      Runtime:
@@ -28,21 +27,6 @@ namespace tao { namespace algorithm
 //          Exact:     ???
 //      Space:
 //          O(???)
-template <Iterator I, Procedure Proc>
-    // requires(Readable(I) &&
-    //     Procedure(Proc) && Arity(Proc) == 1 &&
-    //     ValueType(I) == InputType(Proc, 0))
-std::pair<Proc, I> for_each_n(I f, DistanceType<I> n, Proc proc) {
-    // Precondition: $\property{readable\_weak\_range}(f, n)$
-    while (n != 0) {
-        proc(*f);
-        --n;
-        ++f;
-    }
-    return {proc, f};
-}
-
-
 template <Iterator I, typename T, BinaryOperation Op>
 // requires T == Domain(Op)
 inline
@@ -55,6 +39,12 @@ T accumulate(I f, I l, T init, Op op) {
     return init;
 }
 
+//Complexity: 
+//      Runtime:
+//          Amortized: O(n)
+//          Exact:     ???
+//      Space:
+//          O(???)
 template <Iterator I, typename T, BinaryOperation Op>
 // requires T == Domain(Op)
 inline
@@ -68,7 +58,12 @@ T accumulate_n(I f, DistanceType<I> n, T init, Op op) {
     return init;
 }
 
-
+//Complexity: 
+//      Runtime:
+//          Amortized: O(n)
+//          Exact:     ???
+//      Space:
+//          O(???)
 template <Iterator I, typename T, BinaryOperation Op, UnaryFunction F>
 // requires T == Domain(F)
 //          Codomain(F) == Domain(Op))
@@ -82,6 +77,12 @@ T accumulate(I f, I l, T init, Op op, F fun) {
     return init;
 }
 
+//Complexity: 
+//      Runtime:
+//          Amortized: O(n)
+//          Exact:     ???
+//      Space:
+//          O(???)
 template <Iterator I, typename T, BinaryOperation Op, UnaryFunction F>
 // requires T == Domain(F)
 //          Codomain(F) == Domain(Op))

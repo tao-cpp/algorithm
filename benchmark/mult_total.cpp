@@ -20,10 +20,10 @@ using int101_t = number<cpp_int_backend<101, 101, signed_magnitude, unchecked, v
 using int201_t = number<cpp_int_backend<201, 201, signed_magnitude, unchecked, void>>;
 //2 ^ 201 / 2 - 1 = 1606938044258990275541962092341162602522202993782792835301375    -> 61 chars
 
-#define VectorOfInts typename
-#define VectorOfPairs typename
-#define VectorOfTriples typename
-#define Integer typename
+// #define VectorOfInts typename
+// #define VectorOfPairs typename
+// #define VectorOfTriples typename
+// #define Integer typename
 
 
 //-------------------------------------------------------

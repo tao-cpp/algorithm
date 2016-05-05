@@ -31,4 +31,8 @@
 
 #define StrictWeakOrdering typename
 
+#define Procedure typename
+
+            
+
 #endif /*TAO_ALGORITHM_CONCEPTS_HPP*/

@@ -10,7 +10,7 @@ project(Tao.Algorithm CXX)
 cmake_minimum_required(VERSION 3.0)
 # list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-
+add_compile_options(-std=c++14)
 
 ##############################################################################
 # Setup custom functions to ease the creation of targets

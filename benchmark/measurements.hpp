@@ -22,13 +22,13 @@
 using real_type = double;
 //using real_type = float;
 
-template <Iterator I, Integer N>
+template <Iterator I, Integral N>
 auto mean_n(I f, N n) {
 	using T = ValueType<I>;
 	return std::accumulate(f, std::next(f, n), T(0)) / n;
 }
 
-template <ForwardIterator I, Integer N>
+template <ForwardIterator I, Integral N>
 auto variance_helper_n(I f, N n) {
 	using T = ValueType<I>;
 
