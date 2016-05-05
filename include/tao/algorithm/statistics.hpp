@@ -20,36 +20,37 @@ namespace tao { namespace algorithm {
 // Mean
 // ------------------------------------------------------------------------
 
-template <Iterator I, Integral N>
+template <Iterator I, Integral N, Real R = double>
 inline
 auto mean_n(I f, N n) {
 	//precondition: [f, n) is a valid range. TODO: mutable or read-only range?
-	using T = ValueType<I>;
-	return accumulate_n(f, n, T(0)) / n;
+	//              ValueType<I> is convertible to R      
+	return accumulate_n(f, n, R(0)) / n;
 }
 
-template <Iterator I>
+template <Iterator I, Real R = double>
 inline
 auto mean(I f, I l) {
 	//precondition: [f, l) is a valid range. TODO: mutable or read-only range?
-	using T = ValueType<I>;
-	return std::accumulate(f, l, T(0)) / std::distance(f, l);
+	//              ValueType<I> is convertible to R      
+	return std::accumulate(f, l, R(0)) / std::distance(f, l);
 }
 
-template <Iterator I, Integral N>
+template <Iterator I, Integral N, Real R = double>
 inline
 auto mean(I f, I l, N n) {
 	//precondition: [f, l) is a valid range &&
 	//				std::distance(f, l) == n 
 	//              TODO: mutable or read-only range?
-	using T = ValueType<I>;
-	return std::accumulate(f, l, T(0)) / n;
+	//              ValueType<I> is convertible to R      
+	return std::accumulate(f, l, R(0)) / n;
 }
 
-template <Container C>
+template <Container C, Real R = double>
 inline
 auto mean_c(C const& c) {
-	return mean(std::begin(c), std::end(c), size(c));
+	//precondition: ValueType<I> is convertible to R      
+	return mean<C, R>(std::begin(c), std::end(c), size(c));
 }
 
 // ------------------------------------------------------------------------
