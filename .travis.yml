@@ -209,10 +209,10 @@ script:
     if [[ "${BENCHMARKS}" == "true" ]]; then
       if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "master" ]]; then
         (cd build && make benchmarks) || exit 1
-        pwd
-        ls
-        ls build
-        ls build/benchmark
+        # pwd
+        # ls
+        # ls build
+        # ls build/benchmark
         compiler_slug=$(cd build && make travis_compiler_slug | grep 'travis_compiler_slug:' | cut -d ' ' -f 2)
         config_slug=$(cd build && make travis_config_slug | grep 'travis_config_slug:' | cut -d ' ' -f 2)
 
@@ -220,7 +220,9 @@ script:
         git clone https://fpelliccioni:${GITHUB_TOKEN}@github.com/tao-cpp/algorithm --depth 1 --branch=gh-pages doc/html &>/dev/null
         rm -rf doc/html/benchmarks/${config_slug}/${compiler_slug}/
         mkdir -p doc/html/benchmarks/${config_slug}/${compiler_slug}/
-        for benchmark in $(ls build/benchmark/*.exe | grep -v ".erb"); do
+
+        # for benchmark in $(ls build/benchmark/*.exe | grep -v ".erb"); do
+        for benchmark in $(ls build/benchmark/bench.*); do
           cp ${benchmark} doc/html/benchmarks/${config_slug}/${compiler_slug}/
         done
 

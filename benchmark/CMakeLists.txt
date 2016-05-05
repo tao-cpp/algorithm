@@ -47,9 +47,9 @@ foreach(file IN LISTS TAO_ALGORITHM_BENCHMARKS)
     string(REGEX REPLACE "\\.cpp$" "" name ${file})
     string(REGEX REPLACE "/" "." name ${name})
 
-    add_executable(test.${name} EXCLUDE_FROM_ALL ${name}.cpp)
-    # add_test(NAME test.${name} COMMAND test.${name})
-    add_dependencies(benchmarks test.${name})
+    add_executable(bench.${name} EXCLUDE_FROM_ALL ${name}.cpp)
+    # add_test(NAME bench.${name} COMMAND bench.${name})
+    add_dependencies(benchmarks bench.${name})
 
 
 
@@ -94,7 +94,7 @@ endforeach()
 # enable_testing()
 
 # add_custom_target(benchmarks ALL
-#     COMMAND ${CMAKE_CTEST_COMMAND} -C Release --output-on-failure -R "test.+"
+#     COMMAND ${CMAKE_CTEST_COMMAND} -C Release --output-on-failure -R "bench.+"
 #     COMMENT "Build and run all the benchmarks."
 #     # DEPENDS ${UNIT_TEST_TARGETS}
 # )
@@ -102,14 +102,14 @@ endforeach()
 # function(tao_algorithm_add_test name)
 #     message("name1: " ${name})
 
-#     add_executable(test.${name} EXCLUDE_FROM_ALL ${name}.cpp)
-#     # add_test(NAME test.${name} COMMAND test.${name})
-#     add_dependencies(benchmarks test.${name})
+#     add_executable(bench.${name} EXCLUDE_FROM_ALL ${name}.cpp)
+#     # add_test(NAME bench.${name} COMMAND bench.${name})
+#     add_dependencies(benchmarks bench.${name})
 #     message("name2: " ${name})
 
 #     # add_custom_command(
 #     #   OUTPUT out.${name}
-#     #   COMMAND test.${name}
+#     #   COMMAND bench.${name}
 #     #   COMMENT "..."
 #     #   VERBATIM
 #     # )    
@@ -117,7 +117,7 @@ endforeach()
 #     # add_custom_command(
 #     #     TARGET benchmarks
 #     #     COMMENT "Run tests"
-#     #     POST_BUILD COMMAND test.${name}
+#     #     POST_BUILD COMMAND bench.${name}
 #     #     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 #     # )
 
