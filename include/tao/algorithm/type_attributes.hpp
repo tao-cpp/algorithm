@@ -21,6 +21,13 @@ using ValueType = typename std::iterator_traits<I>::value_type;
 template <Iterator I>
 using IteratorCategory = typename std::iterator_traits<I>::iterator_category;
 
+//TODO: explicar la diferencia entre DistanceType y DifferenceType
+template <Iterator I>
+using DifferenceType = typename std::iterator_traits<I>::difference_type;
+
+template <Iterator I>
+using DistanceType = typename std::iterator_traits<I>::difference_type;
+
 // Containers
 template <Container C>
 using SizeType = typename C::size_type;
