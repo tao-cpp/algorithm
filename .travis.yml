@@ -197,7 +197,8 @@ before_script:
 
 script:
 
-  - make tests -k
+  - (cd build && make tests)
+  # - make tests -k
 
   ############################################################################
   # We only run the full benchmarks on `master` when we're not in a pull
