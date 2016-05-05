@@ -221,10 +221,14 @@ script:
         rm -rf doc/html/benchmarks/${config_slug}/${compiler_slug}/
         mkdir -p doc/html/benchmarks/${config_slug}/${compiler_slug}/
 
+        ls doc/html/benchmarks/${config_slug}/${compiler_slug}/
+
         # for benchmark in $(ls build/benchmark/*.exe | grep -v ".erb"); do
         for benchmark in $(ls build/benchmark/bench.*); do
           cp ${benchmark} doc/html/benchmarks/${config_slug}/${compiler_slug}/
         done
+
+        ls doc/html/benchmarks/${config_slug}/${compiler_slug}/
 
         pushd doc/html
         git add --all .
