@@ -196,6 +196,9 @@ before_script:
   - (mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_CXX_FLAGS="${CXX_FLAGS}" ..)
 
 script:
+
+  - make tests -k
+
   ############################################################################
   # We only run the full benchmarks on `master` when we're not in a pull
   # request, because otherwise it takes too much Travis resources. Otherwise,
@@ -226,7 +229,7 @@ script:
         pwd 
         python --version
         pwd 
-        
+
 
         compiler_slug=$(cd build && make travis_compiler_slug | grep 'travis_compiler_slug:' | cut -d ' ' -f 2)
         config_slug=$(cd build && make travis_config_slug | grep 'travis_config_slug:' | cut -d ' ' -f 2)
@@ -267,7 +270,7 @@ script:
     fi
 
   # - make benchmarks -k
-  # - make tests -k
+
 
 notifications:
   email: false
