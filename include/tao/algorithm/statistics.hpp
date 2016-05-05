@@ -50,7 +50,7 @@ template <Container C, Real R = double>
 inline
 auto mean_c(C const& c) {
 	//precondition: ValueType<I> is convertible to R      
-	return mean<C, R>(std::begin(c), std::end(c), size(c));
+	return mean<C, SizeType<C>, R>(std::begin(c), std::end(c), size(c));
 }
 
 // ------------------------------------------------------------------------
