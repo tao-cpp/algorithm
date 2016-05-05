@@ -8,20 +8,10 @@
 #include <vector>
 #include <tuple>
 
-// #include <iostream>		//REMOVE THIS
-
-
+#include <tao/algorithm/accumulate.hpp>
 #include <tao/algorithm/concepts.hpp>
 #include <tao/algorithm/for_each.hpp>
 #include <tao/algorithm/type_attributes.hpp>
-
-// //Concepts emulation
-// #define Function typename
-// #define Container typename
-
-// using real_type = double;
-// //using real_type = float;
-
 
 // ------------------------------------------------------------------------
 // Mean
@@ -32,8 +22,7 @@ inline
 auto mean_n(I f, N n) {
 	//precondition: [f, n) is a valid range. TODO: mutable or read-only range?
 	using T = ValueType<I>;
-	//TODO: make accumulate_n algorithm
-	return std::accumulate(f, std::next(f, n), T(0)) / n;
+	return accumulate_n(f, n, T(0)) / n;
 }
 
 template <Iterator I>
@@ -108,10 +97,7 @@ auto variance_helper_n(I f, N n, ValueType<I> mean) {
 template <ForwardIterator I, Integral N>
 inline
 auto variance_helper_n(I f, N n) {
-	using T = ValueType<I>;
-
-	auto m = mean_n(f, n);
-	return variance_helper_n(f, n, m);
+	return variance_helper_n(f, n, mean_n(f, n));
 }
 
 
