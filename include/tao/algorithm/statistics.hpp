@@ -199,46 +199,46 @@ auto get_statistics_copy(C samples) {
 
 
 
-double combine_std_dev_1(int n1, double u1, double s1, int n2, double u2, double s2) {
+// double combine_std_dev_1(int n1, double u1, double s1, int n2, double u2, double s2) {
 
-	auto t1 = n1 * n1 * s1 * s1;
-	auto t2 = n2 * n2 * s2 * s2;
-	auto t3 = n2      * s1 * s1;
-	auto t4 = n2      * s2 * s2;
-	auto t5 = n1      * s1 * s1;
-	auto t6 = n1      * s2 * s2;
+// 	auto t1 = n1 * n1 * s1 * s1;
+// 	auto t2 = n2 * n2 * s2 * s2;
+// 	auto t3 = n2      * s1 * s1;
+// 	auto t4 = n2      * s2 * s2;
+// 	auto t5 = n1      * s1 * s1;
+// 	auto t6 = n1      * s2 * s2;
 
-	auto t7 = n1 * n2 * s1 * s1;
-	auto t8 = n1 * n2 * s2 * s2;
+// 	auto t7 = n1 * n2 * s1 * s1;
+// 	auto t8 = n1 * n2 * s2 * s2;
 
-	auto t9 = n1 * n2 * (u1 - u2) * (u1 - u2);
+// 	auto t9 = n1 * n2 * (u1 - u2) * (u1 - u2);
 
-	auto num = t1 + t2 - t3 - t4 - t5 - t6 + t7 + t8 + t9;
-	auto den = (n1 + n2 - 1) * (n1 + n2);
+// 	auto num = t1 + t2 - t3 - t4 - t5 - t6 + t7 + t8 + t9;
+// 	auto den = (n1 + n2 - 1) * (n1 + n2);
 
-	auto res = std::sqrt(num / den);
-	return res;
-}
+// 	auto res = std::sqrt(num / den);
+// 	return res;
+// }
 
-double combine_std_dev_2(int n1, double u1, double s1, int n2, double u2, double s2) {
+// double combine_std_dev_2(int n1, double u1, double s1, int n2, double u2, double s2) {
 
-	auto uc = (n1 * u1 + n2 * u2) / (n1 + n2);
+// 	auto uc = (n1 * u1 + n2 * u2) / (n1 + n2);
 
-	auto t1 = (n1 - 1) * s1 * s1;
-	auto t2 = n1 * u1 * u1;
+// 	auto t1 = (n1 - 1) * s1 * s1;
+// 	auto t2 = n1 * u1 * u1;
 
-	auto t3 = (n2 - 1) * s2 * s2;
-	auto t4 = n2 * u2 * u2;
+// 	auto t3 = (n2 - 1) * s2 * s2;
+// 	auto t4 = n2 * u2 * u2;
 	
-	auto t5 = (n1 + n2) * uc * uc;
+// 	auto t5 = (n1 + n2) * uc * uc;
 
 
-	auto num = t1 + t2 + t3 + t4 - t5;
-	auto den = n1 + n2 - 1;
+// 	auto num = t1 + t2 + t3 + t4 - t5;
+// 	auto den = n1 + n2 - 1;
 
-	auto res = std::sqrt(num / den);
-	return res;
-}
+// 	auto res = std::sqrt(num / den);
+// 	return res;
+// }
 
 }} /*tao::algorithm*/
 
