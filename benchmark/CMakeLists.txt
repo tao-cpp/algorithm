@@ -8,23 +8,31 @@
 ##############################################################################
 # Required packages, gems and caveats
 ##############################################################################
-find_package(Ruby 2.1)
-if(NOT ${RUBY_FOUND})
-    message(WARNING "Ruby >= 2.1 was not found; the benchmarks will be unavailable.")
-    return()
-endif()
 
-# Check for the 'ruby-progressbar' and 'tilt' gems
-execute_process(COMMAND ${RUBY_EXECUTABLE} -r ruby-progressbar -r tilt -e ""
-                RESULT_VARIABLE __TAOCPP_ALGORITHM_MISSING_GEMS
-                OUTPUT_QUIET ERROR_QUIET)
-if(${__TAOCPP_ALGORITHM_MISSING_GEMS})
-    message(WARNING
-        "The 'ruby-progressbar' and/or 'tilt' gems were not found; "
-        "the benchmarks will be unavailable."
-        "Use `gem install ruby-progressbar tilt` to install the missing gems.")
-    return()
-endif()
+# find_package( PythonInterp 2.7 REQUIRED )
+find_package(PythonInterp 2.7 REQUIRED)
+# if(NOT ${PYTHONINTERP_FOUND})
+#     message(WARNING "Python >= 2.7 was not found; the benchmarks will be unavailable.")
+#     return()
+# endif()
+
+# find_package(Ruby 2.1)
+# if(NOT ${RUBY_FOUND})
+#     message(WARNING "Ruby >= 2.1 was not found; the benchmarks will be unavailable.")
+#     return()
+# endif()
+
+# # Check for the 'ruby-progressbar' and 'tilt' gems
+# execute_process(COMMAND ${RUBY_EXECUTABLE} -r ruby-progressbar -r tilt -e ""
+#                 RESULT_VARIABLE __TAOCPP_ALGORITHM_MISSING_GEMS
+#                 OUTPUT_QUIET ERROR_QUIET)
+# if(${__TAOCPP_ALGORITHM_MISSING_GEMS})
+#     message(WARNING
+#         "The 'ruby-progressbar' and/or 'tilt' gems were not found; "
+#         "the benchmarks will be unavailable."
+#         "Use `gem install ruby-progressbar tilt` to install the missing gems.")
+#     return()
+# endif()
 
 
 ##############################################################################

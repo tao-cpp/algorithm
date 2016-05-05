@@ -164,11 +164,11 @@ install:
       brew install cmake
     fi
 
-  ############################################################################
-  # Install and use a more recent Ruby and install the gems for the benchmarks
-  ############################################################################
-  - rvm use 2.1 --install --binary --fuzzy
-  - gem install ruby-progressbar tilt
+  # ############################################################################
+  # # Install and use a more recent Ruby and install the gems for the benchmarks
+  # ############################################################################
+  # - rvm use 2.1 --install --binary --fuzzy
+  # - gem install ruby-progressbar tilt
 
 # install:
 #   - mkdir build
@@ -222,6 +222,11 @@ script:
         # getconf LONG_BIT
         # pwd
         # cat /proc/cpuinfo
+
+        pwd 
+        python --version
+        pwd 
+        
 
         compiler_slug=$(cd build && make travis_compiler_slug | grep 'travis_compiler_slug:' | cut -d ' ' -f 2)
         config_slug=$(cd build && make travis_config_slug | grep 'travis_config_slug:' | cut -d ' ' -f 2)
