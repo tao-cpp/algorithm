@@ -233,8 +233,11 @@ script:
         pushd doc/html
         git add --all .
         git commit --allow-empty -m "Update benchmarks to ${TRAVIS_COMMIT:0:7} for build type '${config_slug}' and compiler '${compiler_slug}'"
+
         # Suppress output to avoid leaking the token
-        travis_retry git push origin gh-pages &>/dev/null
+        # travis_retry git push origin gh-pages &>/dev/null
+        travis_retry git push origin gh-pages
+
         popd
       else
         export BOOST_HANA_JUST_CHECK_BENCHMARKS=true
