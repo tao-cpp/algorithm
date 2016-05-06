@@ -52,3 +52,17 @@ TEST_CASE("median", "median") {
     vector<double> c4 = { 1, 2, 3, 4, 5.5, 6, 7, 8, 9, 10 };
     REQUIRE(median_c(c4) == 5.75);
 }
+
+// TEST_CASE("population variance", "population variance") {
+//     vector<int> c1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+//     REQUIRE(median_c(c1) == 5.5);
+
+//     vector<int> c2 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+//     REQUIRE(median_c(c2) == 5);
+
+//     vector<int> c3 = { 2, 1, 5, 4, 3, 7, 9, 8, 6 };
+//     REQUIRE(median_c(c3) == 5);
+
+//     vector<double> c4 = { 1, 2, 3, 4, 5.5, 6, 7, 8, 9, 10 };
+//     REQUIRE(median_c(c4) == 5.75);
+// }

@@ -37,23 +37,5 @@ template <Container C>
 using IteratorType = typename std::remove_reference<decltype(std::begin(std::declval<C>()))>::type;
 
 
-// template <Container C>
-// struct iterator_for {
-//     typedef typename C::iterator type;
-// };
-
-// template <typename T>
-// struct iterator_for<T*>
-// {
-//     typedef T* type;
-// };
-
-// template <typename T, std::size_t N>
-// struct iterator_for<T (&)[N]>
-// {
-//     typedef T*  type;
-// };
-
-
 
 #endif //TAO_ALGORITHM_TYPE_ATTRIBUTES_HPP

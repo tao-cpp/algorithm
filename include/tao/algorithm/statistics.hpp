@@ -55,8 +55,8 @@ R mean(I f, I l) {
 template <Container C, Real R = double>
 inline
 R mean_c(C const& c) {
-	//precondition: ValueType<C> is convertible to R      
-	return mean<IteratorType<C>, SizeType<C>, R>(std::begin(c), std::end(c), size(c));
+	//precondition: ValueType<C> is convertible to R
+	return mean<IteratorType<decltype(c)>, SizeType<C>, R>(std::begin(c), std::end(c), size(c));
 }
 
 // ------------------------------------------------------------------------
@@ -69,7 +69,8 @@ template <Iterator I, Integral N, Real R = double>
 inline
 R median(I f, I l, N n) {
 	//precondition: [f, l) is a valid range &&
-	//				std::distance(f, l) == n 
+	//				std::distance(f, l) == n
+	//              ValueType<I> is convertible to R
 
 	if (n == N(0)) return R(0);
 
@@ -87,8 +88,9 @@ R median(I f, I l, N n) {
 //Warning: Sorts the contain of the Container
 template <Container C, Real R = double>
 inline
-auto median_c(C& c) {
-	return median<IteratorType<C>, SizeType<C>, R>(std::begin(c), std::end(c), size(c));
+R median_c(C& c) {
+	//precondition: ValueType<C> is convertible to R
+	return median<IteratorType<decltype(c)>, SizeType<C>, R>(std::begin(c), std::end(c), size(c));
 }
 
 
