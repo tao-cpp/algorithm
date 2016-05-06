@@ -24,7 +24,7 @@ namespace tao { namespace algorithm {
 //          Exact:     ???
 //      Space:
 //          O(???)
-template <Iterator I, typename T, BinaryOperation Op>
+template <Iterator I, typename T, BinaryOperation Op = std::plus<>>
 // requires T == Domain(Op)
 inline
 T accumulate(I f, I l, T init, Op op) {   
@@ -42,7 +42,7 @@ T accumulate(I f, I l, T init, Op op) {
 //          Exact:     ???
 //      Space:
 //          O(???)
-template <Iterator I, typename T, BinaryOperation Op = std::plus<>>
+template <Iterator I, typename T, BinaryOperation Op>
 // requires T == Domain(Op)
 inline
 T accumulate_n(I f, DistanceType<I> n, T init, Op op) {   
@@ -54,6 +54,20 @@ T accumulate_n(I f, DistanceType<I> n, T init, Op op) {
     }
     return init;
 }
+
+//Complexity: 
+//      Runtime:
+//          Amortized: O(n)
+//          Exact:     ???
+//      Space:
+//          O(???)
+template <Iterator I, typename T, BinaryOperation Op = std::plus<>>
+// requires T == Domain(Op)
+inline
+T accumulate_n(I f, DistanceType<I> n, T init, Op op) {   
+    return accumulate_n(f, n, init, std::plus<>{});
+}
+
 
 //Complexity: 
 //      Runtime:
