@@ -10,6 +10,9 @@
 #ifndef TAO_ALGORITHM_CONCEPTS_HPP
 #define TAO_ALGORITHM_CONCEPTS_HPP
 
+#define Number typename
+
+
 //TODO: debe llamarse Integral (IntegralDomain) o Integer ???
 #define Integral typename
 

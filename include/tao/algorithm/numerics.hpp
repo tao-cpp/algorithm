@@ -16,13 +16,40 @@
 
 namespace tao { namespace algorithm {
 
+template <Number T>
+constexpr T EpsilonForEquals = T(0.00001);
+
+
 template <Integral I>
-inline
+inline constexpr 
 bool even(I const& a) { return (a bitand I(1)) == I(0); }
 
 template <Integral I>
-inline
+inline constexpr 
 bool odd(I const& a) { return (a bitand I(1)) != I(0); }
+
+
+
+template <FloatingPoint F>
+inline constexpr 
+F abs_static(F x) {
+    // <cmath> abs function doen't support compilation-time values
+    return x < 0 ? -x : x;  
+}
+
+template <FloatingPoint F1, FloatingPoint F2, FloatingPoint F3>
+inline constexpr 
+bool equal_epsilon(F1 a, F2 b, F3 epsilon) {
+    return abs_static(a - b) < epsilon;
+}
+
+template <FloatingPoint F1, FloatingPoint F2>
+inline constexpr 
+bool equal_epsilon(F1 a, F2 b) {
+    //TODO: Epsilon<X> X must be the "bigger" type between F1 and F2
+    return equal_epsilon(a, b, Epsilon<F1>); 
+}
+
 
 }} /*tao::algorithm*/
 
