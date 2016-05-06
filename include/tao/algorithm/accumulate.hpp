@@ -108,19 +108,22 @@ T accumulate_n(I f, DistanceType<I> n, T init, Op op, F fun) {
     return init;
 }
 
-//Complexity: 
-//      Runtime:
-//          Amortized: O(n)
-//          Exact:     ???
-//      Space:
-//          O(???)
-template <Iterator I, typename T, UnaryFunction F>
-// requires T == Domain(F)
-//          Codomain(F) == Domain(Op))
-inline
-T accumulate_n(I f, DistanceType<I> n, T init, F fun) {   
-    return accumulate_n(f, n, init, fun, std::plus<>{});
-}
+// //Complexity: 
+// //      Runtime:
+// //          Amortized: O(n)
+// //          Exact:     ???
+// //      Space:
+// //          O(???)
+// template <Iterator I, typename T, UnaryFunction F>
+// // requires T == Domain(F)
+// //          Codomain(F) == Domain(Op))
+// inline
+// T accumulate_n(I f, DistanceType<I> n, T init, F fun) {   
+//     return accumulate_n(f, n, init, fun, std::plus<>{});
+// }
+
+
+
 
 }} /*tao::algorithm*/
 

@@ -57,12 +57,15 @@ TEST_CASE("median", "median") {
 TEST_CASE("sample variance", "sample variance") {
     vector<int> c1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
     REQUIRE(equal_epsilon(sample_variance_n(begin(c1), size(c1)), 9.1667));
+    // http://www.wolframalpha.com/input/?i=variance+%7B1,+2,+3,+4,+5,+6,+7,+8,+9,+10%7D
 
     vector<int> c2 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     REQUIRE(equal_epsilon(sample_variance_n(begin(c2), size(c2)), 7.5000));
+    // http://www.wolframalpha.com/input/?i=variance+%7B1,+2,+3,+4,+5,+6,+7,+8,+9%7D
 
     vector<double> c4 = { 1, 2, 3, 4, 5.5, 6, 7, 8, 9, 10 };
     REQUIRE(equal_epsilon(sample_variance_n(begin(c4), size(c4)), 9.13611));
+    // http://www.wolframalpha.com/input/?i=variance+%7B1,+2,+3,+4,+5.5,+6,+7,+8,+9,+10%7D
 
 }
 
@@ -78,6 +81,7 @@ TEST_CASE("population variance", "population variance") {
 
     vector<double> c4 = { 1, 2, 3, 4, 5.5, 6, 7, 8, 9, 10 };
     REQUIRE(equal_epsilon(population_variance_n(begin(c4), size(c4)), 8.2225));
+    // http://www.wolframalpha.com/input/?i=variance+%7B1,+2,+3,+4,+5.5,+6,+7,+8,+9,+10%7D&rawformassumption=%7B%22C%22,+%22variance%22%7D+-%3E+%7B%22PopulationVariance%22%7D&rawformassumption=%7B%22MC%22,%22%22%7D-%3E%7B%22Formula%22%7D
 }
 
 
