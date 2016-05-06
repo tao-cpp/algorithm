@@ -76,7 +76,7 @@ R median(I f, I l, N n) {
 	std::sort(f, l);
 
 	if (even(n)) {
-		f = std::next(f, n / 2 - 1)
+		f = std::next(f, n / 2 - 1);
 		return (*f + *std::next(f)) / R(2);
 	} else {
 		return R(*std::next(f, n / 2));
