@@ -93,7 +93,7 @@ TEST_CASE("population variance", "population variance") {
 TEST_CASE("sample standard deviation", "sample standard deviation") {
     vector<int> c1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
     auto ssd1 = sample_std_dev_n(begin(c1), size(c1));
-    REQUIRE(ssd1 == Approx(3.0277));
+    REQUIRE(ssd1 == Approx(3.02765035409749));
     // http://www.wolframalpha.com/input/?i=stddev+%7B1,+2,+3,+4,+5,+6,+7,+8,+9,+10%7D
 
     vector<int> c2 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
