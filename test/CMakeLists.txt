@@ -6,8 +6,6 @@
 
 enable_testing()
 
-
-
 add_custom_target(tests ALL
     COMMAND ${CMAKE_CTEST_COMMAND} -C Debug --output-on-failure -R "test.+"
     COMMENT "Build and run all the unit tests.")

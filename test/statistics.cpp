@@ -7,9 +7,11 @@
 
 
 // #include <iterator>
+#include <array>
 #include <forward_list>
 #include <list>
 #include <vector>
+
 
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
@@ -123,4 +125,41 @@ TEST_CASE("population standard deviation", "population standard deviation") {
     REQUIRE(psd4 == Approx(2.86749));
     // http://www.wolframalpha.com/input/?i=stddev+%7B1,+2,+3,+4,+5.5,+6,+7,+8,+9,+10%7D&rawformassumption=%7B%22C%22,+%22stddev%22%7D+-%3E+%7B%22PopulationStandardDeviation%22%7D&rawformassumption=%7B%22MC%22,%22%22%7D-%3E%7B%22Formula%22%7D
 }
+
+TEST_CASE("get_statistics_mutate", "get_statistics_mutate") {
+    array<int, 10> c1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    auto stats = get_statistics_mutate(c1);
+    auto mean = get<0>(stats);
+    auto ssd = get<1>(stats);
+    auto median = get<2>(stats);
+
+    REQUIRE(mean   == Approx(5.5));
+    REQUIRE(ssd    == Approx(3.02765035409749));
+    REQUIRE(median == Approx(5.5));
+
+    //---------------------
+
+    array<int, 9> c2 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    stats = get_statistics_mutate(c2);
+    mean = get<0>(stats);
+    ssd = get<1>(stats);
+    median = get<2>(stats);
+
+    REQUIRE(mean   == Approx(5));
+    REQUIRE(ssd    == Approx(2.7386));
+    REQUIRE(median == Approx(5));
+
+    //---------------------
+
+    array<double, 10> c4 = { 1, 2, 3, 4, 5.5, 6, 7, 8, 9, 10 };
+    stats = get_statistics_mutate(c4);
+    mean = get<0>(stats);
+    ssd = get<1>(stats);
+    median = get<2>(stats);
+
+    REQUIRE(mean   == Approx(5.55));
+    REQUIRE(ssd    == Approx(3.0226));
+    REQUIRE(median == Approx(5.75));
+}
+
 
