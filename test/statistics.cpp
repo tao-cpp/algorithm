@@ -65,8 +65,8 @@ TEST_CASE("sample variance", "sample variance") {
     // REQUIRE(sample_variance_n(c3) == 5);
 
     vector<double> c4 = { 1, 2, 3, 4, 5.5, 6, 7, 8, 9, 10 };
-    REQUIRE(sample_variance_n(c4) == 9.13611);
-    REQUIRE(equal_epsilon(sample_variance_n(c4), 9.13611));
+    REQUIRE(sample_variance_n(begin(c4), size(c4)) == 9.13611);
+    REQUIRE(equal_epsilon(sample_variance_n(begin(c4), size(c4)), 9.13611));
 
 }
 
@@ -81,8 +81,8 @@ TEST_CASE("population variance", "population variance") {
     // REQUIRE(sample_variance_n(c3) == 5);
 
     vector<double> c4 = { 1, 2, 3, 4, 5.5, 6, 7, 8, 9, 10 };
-    REQUIRE(sample_variance_n(c4) == 8.2225);
-    REQUIRE(equal_epsilon(sample_variance_n(c4), 8.2225));
+    REQUIRE(population_variance_n(begin(c4), size(c4)) == 8.2225);
+    REQUIRE(equal_epsilon(population_variance_n(begin(c4), size(c4)), 8.2225));
 
 }
 
