@@ -10,7 +10,9 @@
 #ifndef TAO_ALGORITHM_CONCEPTS_HPP
 #define TAO_ALGORITHM_CONCEPTS_HPP
 
+//TODO: debe llamarse Integral (IntegralDomain) o Integer ???
 #define Integral typename
+
 #define Real typename               //Includes FloatingPoint and FixedPoint decimals
 #define FloatingPoint typename
 #define FixedPoint typename

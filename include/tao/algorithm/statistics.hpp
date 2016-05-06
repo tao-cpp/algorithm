@@ -12,6 +12,7 @@
 #include <tao/algorithm/concepts.hpp>
 #include <tao/algorithm/for_each.hpp>
 #include <tao/algorithm/iterator.hpp>
+#include <tao/algorithm/numerics.hpp>
 #include <tao/algorithm/type_attributes.hpp>
 
 namespace tao { namespace algorithm {
@@ -22,33 +23,38 @@ namespace tao { namespace algorithm {
 
 template <Iterator I, Integral N, Real R = double>
 inline
-auto mean_n(I f, N n) {
+R mean_n(I f, N n) {
 	//precondition: [f, n) is a valid range. TODO: mutable or read-only range?
-	//              ValueType<I> is convertible to R      
-	return accumulate_n(f, n, R(0)) / n;
+	//              ValueType<I> is convertible to R
+
+	using T = ValueType<I>;    
+	return accumulate_n(f, n, T(0)) / R(n);
 }
 
 template <Iterator I, Integral N, Real R = double>
 inline
-auto mean(I f, I l, N n) {
+R mean(I f, I l, N n) {
 	//precondition: [f, l) is a valid range &&
 	//				std::distance(f, l) == n 
 	//              ValueType<I> is convertible to R      
 	//              TODO: mutable or read-only range?
-	return std::accumulate(f, l, R(0)) / n;
+
+	using T = ValueType<I>;
+	return std::accumulate(f, l, T(0)) / R(n);
 }
 
 template <Iterator I, Real R = double>
 inline
-auto mean(I f, I l) {
+R mean(I f, I l) {
 	//precondition: [f, l) is a valid range. TODO: mutable or read-only range?
-	//              ValueType<I> is convertible to R      
-	return std::accumulate(f, l, R(0)) / std::distance(f, l);
+	//              ValueType<I> is convertible to R
+	using T = ValueType<I>;
+	return std::accumulate(f, l, T(0)) / R(std::distance(f, l));
 }
 
 template <Container C, Real R = double>
 inline
-auto mean_c(C const& c) {
+R mean_c(C const& c) {
 	//precondition: ValueType<C> is convertible to R      
 	return mean<IteratorType<C>, SizeType<C>, R>(std::begin(c), std::end(c), size(c));
 }
@@ -58,20 +64,28 @@ auto mean_c(C const& c) {
 // ------------------------------------------------------------------------
 
 //Warning: Sorts the range [f, l)
-template <Iterator I, Integral N>
+template <Iterator I, Integral N, Real R = double>
 // requires Mutable<I>
 inline
-auto median(I f, I l, N n) {
+R median(I f, I l, N n) {
 	//precondition: [f, l) is a valid range &&
 	//				std::distance(f, l) == n 
 
+	if (n == N(0)) return R(0);
+
 	std::sort(f, l);
-	return *std::next(f, n / 2);
+
+	if (even(n)) {
+		f = std::next(f, n / 2 - 1)
+		return (*f + *std::next(f)) / R(2);
+	} else {
+		return R(*std::next(f, n / 2));
+	}
 }
 
 
 //Warning: Sorts the contain of the Container
-template <Container C>
+template <Container C, Real R = double>
 inline
 auto median_c(C& c) {
 	return median(std::begin(c), std::end(c), size(c));
