@@ -24,7 +24,7 @@ namespace tao { namespace algorithm {
 //          Exact:     ???
 //      Space:
 //          O(???)
-template <Iterator I, typename T, BinaryOperation Op = std::plus<>>
+template <Iterator I, typename T, BinaryOperation Op>
 // requires T == Domain(Op)
 inline
 T accumulate(I f, I l, T init, Op op) {   
@@ -75,7 +75,7 @@ T accumulate_n(I f, DistanceType<I> n, T init) {
 //          Exact:     ???
 //      Space:
 //          O(???)
-template <Iterator I, typename T, UnaryFunction F, BinaryOperation Op = std::plus<>>
+template <Iterator I, typename T, BinaryOperation Op, UnaryFunction F>
 // requires T == Domain(F)
 //          Codomain(F) == Domain(Op))
 inline

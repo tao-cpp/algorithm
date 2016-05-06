@@ -5,14 +5,15 @@
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#include <tao/algorithm.hpp>
-#include <iterator>
 
+#include <iterator>
 #include <forward_list>
 #include <list>
 
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
+
+#include <tao/algorithm.hpp>
 
 using namespace std;
 using namespace tao::algorithm;
@@ -77,3 +78,5 @@ TEST_CASE("shift_right_bidirectional", "shift_right on BidirectionalIterator's")
     // REQUIRE(*r == 1);
     // CHECK(*r == 1);
 }
+
+// #include <tao/algorithm/concepts_undef.hpp>

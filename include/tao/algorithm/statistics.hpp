@@ -188,6 +188,21 @@ auto sample_std_dev_n(I f, N n) {
 	return std::sqrt(sample_variance_n<I, N, R>(f, n));
 }
 
+template <Iterator I, Integral N, Real R>
+inline
+auto population_std_dev_n(I f, N n, R mean) {
+	//precondition: [f, n) is a valid range.
+	return std::sqrt(population_variance_n(f, n, mean));
+}
+
+template <ForwardIterator I, Integral N, Real R = double>
+inline
+auto population_std_dev_n(I f, N n) {
+	//precondition: [f, n) is a valid range.
+	return std::sqrt(population_variance_n<I, N, R>(f, n));
+}
+
+
 template <Container C>
 // std::tuple<double, double, double> get_statistics(C& samples) {
 auto get_statistics_mutate(C& samples) {
