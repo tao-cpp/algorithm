@@ -88,7 +88,7 @@ R median(I f, I l, N n) {
 template <Container C, Real R = double>
 inline
 auto median_c(C& c) {
-	return median(std::begin(c), std::end(c), size(c));
+	return median<IteratorType<C>, SizeType<C>, R>(std::begin(c), std::end(c), size(c));
 }
 
 
