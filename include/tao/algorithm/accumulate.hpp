@@ -42,7 +42,7 @@ T accumulate(I f, I l, T init, Op op) {
 //          Exact:     ???
 //      Space:
 //          O(???)
-template <Iterator I, typename T, BinaryOperation Op>
+template <Iterator I, typename T, BinaryOperation Op = std::plus<>>
 // requires T == Domain(Op)
 inline
 T accumulate_n(I f, DistanceType<I> n, T init, Op op) {   
@@ -61,7 +61,7 @@ T accumulate_n(I f, DistanceType<I> n, T init, Op op) {
 //          Exact:     ???
 //      Space:
 //          O(???)
-template <Iterator I, typename T, BinaryOperation Op, UnaryFunction F>
+template <Iterator I, typename T, UnaryFunction F, BinaryOperation Op = std::plus<>>
 // requires T == Domain(F)
 //          Codomain(F) == Domain(Op))
 inline
@@ -80,7 +80,7 @@ T accumulate(I f, I l, T init, Op op, F fun) {
 //          Exact:     ???
 //      Space:
 //          O(???)
-template <Iterator I, typename T, BinaryOperation Op, UnaryFunction F>
+template <Iterator I, typename T, UnaryFunction F, BinaryOperation Op = std::plus<>>
 // requires T == Domain(F)
 //          Codomain(F) == Domain(Op))
 inline

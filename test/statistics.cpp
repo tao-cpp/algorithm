@@ -55,14 +55,13 @@ TEST_CASE("median", "median") {
 
 
 TEST_CASE("sample variance", "sample variance") {
-    // vector<int> c1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-    // REQUIRE(sample_variance_n(c1) == 5.5);
+    vector<int> c1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    REQUIRE(sample_variance_n(begin(c1), size(c1)) == 9.1667);
+    REQUIRE(equal_epsilon(sample_variance_n(begin(c1), size(c1)), 9.1667));
 
-    // vector<int> c2 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    // REQUIRE(sample_variance_n(c2) == 5);
-
-    // vector<int> c3 = { 2, 1, 5, 4, 3, 7, 9, 8, 6 };
-    // REQUIRE(sample_variance_n(c3) == 5);
+    vector<int> c2 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    REQUIRE(sample_variance_n(begin(c2), size(c2)) == 7.5000);
+    REQUIRE(equal_epsilon(sample_variance_n(begin(c2), size(c2)), 7.5000));
 
     vector<double> c4 = { 1, 2, 3, 4, 5.5, 6, 7, 8, 9, 10 };
     REQUIRE(sample_variance_n(begin(c4), size(c4)) == 9.13611);
