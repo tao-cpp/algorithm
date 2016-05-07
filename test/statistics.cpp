@@ -127,7 +127,7 @@ TEST_CASE("population standard deviation", "population standard deviation") {
 }
 
 TEST_CASE("get_statistics_mutate", "get_statistics_mutate") {
-    array<int, 10> c1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+    vector<int> c1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
     auto stats = get_statistics_mutate(c1);
     auto mean = get<0>(stats);
     auto ssd = get<1>(stats);
@@ -139,7 +139,7 @@ TEST_CASE("get_statistics_mutate", "get_statistics_mutate") {
 
     //---------------------
 
-    array<int, 9> c2 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    vector<int> c2 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     stats = get_statistics_mutate(c2);
     mean = get<0>(stats);
     ssd = get<1>(stats);
@@ -151,7 +151,7 @@ TEST_CASE("get_statistics_mutate", "get_statistics_mutate") {
 
     //---------------------
 
-    array<double, 10> c4 = { 1, 2, 3, 4, 5.5, 6, 7, 8, 9, 10 };
+    vector<double> c4 = { 1, 2, 3, 4, 5.5, 6, 7, 8, 9, 10 };
     stats = get_statistics_mutate(c4);
     mean = get<0>(stats);
     ssd = get<1>(stats);
