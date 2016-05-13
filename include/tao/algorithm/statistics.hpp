@@ -1,10 +1,11 @@
 #ifndef TAOCPP_BENCHMARK_STATISTICS_HPP_
 #define TAOCPP_BENCHMARK_STATISTICS_HPP_
 
-#include <algorithm>	//for std::sort
+#include <algorithm>
 #include <array>
 #include <chrono>
-#include <numeric>		//for std::accumulate
+#include <cmath>
+#include <numeric>
 #include <vector>
 #include <tuple>
 
