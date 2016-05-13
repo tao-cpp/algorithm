@@ -10,6 +10,7 @@
 #define TAO_ALGORITHM_ACCUMULATE_HPP
 
 #include <algorithm>
+#include <functional>
 #include <iterator>
 #include <utility>
 
