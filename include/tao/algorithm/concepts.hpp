@@ -44,8 +44,14 @@
 
 #define Procedure typename
 #define BinaryOperation typename
+
 #define UnaryFunction typename
+// #define NullaryFunction typename
 
             
+
+#define RandomEngine typename
+#define Sequence typename
+
 
 #endif /*TAO_ALGORITHM_CONCEPTS_HPP*/
