@@ -15,9 +15,9 @@
 
 namespace tao { namespace algorithm {
 
-template<Integer I>
+template <Integer I>
 bool even(I const& a) {
-    return (a bitand I(1)) == I(0);
+    return (a & I(1)) == I(0);
 }
 
 }} /*tao::algorithm*/

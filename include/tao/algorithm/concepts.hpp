@@ -12,9 +12,9 @@
 
 #define Number typename
 
-
 //TODO: debe llamarse Integral (IntegralDomain) o Integer ???
 #define Integral typename
+#define Integer typename
 
 #define Real typename               //Includes FloatingPoint and FixedPoint decimals
 #define FloatingPoint typename
@@ -24,7 +24,6 @@
 
 
 #define Iterator typename
-
 
     /*
         ForwardIterator(T) ^=
@@ -53,5 +52,7 @@
 #define RandomEngine typename
 #define Sequence typename
 
+
+#define requires(...) 
 
 #endif /*TAO_ALGORITHM_CONCEPTS_HPP*/
