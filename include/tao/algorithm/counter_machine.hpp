@@ -17,23 +17,6 @@
 
 namespace tao { namespace algorithm {
 
-// // Concepts
-// #define Integer typename
-// #define Container typename
-// #define Iterator typename
-// #define ForwardIterator typename
-// #define BinaryOperation typename
-// #define Semiregular typename
-// #define UnaryFunction typename
-
-// #define requires(...) 
-
-//TODO: 
-	// Mutable<I>
-	// Domain<Op>
-
-
-
 template <ForwardIterator I, BinaryOperation Op>
 // 	TODO: requires Op is associative
 	requires(Mutable<I> && ValueType<I> == Domain<Op>) 
@@ -56,7 +39,7 @@ template <Semiregular T, BinaryOperation Op, std::size_t Size = 64>
 	requires(Domain<Op> == T) //TODO...
 struct counter_machine {
 	counter_machine(Op op, T const& e)
-		: op{op}, e{e}, l{f}
+		: op(op), e(e), l(f)
 	{}
 
 	counter_machine(counter_machine const&) = delete;
