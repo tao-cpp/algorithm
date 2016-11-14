@@ -30,7 +30,7 @@ template <ForwardIterator I1, ForwardIterator I2>
 I1 remove_range_first(I1 f, I1 l, I2 fs, I2 ls) {
     // precondition: readable_weak_range(f, l) && readable_weak_range(fs, ls) TODO???
     I1 fn;
-    std::tie(f, fn) = tao::search(f, l, fs, ls);
+    std::tie(f, fn) = tao::algorithm::search(f, l, fs, ls);
     if (f == l) return f;
     return std::rotate(f, fn, l);
 }
@@ -46,11 +46,11 @@ template <ForwardIterator I1, ForwardIterator I2>
 I1 remove_range(I1 f, I1 l, I2 fs, I2 ls) {
     // precondition: readable_weak_range(f, l) && readable_weak_range(fs, ls) TODO???
     I1 fn;
-    std::tie(f, fn) = tao::search(f, l, fs, ls);
+    std::tie(f, fn) = tao::algorithm::search(f, l, fs, ls);
     
     while (f != l) {
         l = std::rotate(f, fn, l);
-        std::tie(f, fn) = tao::search(f, l, fs, ls);
+        std::tie(f, fn) = tao::algorithm::search(f, l, fs, ls);
     }
     return l;
 }
