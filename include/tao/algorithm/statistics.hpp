@@ -58,7 +58,7 @@ template <Container C, Real R = double>
 inline
 R mean_c(C const& c) {
 	//precondition: ValueType<C> is convertible to R
-	return mean<IteratorType<decltype(c)>, SizeType<C>, R>(std::begin(c), std::end(c), size(c));
+	return mean<IteratorType<decltype(c)>, SizeType<C>, R>(std::begin(c), std::end(c), tao::algorithm::size(c));
 }
 
 // ------------------------------------------------------------------------
@@ -94,7 +94,7 @@ template <Container C, Real R = double>
 inline
 R median_c(C& c) {
 	//precondition: ValueType<C> is convertible to R
-	return median<IteratorType<decltype(c)>, SizeType<C>, R>(std::begin(c), std::end(c), size(c));
+	return median<IteratorType<decltype(c)>, SizeType<C>, R>(std::begin(c), std::end(c), tao::algorithm::size(c));
 }
 
 
@@ -219,7 +219,7 @@ auto get_statistics_mutate(C& samples) {
 	auto mean = mean_c(samples);
 
 	// auto ssd = sample_std_dev_n(begin(samples), samples.size());
-	auto ssd = sample_std_dev_n(begin(samples), size(samples), mean);
+	auto ssd = sample_std_dev_n(std::begin(samples), tao::algorithm::size(samples), mean);
 
 	// sort(begin(samples), end(samples));
 	// double median = samples[samples.size() / 2];
