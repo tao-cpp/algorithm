@@ -14,6 +14,7 @@
 #include <utility>
 
 #include <tao/algorithm/concepts.hpp>
+#include <tao/algorithm/search.hpp>
 #include <tao/algorithm/type_attributes.hpp>
 
 namespace tao { namespace algorithm {
