@@ -199,15 +199,19 @@ void push_back_or_front(std::forward_list<T>& c, T const& x) {
 template <typename T>
 inline
 auto size_or_distance(std::vector<T> const& c) {
-	using tao::algorithm::size;
-	return size(c);
+	// ambiguous call in MSVC 14 that implements std::size
+	// using tao::algorithm::size;
+	// return size(c);
+	return tao::algorithm::size(c);
 }
 
 template <typename T>
 inline
 auto size_or_distance(std::list<T> const& c) {
-	using tao::algorithm::size;
-	return size(c);
+	// ambiguous call in MSVC 14 that implements std::size
+	// using tao::algorithm::size;
+	// return size(c);
+	return tao::algorithm::size(c);
 }
 
 template <typename T>
