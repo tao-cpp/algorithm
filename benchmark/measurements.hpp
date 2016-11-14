@@ -56,7 +56,7 @@ std::string iterator_category_str() {
 
 template <Container C>
 inline
-std::string iterator_category_str(C const& c) {
+std::string iterator_category_str(C const&) {
 	return iterator_category_str<IteratorType<C>>();
 }
 
@@ -164,13 +164,13 @@ void reserve(std::vector<T>& c, SizeType<std::vector<T>> cap) {
 
 template <typename T>
 inline
-void reserve(std::list<T> const& c, SizeType<std::list<T>> cap) {
+void reserve(std::list<T> const&, SizeType<std::list<T>>) {
 	//do nothing
 }
 
 template <typename T>
 inline
-void reserve(std::forward_list<T> const& c, SizeType<std::forward_list<T>> cap) {
+void reserve(std::forward_list<T> const&, SizeType<std::forward_list<T>>) {
 	//do nothing
 }
 
