@@ -16,9 +16,13 @@
 namespace tao { namespace algorithm {
 
 template <Integer I>
-bool even(I const& a) {
-    return (a & I(1)) == I(0);
-}
+inline constexpr 
+bool even(I const& a) { return (a & I(1)) == I(0); }
+
+template <Integer I>
+inline constexpr 
+bool odd(I const& a) { return (a & I(1)) != I(0); }
+
 
 }} /*tao::algorithm*/
 

@@ -20,16 +20,6 @@ template <Number T>
 constexpr T EpsilonForEquals = T(0.00001);
 
 
-template <Integral I>
-inline constexpr 
-bool even(I const& a) { return (a bitand I(1)) == I(0); }
-
-template <Integral I>
-inline constexpr 
-bool odd(I const& a) { return (a bitand I(1)) != I(0); }
-
-
-
 template <FloatingPoint F>
 inline constexpr 
 F abs_static(F x) {
