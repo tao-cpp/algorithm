@@ -6,7 +6,7 @@ channel = os.getenv("CONAN_CHANNEL", "stable")
 username = os.getenv("CONAN_USERNAME", "fpelliccioni")
 
 
-class BitprimcoreTestConan(ConanFile):
+class TaoCppAlgorithmTest(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     requires = "algorithm/0.1@%s/%s" % (username, channel)
     generators = "cmake"

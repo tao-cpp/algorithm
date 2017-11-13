@@ -14,7 +14,7 @@ class TaoCppAlgorithm(ConanFile):
     def build(self):
          #empty too, nothing to build in header only
         pass
-        
+
     # exports_sources = "src/*", "CMakeLists.txt", "cmake/*", "bitprim-node-cintConfig.cmake.in", "include/*", "test/*", "console/*"
     # package_files = "build/lbitprim-node-cint.so"
     # build_policy = "missing"
@@ -29,3 +29,17 @@ class TaoCppAlgorithm(ConanFile):
     #     self.copy("*.so", dst="./deps/lib", src="lib")
     #     self.copy("*.dll", dst="./deps/lib", src="lib")
 
+
+    def package(self):
+        self.copy("*.h", dst="include", src="include")
+        self.copy("*.hpp", dst="include", src="include")
+        self.copy("*.ipp", dst="include", src="include")
+        # self.copy("*.lib", dst="lib", keep_path=False)
+        # self.copy("*.dll", dst="bin", keep_path=False)
+        # self.copy("*.dylib*", dst="lib", keep_path=False)
+        # self.copy("*.so", dst="lib", keep_path=False)
+        # self.copy("*.a", dst="lib", keep_path=False)
+
+    def package_info(self):
+        self.cpp_info.includedirs = ['include']
+        self.cpp_info.libs = ["algorithm"]
