@@ -48,9 +48,9 @@ matrix:
       # - <<: *linux
       #   env: CONAN_CLANG_VERSIONS=3.9 CONAN_DOCKER_IMAGE=lasote/conanclang39
 
-      - <<: *osx
-        osx_image: xcode8.3
-        env: CONAN_APPLE_CLANG_VERSIONS=8.1
+      # - <<: *osx
+      #   osx_image: xcode8.3
+      #   env: CONAN_APPLE_CLANG_VERSIONS=8.1
 
       # - <<: *osx
       #   osx_image: xcode8.2
