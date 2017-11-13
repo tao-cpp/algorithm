@@ -364,3 +364,5 @@ build/test/test.multiple.definitions
 build/test/test.shift_right
 build/test/test.statistics
 build/test/Testing/Temporary/LastTest.log
+
+conaninfo.txt

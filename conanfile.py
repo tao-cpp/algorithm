@@ -11,9 +11,12 @@ class TaoCppAlgorithm(ConanFile):
     settings = None
     generators = "cmake"
 
-    def build(self):
-         #empty too, nothing to build in header only
-        pass
+    exports_sources = "CMakeLists.txt", "include/*", "test/*"
+
+
+    # def build(self):
+    #      #empty too, nothing to build in header only
+    #     pass
 
     # exports_sources = "src/*", "CMakeLists.txt", "cmake/*", "bitprim-node-cintConfig.cmake.in", "include/*", "test/*", "console/*"
     # package_files = "build/lbitprim-node-cint.so"
@@ -40,6 +43,6 @@ class TaoCppAlgorithm(ConanFile):
         # self.copy("*.so", dst="lib", keep_path=False)
         # self.copy("*.a", dst="lib", keep_path=False)
 
-    def package_info(self):
-        self.cpp_info.includedirs = ['include']
-        self.cpp_info.libs = ["algorithm"]
+    # def package_info(self):
+    #     self.cpp_info.includedirs = ['include']
+    #     self.cpp_info.libs = ["algorithm"]
