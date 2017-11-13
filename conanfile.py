@@ -13,7 +13,8 @@ class TaoCppAlgorithm(ConanFile):
 
     def build(self):
          #empty too, nothing to build in header only
-
+        pass
+        
     # exports_sources = "src/*", "CMakeLists.txt", "cmake/*", "bitprim-node-cintConfig.cmake.in", "include/*", "test/*", "console/*"
     # package_files = "build/lbitprim-node-cint.so"
     # build_policy = "missing"
