@@ -165,6 +165,48 @@ auto&& select_1_3(T&& a, U&& b, V&& c) {
 
 
 
+
+template <Regular T, Regular U, Regular V, Regular W, StrictWeakOrdering R>
+    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && Domain<R, T>)
+inline constexpr
+auto&& select_1_4_ab_cd(T&& a, U&& b, V&& c, W&& d, R r) {
+    // precondition: a <= b && c <= d
+
+    // cdab ...  (c < a)
+    // cadb ...  (c < a)
+    // cabd ...  (c < a)
+
+    // abcd ... !(c < a)
+    // acbd ... !(c < a)
+    // acdb ... !(c < a)
+
+    using std::forward;
+    return r(c, a) ? // c < a
+              select_0_2(forward<T>(a), forward<W>(d), r)
+            : select_0_2(forward<U>(b), forward<V>(c), r);
+}
+
+template <Regular T, Regular U, Regular V, Regular W, StrictWeakOrdering R>
+    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && Domain<R, T>)
+inline constexpr
+auto&& select_1_4_ab(T&& a, U&& b, V&& c, W&& d, R r) {
+    using std::forward;
+    return r(d, c) ? // d < c
+              select_1_4_ab_cd(forward<T>(a), forward<U>(b), forward<W>(d), forward<V>(c), r)
+            : select_1_4_ab_cd(forward<T>(a), forward<U>(b), forward<V>(c), forward<W>(d), r);
+}
+
+template <Regular T, Regular U, Regular V, Regular W, StrictWeakOrdering R>
+    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && Domain<R, T>)
+inline constexpr
+auto&& select_1_4(T&& a, U&& b, V&& c, W&& d, R r) {
+    using std::forward;
+    return r(b, a) ? // b < a
+              select_1_4_ab(forward<U>(b), forward<T>(a), forward<V>(c), forward<W>(d), r)
+            : select_1_4_ab(forward<T>(a), forward<U>(b), forward<V>(c), forward<W>(d), r);
+}
+
+
 // Original EoP code
 
 // template <Regular T, StrictWeakOrdering R>
