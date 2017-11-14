@@ -370,3 +370,5 @@ conaninfo.txt
 .vscode/
 
 test/a.out
+
+build/
