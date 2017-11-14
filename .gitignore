@@ -366,3 +366,7 @@ build/test/test.statistics
 build/test/Testing/Temporary/LastTest.log
 
 conaninfo.txt
+
+.vscode/
+
+test/a.out
