@@ -23,6 +23,10 @@ template <Integer I>
 inline constexpr 
 bool odd(I const& a) { return (a & I(1)) != I(0); }
 
+template <Integer N>
+inline constexpr 
+N half(N n) { return n >> 1; }
+
 
 }} /*tao::algorithm*/
 

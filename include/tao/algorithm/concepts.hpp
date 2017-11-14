@@ -61,6 +61,14 @@
 #define Sequence typename
 
 
+#define NoncommutativeAdditiveMonoid typename
+#define MultiplicativeMonoid typename
+#define AdditiveGroup typename
+#define MultiplicativeGroup typename
+#define SemigroupOperation typename
+#define MonoidOperation typename
+#define GroupOperation typename
+
 #define requires(...) 
 
 #endif /*TAO_ALGORITHM_CONCEPTS_HPP*/
