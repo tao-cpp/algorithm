@@ -5,7 +5,6 @@
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-
 #ifndef TAO_ALGORITHM_PRIMES_HPP_
 #define TAO_ALGORITHM_PRIMES_HPP_
 
@@ -125,3 +124,25 @@ void sift(I first, N n) {
 }} /*tao::algorithm*/
 
 #endif /*TAO_ALGORITHM_PRIMES_HPP_*/
+
+#ifdef DOCTEST_LIBRARY_INCLUDED
+
+TEST_CASE("[primes] testing the Primality Test functionality") {
+    using namespace tao::algorithm;
+    CHECK( ! prime(1));
+    CHECK(composite(1));
+
+    CHECK(prime(2));
+    CHECK(prime(3));
+    CHECK( ! prime(4));
+    CHECK(prime(5));
+    CHECK( ! prime(6));
+    CHECK(prime(7));
+
+    CHECK( ! prime(10001));
+    CHECK(prime(10007));
+    CHECK( ! prime(1729));
+    CHECK( ! prime(172081));
+}
+
+#endif /*DOCTEST_LIBRARY_INCLUDED*/
