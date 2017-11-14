@@ -43,6 +43,11 @@ class TaoCppAlgorithm(ConanFile):
         # self.copy("*.so", dst="lib", keep_path=False)
         # self.copy("*.a", dst="lib", keep_path=False)
 
+
+    def deploy(self):
+        self.copy("*.hpp")
+        # self.copy_deps("*.dll") # copy from dependencies
+
     # def package_info(self):
     #     self.cpp_info.includedirs = ['include']
     #     self.cpp_info.libs = ["algorithm"]
