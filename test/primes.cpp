@@ -13,8 +13,17 @@ using namespace std;
 using namespace tao::algorithm;
 
 int main() {
-    std::cout << "10001 is prime: " << prime(10001);
-    std::cout << "10007 is prime: " << prime(10007);
-    std::cout << "1729 is prime: " << prime(1729);
-    
+
+    std::cout << "1 is prime: " << prime(1) << std::endl;
+    std::cout << "2 is prime: " << prime(2) << std::endl;
+    std::cout << "3 is prime: " << prime(3) << std::endl;
+    std::cout << "4 is prime: " << prime(4) << std::endl;
+    std::cout << "5 is prime: " << prime(5) << std::endl;
+    std::cout << "6 is prime: " << prime(6) << std::endl;
+    std::cout << "7 is prime: " << prime(7) << std::endl;
+
+    std::cout << "10001 is prime: " << prime(10001) << std::endl;
+    std::cout << "10007 is prime: " << prime(10007) << std::endl;
+    std::cout << "1729 is prime: " << prime(1729) << std::endl;
+    std::cout << "172081 is prime: " << prime(172081) << std::endl;
 }

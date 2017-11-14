@@ -39,10 +39,8 @@
             ^ regular_unary_function (successor)
     */
 #define ForwardIterator typename     // EoP 6.6. Forward Iterators
-            
-
 #define BidirectionalIterator typename
-
+#define RandomAccessIterator typename
 
 
 #define Container typename

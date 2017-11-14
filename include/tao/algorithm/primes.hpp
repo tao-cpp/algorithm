@@ -9,8 +9,7 @@
 #ifndef TAO_ALGORITHM_PRIMES_HPP_
 #define TAO_ALGORITHM_PRIMES_HPP_
 
-#include <algorithm>
-#include <iterator>
+#include <random>
 #include <utility>
 
 #include <tao/algorithm/concepts.hpp>
@@ -32,15 +31,15 @@ struct modulo_multiply {
 
 template <Integer I>
 bool miller_rabin_test(I n, I q, I k, I w) {
-
     // precondition: n > 1 && n - 1 == (2^k)*q && odd(q)
     
     modulo_multiply<I> mmult(n);
     I x = power_semigroup(w, q, mmult);
+
     if (x == I(1) || x == n - I(1)) return true;
+
     for (I i(1); i < k; ++i) {
-    
-        // invariant x == w^{2^{i-1}q}
+        // invariant x == w^((2^(i-1))*q)
         
         x = mmult(x, x);
         if (x == n - I(1)) return true;
@@ -49,22 +48,15 @@ bool miller_rabin_test(I n, I q, I k, I w) {
     return false;
 }
 
-#include <iostream>
-
 template <Integer I>
 std::pair<I, I> miller_rabin_q_k(I n) {
-    // precondition: 
+    // precondition: odd(n) && ??? TODO(fernando)
 
     // n - 1 = (2^k)*q
 
     I k(1);
     while (true) {
         I two_to_the_k = power_semigroup(2, k, std::multiplies<I>());
-        // I q = (n - 1) / power_semigroup(2, k);
-        // I r = (n - 1) % power_semigroup(2, k);
-
-        // std::cout << "two_to_the_k: " << two_to_the_k << std::endl;
-
         if ((n - 1) % two_to_the_k == 0) {
             I q = (n - 1) / two_to_the_k;
             if (odd(q)) return {q, k};
@@ -73,22 +65,61 @@ std::pair<I, I> miller_rabin_q_k(I n) {
     }
 }
 
-
 template <Integer I>
-bool prime(I n) {
-    // n - 1 = (2^k)*q
+bool prime(I n, I witnesses_n = I(100)) {
+    if (n <= I(1)) return false;
+    if (n == I(2)) return true;
+    if (even(n)) return false;
 
     auto q_k = miller_rabin_q_k(n);
-
     auto q = q_k.first;
     auto k = q_k.second;
 
+    witnesses_n = (std::min)(n - I(1), witnesses_n);
 
-    std::cout << "q: " << q << std::endl;
-    std::cout << "k: " << k << std::endl;
+    using dis_t = std::uniform_int_distribution<I>;
+	std::random_device rd;
+	std::mt19937 mt(rd());
+	dis_t dis(1, witnesses_n);
 
-    auto w = 1; //TODO(fernando): try N random numbers from 0? to n
-    return miller_rabin_test(n, q, k, w);
+    for (I i(0); i < witnesses_n; ++i) {
+        if ( ! miller_rabin_test(n, q, k, dis(mt)) ) return false;
+    }
+
+    return true;
+}
+
+template <Integer I>
+bool composite(I n, I witnesses_n = I(100)) {
+    return !prime(n, witnesses_n);
+}
+
+template <RandomAccessIterator I, Integer N>
+void mark_sieve(I first, I last, N factor) {
+    // precondition: first != last
+    *first = false;
+    while (last - first > factor) {
+        first = first + factor;
+        *first = false;
+    }
+}
+
+template <RandomAccessIterator I, Integer N>
+void sift(I first, N n) {
+    // precondition: [first, n) is a valid range
+    I last = first + n;
+    std::fill(first, last, true);
+    N i(0);
+    N index_square(3);
+    N factor(3);
+    while (index_square < n) {
+        // invariant: index_square = 2i^2 + 6i + 3, factor = 2i + 3
+        if (first[i]) mark_sieve(first + index_square, last, factor);
+        ++i;
+        index_square += factor;
+        factor += N(2);
+        index_square += factor;
+    }
 }
 
 }} /*tao::algorithm*/

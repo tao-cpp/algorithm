@@ -46,7 +46,6 @@ reciprocal<T> inverse_operation(std::multiplies<T>) {
 }
 
 
-
 template <Regular A, Integer N, SemigroupOperation Op>
     requires(Domain<Op, A>)
 A power_accumulate_semigroup(A r, A a, N n, Op op) {
