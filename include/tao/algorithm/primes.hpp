@@ -93,7 +93,10 @@ bool composite(I n, I witnesses_n = I(100)) {
     return !prime(n, witnesses_n);
 }
 
+// sift ----------------------
+
 template <RandomAccessIterator I, Integer N>
+    requires(ValueType<I, bool> && Mutable<I>)
 void mark_sieve(I first, I last, N factor) {
     // precondition: first != last
     *first = false;
@@ -104,6 +107,7 @@ void mark_sieve(I first, I last, N factor) {
 }
 
 template <RandomAccessIterator I, Integer N>
+    requires(ValueType<I, bool> && Mutable<I>)
 void sift(I first, N n) {
     // precondition: [first, n) is a valid range
     I last = first + n;
@@ -120,6 +124,14 @@ void sift(I first, N n) {
         index_square += factor;
     }
 }
+
+
+// template <Integer N>
+// struct sift_gen {
+
+
+// };
+
 
 }} /*tao::algorithm*/
 
