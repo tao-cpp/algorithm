@@ -10,6 +10,7 @@
 #define TAO_ALGORITHM_POWER_HPP_
 
 #include <algorithm>
+#include <functional>
 #include <iterator>
 #include <utility>
 
