@@ -10,3 +10,5 @@
 
 #include <tao/algorithm/primes.hpp>
 #include <tao/algorithm/selection.hpp>
+#include <tao/algorithm/selection_stability.hpp>
+#include <tao/algorithm/selection_i_5.hpp>

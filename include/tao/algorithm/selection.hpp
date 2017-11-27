@@ -163,7 +163,7 @@ inline constexpr
 auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
     
     r(b, a) ? select_1_3_ab(std::forward<U>(b), std::forward<T>(a), std::forward<V>(c), r) 
-                   : select_1_3_ab(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), r)
+            : select_1_3_ab(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), r)
 )
 
 template <Regular T, Regular U, Regular V>
@@ -197,7 +197,6 @@ auto select_1_3(T&& a, U&& b, V&& c) FN(
 //  select_1_4:       4 comparisons
 //  select_2_4_ab_cd: 2 comparisons
 //  select_2_4_cd:    3 comparisons
-//  select_2_4:       4 comparisons
 //  select_2_4:       4 comparisons
 //  select_3_4:       3 comparisons
 
@@ -394,10 +393,10 @@ auto select_2_4(T&& a, U&& b, V&& c, W&& d) FN(
 
 }} /*tao::algorithm*/
 
-#endif /*TAO_ALGORITHM_SELECTION_HPP_*/
-
 #undef FN
 #include <tao/algorithm/concepts_undef.hpp>
+
+#endif /*TAO_ALGORITHM_SELECTION_HPP_*/
 
 #ifdef DOCTEST_LIBRARY_INCLUDED
 
