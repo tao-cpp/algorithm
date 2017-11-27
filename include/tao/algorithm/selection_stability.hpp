@@ -24,6 +24,10 @@
 #define CMP(s, R) compare_strict_or_reflexive<(s), R>()
 // compare_strict_or_reflexive<(ia < ib), R>()(b, a, r)) ? b : a;
 
+#define _a std::forward<T>(a)
+#define _b std::forward<U>(b)
+#define _c std::forward<V>(c)
+#define _d std::forward<W>(d)
 
 namespace tao { namespace algorithm {
 
@@ -35,28 +39,28 @@ template <int ia, int ib, Regular T, Regular U, StrictWeakOrdering R>
     requires(SameType<T, U> && Domain<R, T>)
 inline constexpr
 auto select_0_2(T&& a, U&& b, R r) FN(
-    CMP((ia < ib), R)(b, a, r) ? std::forward<U>(b) : std::forward<T>(a)
+    CMP((ia < ib), R)(b, a, r) ? _b : _a
 )
 
 template <int ia, int ib, Regular T, Regular U>
     requires(SameType<T, U>)
 inline constexpr
 auto select_0_2(T&& a, U&& b) FN(
-    (select_0_2<ia,ib>(std::forward<T>(a), std::forward<U>(b), std::less<>()))
+    (select_0_2<ia,ib>(_a, _b, std::less<>()))
 )
 
 template <int ia, int ib, Regular T, Regular U, StrictWeakOrdering R>
     requires(SameType<T, U> && Domain<R, T>)
 inline constexpr
 auto select_1_2(T&& a, U&& b, R r) FN(
-    CMP((ia < ib), R)(b, a, r) ? std::forward<T>(a) : std::forward<U>(b)
+    CMP((ia < ib), R)(b, a, r) ? _a : _b
 )
 
 template <int ia, int ib, Regular T, Regular U>
     requires(SameType<T, U>)
 inline constexpr
 auto select_1_2(T&& a, U&& b) FN(
-    (select_1_2<ia,ib>(std::forward<T>(a), std::forward<U>(b), std::less<>()))
+    (select_1_2<ia,ib>(_a, _b, std::less<>()))
 )
 
 // ------------------------------------------------------------------------------
@@ -77,9 +81,9 @@ template <int ia, int ib, int ic, Regular T, Regular U, Regular V, StrictWeakOrd
     requires(SameType<T, U> && SameType<U, V> && Domain<R, T>)
 inline constexpr
 auto select_0_3(T&& a, U&& b, V&& c, R r) FN(
-    (select_0_2<ia,ic>(
-            select_0_2<ia,ib>(std::forward<T>(a), std::forward<U>(b), r), 
-            std::forward<V>(c), r))
+    CMP((ia < ib), R)(b, a, r) 
+        ? (select_0_2<ib,ic>(_b, _c, r))
+        : (select_0_2<ia,ic>(_a, _c, r))
 )
 
 // template <int ia, int ib, int ic, Regular T, Regular U, Regular V>
@@ -88,17 +92,18 @@ auto select_0_3(T&& a, U&& b, V&& c, R r) FN(
 // auto select_0_3(T&& a, U&& b, V&& c) FN(
     
 //     select_0_2(
-//             select_0_2(std::forward<T>(a), std::forward<U>(b)), 
-//             std::forward<V>(c))
+//             select_0_2(_a, _b), 
+//             _c)
 // )
 
 template <int ia, int ib, int ic, Regular T, Regular U, Regular V, StrictWeakOrdering R>
     requires(SameType<T, U> && SameType<U, V> && Domain<R, T>)
 inline constexpr
 auto select_2_3(T&& a, U&& b, V&& c, R r) FN(
-    (select_1_2<ia,ic>(
-            select_1_2<ia,ib>(std::forward<T>(a), std::forward<U>(b), r), 
-            std::forward<V>(c), r))
+    CMP((ia < ib), R)(b, a, r) 
+        ? (select_1_2<ia,ic>(_a, _c, r))
+        : (select_1_2<ib,ic>(_b, _c, r))
+            
 )
 
 // template <int ia, int ib, int ic, Regular T, Regular U, Regular V>
@@ -107,8 +112,8 @@ auto select_2_3(T&& a, U&& b, V&& c, R r) FN(
 // auto select_2_3(T&& a, U&& b, V&& c) FN(
     
 //     select_1_2(
-//             select_1_2(std::forward<T>(a), std::forward<U>(b)), 
-//             std::forward<V>(c))
+//             select_1_2(_a, _b), 
+//             _c)
 // )
 
 template <int ia, int ib, int ic, Regular T, Regular U, Regular V, StrictWeakOrdering R>
@@ -118,8 +123,8 @@ auto select_1_3_ab(T&& a, U&& b, V&& c, R r) FN(
     // precondition: a <= b
     
     ! CMP((ib < ic), R)(c, b, r) //!(c < b) -> c >= b
-        ? std::forward<U>(b)                                              // a, b, c are sorted
-        : (select_1_2<ia,ic>(std::forward<T>(a), std::forward<V>(c), r))  // b is not the median
+        ? _b                                              // a, b, c are sorted
+        : (select_1_2<ia,ic>(_a, _c, r))  // b is not the median
 )
 
 template <int ia, int ib, int ic, Regular T, Regular U, Regular V, StrictWeakOrdering R>
@@ -127,8 +132,8 @@ template <int ia, int ib, int ic, Regular T, Regular U, Regular V, StrictWeakOrd
 inline constexpr
 auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
     CMP((ia < ib), R)(b, a, r) 
-        ? (select_1_3_ab<ib,ia,ic>(std::forward<U>(b), std::forward<T>(a), std::forward<V>(c), r))
-        : (select_1_3_ab<ia,ib,ic>(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), r))
+        ? (select_1_3_ab<ib,ia,ic>(_b, _a, _c, r))
+        : (select_1_3_ab<ia,ib,ic>(_a, _b, _c, r))
 )
 
 // template <int ia, int ib, int ic, Regular T, Regular U, Regular V>
@@ -138,8 +143,8 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
 //     // precondition: a <= b
     
 //     !(c < b) ? //!(c < b) -> c >= b
-//                   std::forward<U>(b)                              // a, b, c are sorted
-//                 : select_1_2(std::forward<T>(a), std::forward<V>(c))  // b is not the median
+//                   _b                              // a, b, c are sorted
+//                 : select_1_2(_a, _c)  // b is not the median
 // )
 
 // template <int ia, int ib, int ic, Regular T, Regular U, Regular V>
@@ -148,8 +153,8 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
 // auto select_1_3(T&& a, U&& b, V&& c) FN(
     
 //     b < a ? 
-//               select_1_3_ab(std::forward<U>(b), std::forward<T>(a), std::forward<V>(c)) 
-//             : select_1_3_ab(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c))
+//               select_1_3_ab(_b, _a, _c) 
+//             : select_1_3_ab(_a, _b, _c)
 // )
 
 // // ------------------------------------------------------------------------------
@@ -173,8 +178,8 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
 // auto select_0_4(T&& a, U&& b, V&& c, W&& d, R r) FN(
     
 //     select_0_2(
-//             select_0_3(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), r), 
-//             std::forward<W>(d), r)
+//             select_0_3(_a, _b, _c, r), 
+//             _d, r)
 // )
 
 // template <int ia, int ib, int ic, int id,
@@ -184,8 +189,8 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
 // auto select_0_4(T&& a, U&& b, V&& c, W&& d) FN(
     
 //     select_0_2(
-//             select_0_3(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c)), 
-//             std::forward<W>(d))
+//             select_0_3(_a, _b, _c), 
+//             _d)
 // )
 
 // template <int ia, int ib, int ic, int id,
@@ -195,8 +200,8 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
 // auto select_3_4(T&& a, U&& b, V&& c, W&& d, R r) FN(
     
 //     select_1_2(
-//             select_2_3(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), r), 
-//             std::forward<W>(d), r)
+//             select_2_3(_a, _b, _c, r), 
+//             _d, r)
 // )
 
 // template <int ia, int ib, int ic, int id,
@@ -206,31 +211,30 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
 // auto select_3_4(T&& a, U&& b, V&& c, W&& d) FN(
     
 //     select_1_2(
-//             select_2_3(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c)), 
-//             std::forward<W>(d))
+//             select_2_3(_a, _b, _c), 
+//             _d)
 // )
 
 
 
-// template <int ia, int ib, int ic, int id,
-//           Regular T, Regular U, Regular V, Regular W, StrictWeakOrdering R>
-//     requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && Domain<R, T>)
-// inline constexpr
-// auto select_1_4_ab_cd(T&& a, U&& b, V&& c, W&& d, R r) FN(
-//     // precondition: a <= b && c <= d
+template <int ia, int ib, int ic, int id,
+          Regular T, Regular U, Regular V, Regular W, StrictWeakOrdering R>
+    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && Domain<R, T>)
+inline constexpr
+auto select_1_4_ab_cd(T&& a, U&& b, V&& c, W&& d, R r) FN(
+    // precondition: a <= b && c <= d
 
-//     // cdab ...  (c < a)
-//     // cadb ...  (c < a)
-//     // cabd ...  (c < a)
-//     // abcd ... !(c < a)
-//     // acbd ... !(c < a)
-//     // acdb ... !(c < a)
+    // cdab ...  (c < a)
+    // cadb ...  (c < a)
+    // cabd ...  (c < a)
+    // abcd ... !(c < a)
+    // acbd ... !(c < a)
+    // acdb ... !(c < a)
 
-    
-//     CMP((ia < ib), R)(c, a) ? // c < a
-//               select_0_2(std::forward<T>(a), std::forward<W>(d), r)
-//             : select_0_2(std::forward<U>(b), std::forward<V>(c), r)
-// )
+    CMP((ia < ic), R)(c, a, r) // c < a
+        ? (select_0_2<ia,id>(_a, _d, r))
+        : (select_0_2<ib,ic>(_b, _c, r))
+)
 
 // template <int ia, int ib, int ic, int id,
 //           Regular T, Regular U, Regular V, Regular W>
@@ -238,25 +242,21 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
 // inline constexpr
 // auto select_1_4_ab_cd(T&& a, U&& b, V&& c, W&& d) FN(
 //     // precondition: a <= b && c <= d
-
-    
 //     c < a ? 
-//               select_0_2(std::forward<T>(a), std::forward<W>(d))
-//             : select_0_2(std::forward<U>(b), std::forward<V>(c))
+//               select_0_2(_a, _d)
+//             : select_0_2(_b, _c)
 // )
 
-// template <int ia, int ib, int ic, int id,
-//           Regular T, Regular U, Regular V, Regular W, StrictWeakOrdering R>
-//     requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && Domain<R, T>)
-// inline constexpr
-// auto select_1_4_ab(T&& a, U&& b, V&& c, W&& d, R r) FN(
-//     // precondition: a <= b
-
-    
-//     CMP((ia < ib), R)(d, c) ? // d < c
-//               select_1_4_ab_cd(std::forward<T>(a), std::forward<U>(b), std::forward<W>(d), std::forward<V>(c), r)
-//             : select_1_4_ab_cd(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), std::forward<W>(d), r)
-// )
+template <int ia, int ib, int ic, int id,
+          Regular T, Regular U, Regular V, Regular W, StrictWeakOrdering R>
+    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && Domain<R, T>)
+inline constexpr
+auto select_1_4_ab(T&& a, U&& b, V&& c, W&& d, R r) FN(
+    // precondition: a <= b
+    CMP((ic < id), R)(d, c, r) // d < c
+            ? (select_1_4_ab_cd<ia,ib,id,ic>(_a, _b, _d, _c, r))
+            : (select_1_4_ab_cd<ia,ib,ic,id>(_a, _b, _c, _d, r))
+)
 
 // template <int ia, int ib, int ic, int id,
 //           Regular T, Regular U, Regular V, Regular W>
@@ -267,8 +267,8 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
 
     
 //     d < c ? 
-//               select_1_4_ab_cd(std::forward<T>(a), std::forward<U>(b), std::forward<W>(d), std::forward<V>(c))
-//             : select_1_4_ab_cd(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), std::forward<W>(d))
+//               select_1_4_ab_cd(_a, _b, _d, _c)
+//             : select_1_4_ab_cd(_a, _b, _c, _d)
 // )
 
 // template <int ia, int ib, int ic, int id,
@@ -278,8 +278,8 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
 // auto select_1_4(T&& a, U&& b, V&& c, W&& d, R r) FN(
     
 //     CMP((ia < ib), R)(b, a) ? // b < a
-//               select_1_4_ab(std::forward<U>(b), std::forward<T>(a), std::forward<V>(c), std::forward<W>(d), r)
-//             : select_1_4_ab(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), std::forward<W>(d), r)
+//               select_1_4_ab(_b, _a, _c, _d, r)
+//             : select_1_4_ab(_a, _b, _c, _d, r)
 // )
 
 // template <int ia, int ib, int ic, int id,
@@ -288,8 +288,8 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
 // inline constexpr
 // auto select_1_4(T&& a, U&& b, V&& c, W&& d) FN(
 //     b < a ? 
-//               select_1_4_ab(std::forward<U>(b), std::forward<T>(a), std::forward<V>(c), std::forward<W>(d))
-//             : select_1_4_ab(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), std::forward<W>(d))
+//               select_1_4_ab(_b, _a, _c, _d)
+//             : select_1_4_ab(_a, _b, _c, _d)
 // )
         
 // template <int ia, int ib, int ic, int id,
@@ -308,8 +308,8 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
 
     
 //     CMP((ia < ib), R)(d, b) ? // d < b
-//               select_1_2(std::forward<T>(a), std::forward<W>(d), r)
-//             : select_1_2(std::forward<U>(b), std::forward<V>(c), r)
+//               select_1_2(_a, _d, r)
+//             : select_1_2(_b, _c, r)
 // )
 
 // template <int ia, int ib, int ic, int id,
@@ -321,8 +321,8 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
 
     
 //     d < b ? 
-//               select_1_2(std::forward<T>(a), std::forward<W>(d))
-//             : select_1_2(std::forward<U>(b), std::forward<V>(c))
+//               select_1_2(_a, _d)
+//             : select_1_2(_b, _c)
 // )
         
 // template <int ia, int ib, int ic, int id,
@@ -335,7 +335,7 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
     
 //     CMP((ia < ib), R)(b, a) ? // b < a
 //               select_2_4_ab_cd(std::forward<T>(b), std::forward<U>(a), std::forward<W>(c), std::forward<V>(d), r)
-//             : select_2_4_ab_cd(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), std::forward<W>(d), r)
+//             : select_2_4_ab_cd(_a, _b, _c, _d, r)
 // )
 
 // template <int ia, int ib, int ic, int id,
@@ -348,7 +348,7 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
     
 //     b < a ? 
 //               select_2_4_ab_cd(std::forward<T>(b), std::forward<U>(a), std::forward<W>(c), std::forward<V>(d))
-//             : select_2_4_ab_cd(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), std::forward<W>(d))
+//             : select_2_4_ab_cd(_a, _b, _c, _d)
 // )
 
 // template <int ia, int ib, int ic, int id,
@@ -359,7 +359,7 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
     
 //     CMP((ia < ib), R)(d, c) ? // d < c
 //               select_2_4_cd(std::forward<U>(a), std::forward<T>(b), std::forward<V>(d), std::forward<W>(c), r)
-//             : select_2_4_cd(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), std::forward<W>(d), r)
+//             : select_2_4_cd(_a, _b, _c, _d, r)
 // )
 
 // template <int ia, int ib, int ic, int id,
@@ -369,13 +369,19 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
 // auto select_2_4(T&& a, U&& b, V&& c, W&& d) FN(
 //     d < c ?
 //               select_2_4_cd(std::forward<U>(a), std::forward<T>(b), std::forward<V>(d), std::forward<W>(c))
-//             : select_2_4_cd(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), std::forward<W>(d))
+//             : select_2_4_cd(_a, _b, _c, _d)
 // )
 
 }} /*tao::algorithm*/
 
 #undef FN
 #undef CMP
+
+#undef _a
+#undef _b
+#undef _c
+#undef _d
+
 #include <tao/algorithm/concepts_undef.hpp>
 
 #endif /*TAO_ALGORITHM_SELECTION_STABILITY_HPP_*/
@@ -390,101 +396,117 @@ TEST_CASE("[select_i_j] testing select_i_j selection algorithm") {
     int b = 3;
     int c = 4;
     int d = 4;
+    int a2 = 3;
 
 
     SUBCASE("[select_i_2] (0,1) testing select_i_2 selection algorithms") {
+        CHECK(select_0_2<0,1>(a, c, less<>()) == a);
+        CHECK(select_0_2<0,1>(c, a, less<>()) == a);
         CHECK(&select_0_2<0,1>(a, b, less<>()) == &a);
         CHECK(&select_0_2<0,1>(b, a, less<>()) == &b);
         CHECK(&select_0_2<0,1>(a, c, less<>()) == &a);
         CHECK(&select_0_2<0,1>(c, a, less<>()) == &a);
-        CHECK(select_0_2<0,1>(a, c, less<>()) == a);
-        CHECK(select_0_2<0,1>(c, a, less<>()) == a);
 
+        CHECK(select_1_2<0,1>(a, c, less<>()) == c);
+        CHECK(select_1_2<0,1>(c, a, less<>()) == c);
         CHECK(&select_1_2<0,1>(a, b, less<>()) == &b);
         CHECK(&select_1_2<0,1>(b, a, less<>()) == &a);
         CHECK(&select_1_2<0,1>(a, c, less<>()) == &c);
         CHECK(&select_1_2<0,1>(c, a, less<>()) == &c);
-        CHECK(select_1_2<0,1>(a, c, less<>()) == c);
-        CHECK(select_1_2<0,1>(c, a, less<>()) == c);
 
+        CHECK(select_0_2<0,1>(a, c) == a);
+        CHECK(select_0_2<0,1>(c, a) == a);
         CHECK(&select_0_2<0,1>(a, b) == &a);
         CHECK(&select_0_2<0,1>(b, a) == &b);
         CHECK(&select_0_2<0,1>(a, c) == &a);
         CHECK(&select_0_2<0,1>(c, a) == &a);
-        CHECK(select_0_2<0,1>(a, c) == a);
-        CHECK(select_0_2<0,1>(c, a) == a);
 
+        CHECK(select_1_2<0,1>(a, c) == c);
+        CHECK(select_1_2<0,1>(c, a) == c);
         CHECK(&select_1_2<0,1>(a, b) == &b);
         CHECK(&select_1_2<0,1>(b, a) == &a);
         CHECK(&select_1_2<0,1>(a, c) == &c);
         CHECK(&select_1_2<0,1>(c, a) == &c);
-        CHECK(select_1_2<0,1>(a, c) == c);
-        CHECK(select_1_2<0,1>(c, a) == c);
     }
 
     SUBCASE("[select_i_2] (1,0) testing select_i_2 selection algorithms") {
+        CHECK(select_0_2<1,0>(a, c, less<>()) == a);
+        CHECK(select_0_2<1,0>(c, a, less<>()) == a);
         CHECK(&select_0_2<1,0>(a, b, less<>()) == &b);
         CHECK(&select_0_2<1,0>(b, a, less<>()) == &a);
         CHECK(&select_0_2<1,0>(a, c, less<>()) == &a);
         CHECK(&select_0_2<1,0>(c, a, less<>()) == &a);
-        CHECK(select_0_2<1,0>(a, c, less<>()) == a);
-        CHECK(select_0_2<1,0>(c, a, less<>()) == a);
 
+        CHECK(select_1_2<1,0>(a, c, less<>()) == c);
+        CHECK(select_1_2<1,0>(c, a, less<>()) == c);
         CHECK(&select_1_2<1,0>(a, b, less<>()) == &a);
         CHECK(&select_1_2<1,0>(b, a, less<>()) == &b);
         CHECK(&select_1_2<1,0>(a, c, less<>()) == &c);
         CHECK(&select_1_2<1,0>(c, a, less<>()) == &c);
-        CHECK(select_1_2<1,0>(a, c, less<>()) == c);
-        CHECK(select_1_2<1,0>(c, a, less<>()) == c);
 
+        CHECK(select_0_2<1,0>(a, c) == a);
+        CHECK(select_0_2<1,0>(c, a) == a);
         CHECK(&select_0_2<1,0>(a, b) == &b);
         CHECK(&select_0_2<1,0>(b, a) == &a);
         CHECK(&select_0_2<1,0>(a, c) == &a);
         CHECK(&select_0_2<1,0>(c, a) == &a);
-        CHECK(select_0_2<1,0>(a, c) == a);
-        CHECK(select_0_2<1,0>(c, a) == a);
 
+        CHECK(select_1_2<1,0>(a, c) == c);
+        CHECK(select_1_2<1,0>(c, a) == c);
         CHECK(&select_1_2<1,0>(a, b) == &a);
         CHECK(&select_1_2<1,0>(b, a) == &b);
         CHECK(&select_1_2<1,0>(a, c) == &c);
         CHECK(&select_1_2<1,0>(c, a) == &c);
-        CHECK(select_1_2<1,0>(a, c) == c);
-        CHECK(select_1_2<1,0>(c, a) == c);
     }
 
-    SUBCASE("[select_i_3] testing select_i_3 selection algorithm") {
-        CHECK(&select_0_3<0,1,2>(a, b, c, less<>()) == &a);
-        CHECK(&select_0_3<0,1,2>(a, c, b, less<>()) == &a);
-        CHECK(&select_0_3<0,1,2>(b, a, c, less<>()) == &b);
-        CHECK(&select_0_3<0,1,2>(b, c, a, less<>()) == &b);
-        CHECK(&select_0_3<0,1,2>(c, a, b, less<>()) == &a);
-        CHECK(&select_0_3<0,1,2>(c, b, a, less<>()) == &b);
-        CHECK(select_0_3<0,1,2>(a, c, d, less<>()) == a);
-        CHECK(select_0_3<0,1,2>(c, a, d, less<>()) == a);
-        CHECK(select_0_3<0,1,2>(d, c, a, less<>()) == a);
+    SUBCASE("[select_i_3] (0,1,2) testing select_i_3 selection algorithm") {
+        CHECK( select_0_3<0,1,2>(a, c, d,  less<>()) == a);
+        CHECK( select_0_3<0,1,2>(c, a, d,  less<>()) == a);
+        CHECK( select_0_3<0,1,2>(d, c, a,  less<>()) == a);
+        CHECK(&select_0_3<0,1,2>(a, b, c,  less<>()) == &a);
+        CHECK(&select_0_3<0,1,2>(a, c, b,  less<>()) == &a);
+        CHECK(&select_0_3<0,1,2>(b, a, c,  less<>()) == &b);
+        CHECK(&select_0_3<0,1,2>(b, c, a,  less<>()) == &b);
+        CHECK(&select_0_3<0,1,2>(c, a, b,  less<>()) == &a);
+        CHECK(&select_0_3<0,1,2>(c, b, a,  less<>()) == &b);
+        CHECK(&select_0_3<0,1,2>(a, b, a2, less<>()) == &a);
+        CHECK(&select_0_3<0,1,2>(a, a2, b, less<>()) == &a);
+        CHECK(&select_0_3<0,1,2>(b, a, a2, less<>()) == &b);
+        CHECK(&select_0_3<0,1,2>(b, a2, a, less<>()) == &b);
+        CHECK(&select_0_3<0,1,2>(a2, a, b, less<>()) == &a2);
+        CHECK(&select_0_3<0,1,2>(a2, b, a, less<>()) == &a2);
 
-        CHECK(&select_2_3<0,1,2>(b, c, d, less<>()) == &d);
-        CHECK(&select_2_3<0,1,2>(c, b, d, less<>()) == &d);
-        CHECK(&select_2_3<0,1,2>(b, d, c, less<>()) == &c);
-        CHECK(&select_2_3<0,1,2>(d, b, c, less<>()) == &c);
-        CHECK(&select_2_3<0,1,2>(c, d, b, less<>()) == &d);
-        CHECK(&select_2_3<0,1,2>(d, c, b, less<>()) == &c);
-        CHECK(select_2_3<0,1,2>(a, c, d, less<>()) == d);
-        CHECK(select_2_3<0,1,2>(c, a, d, less<>()) == c);
-        CHECK(select_2_3<0,1,2>(d, c, a, less<>()) == c);
+        CHECK( select_2_3<0,1,2>(a, c, d,  less<>()) == d);
+        CHECK( select_2_3<0,1,2>(c, a, d,  less<>()) == c);
+        CHECK( select_2_3<0,1,2>(d, c, a,  less<>()) == c);
+        CHECK(&select_2_3<0,1,2>(b, c, d,  less<>()) == &d);
+        CHECK(&select_2_3<0,1,2>(c, b, d,  less<>()) == &d);
+        CHECK(&select_2_3<0,1,2>(b, d, c,  less<>()) == &c);
+        CHECK(&select_2_3<0,1,2>(d, b, c,  less<>()) == &c);
+        CHECK(&select_2_3<0,1,2>(c, d, b,  less<>()) == &d);
+        CHECK(&select_2_3<0,1,2>(d, c, b,  less<>()) == &c);
+        CHECK(&select_2_3<0,1,2>(a, b, a2, less<>()) == &a2);
+        CHECK(&select_2_3<0,1,2>(a, a2, b, less<>()) == &b);
+        CHECK(&select_2_3<0,1,2>(b, a, a2, less<>()) == &a2);
+        CHECK(&select_2_3<0,1,2>(b, a2, a, less<>()) == &a);
+        CHECK(&select_2_3<0,1,2>(a2, a, b, less<>()) == &b);
+        CHECK(&select_2_3<0,1,2>(a2, b, a, less<>()) == &a);
 
-        // Test select_1_3_ab
-        CHECK(&select_1_3<0,1,2>(a, b, c, less<>()) == &b);
-        CHECK(&select_1_3<0,1,2>(a, c, b, less<>()) == &b);
-        CHECK(&select_1_3<0,1,2>(b, a, c, less<>()) == &a);
-        CHECK(&select_1_3<0,1,2>(b, c, a, less<>()) == &a);
-        CHECK(&select_1_3<0,1,2>(c, a, b, less<>()) == &b);
-        CHECK(&select_1_3<0,1,2>(c, b, a, less<>()) == &a);
-        CHECK(select_1_3<0,1,2>(a, c, d, less<>()) == c);
-        CHECK(select_1_3<0,1,2>(c, a, d, less<>()) == c);
-        CHECK(select_1_3<0,1,2>(d, c, a, less<>()) == c);
-
-
+        CHECK( select_1_3<0,1,2>(a, c, d,  less<>()) == c);
+        CHECK( select_1_3<0,1,2>(c, a, d,  less<>()) == c);
+        CHECK( select_1_3<0,1,2>(d, c, a,  less<>()) == c);
+        CHECK(&select_1_3<0,1,2>(a, b, c,  less<>()) == &b);
+        CHECK(&select_1_3<0,1,2>(a, c, b,  less<>()) == &b);
+        CHECK(&select_1_3<0,1,2>(b, a, c,  less<>()) == &a);
+        CHECK(&select_1_3<0,1,2>(b, c, a,  less<>()) == &a);
+        CHECK(&select_1_3<0,1,2>(c, a, b,  less<>()) == &b);
+        CHECK(&select_1_3<0,1,2>(c, b, a,  less<>()) == &a);
+        CHECK(&select_1_3<0,1,2>(a, b, a2, less<>()) == &b);
+        CHECK(&select_1_3<0,1,2>(a, a2, b, less<>()) == &a2);
+        CHECK(&select_1_3<0,1,2>(b, a, a2, less<>()) == &a);
+        CHECK(&select_1_3<0,1,2>(b, a2, a, less<>()) == &a2);
+        CHECK(&select_1_3<0,1,2>(a2, a, b, less<>()) == &a);
+        CHECK(&select_1_3<0,1,2>(a2, b, a, less<>()) == &b);
 
         // CHECK(&select_0_3<0,1,2>(a, b, c) == &a);
         // CHECK(&select_0_3<0,1,2>(a, c, b) == &a);
@@ -506,7 +528,6 @@ TEST_CASE("[select_i_j] testing select_i_j selection algorithm") {
         // CHECK(select_2_3<0,1,2>(c, a, d) == c);
         // CHECK(select_2_3<0,1,2>(d, c, a) == c);
 
-        // // Test select_1_3_ab
         // CHECK(&select_1_3<0,1,2>(a, b, c) == &b);
         // CHECK(&select_1_3<0,1,2>(a, c, b) == &b);
         // CHECK(&select_1_3<0,1,2>(b, a, c) == &a);
@@ -517,6 +538,256 @@ TEST_CASE("[select_i_j] testing select_i_j selection algorithm") {
         // CHECK(select_1_3<0,1,2>(c, a, d) == c);
         // CHECK(select_1_3<0,1,2>(d, c, a) == c);        
     }
+
+    SUBCASE("[select_i_3] (0,2,1) testing select_i_3 selection algorithm") {
+        CHECK( select_0_3<0,2,1>(a, c, d,  less<>()) == a);
+        CHECK( select_0_3<0,2,1>(c, a, d,  less<>()) == a);
+        CHECK( select_0_3<0,2,1>(d, c, a,  less<>()) == a);
+        CHECK(&select_0_3<0,2,1>(a, b, c,  less<>()) == &a);
+        CHECK(&select_0_3<0,2,1>(a, c, b,  less<>()) == &a);
+        CHECK(&select_0_3<0,2,1>(b, a, c,  less<>()) == &b);
+        CHECK(&select_0_3<0,2,1>(b, c, a,  less<>()) == &b);
+        CHECK(&select_0_3<0,2,1>(c, a, b,  less<>()) == &b);
+        CHECK(&select_0_3<0,2,1>(c, b, a,  less<>()) == &a);
+        CHECK(&select_0_3<0,2,1>(a, b, a2, less<>()) == &a);
+        CHECK(&select_0_3<0,2,1>(a, a2, b, less<>()) == &a);
+        CHECK(&select_0_3<0,2,1>(b, a, a2, less<>()) == &b);
+        CHECK(&select_0_3<0,2,1>(b, a2, a, less<>()) == &b);
+        CHECK(&select_0_3<0,2,1>(a2, a, b, less<>()) == &a2);
+        CHECK(&select_0_3<0,2,1>(a2, b, a, less<>()) == &a2);
+
+        CHECK( select_2_3<0,2,1>(a, c, d,  less<>()) == d);
+        CHECK( select_2_3<0,2,1>(c, a, d,  less<>()) == c);
+        CHECK( select_2_3<0,2,1>(d, c, a,  less<>()) == c);
+        CHECK(&select_2_3<0,2,1>(b, c, d,  less<>()) == &c);
+        CHECK(&select_2_3<0,2,1>(c, b, d,  less<>()) == &d);
+        CHECK(&select_2_3<0,2,1>(b, d, c,  less<>()) == &d);
+        CHECK(&select_2_3<0,2,1>(d, b, c,  less<>()) == &c);
+        CHECK(&select_2_3<0,2,1>(c, d, b,  less<>()) == &d);
+        CHECK(&select_2_3<0,2,1>(d, c, b,  less<>()) == &c);
+        CHECK(&select_2_3<0,2,1>(a, b, a2, less<>()) == &b);
+        CHECK(&select_2_3<0,2,1>(a, a2, b, less<>()) == &a2);
+        CHECK(&select_2_3<0,2,1>(b, a, a2, less<>()) == &a);
+        CHECK(&select_2_3<0,2,1>(b, a2, a, less<>()) == &a2);
+        CHECK(&select_2_3<0,2,1>(a2, a, b, less<>()) == &a);
+        CHECK(&select_2_3<0,2,1>(a2, b, a, less<>()) == &b);
+
+        CHECK( select_1_3<0,2,1>(a, c, d,  less<>()) == c);
+        CHECK( select_1_3<0,2,1>(c, a, d,  less<>()) == c);
+        CHECK( select_1_3<0,2,1>(d, c, a,  less<>()) == c);
+        CHECK(&select_1_3<0,2,1>(a, b, c,  less<>()) == &b);
+        CHECK(&select_1_3<0,2,1>(a, c, b,  less<>()) == &b);
+        CHECK(&select_1_3<0,2,1>(b, a, c,  less<>()) == &a);
+        CHECK(&select_1_3<0,2,1>(b, c, a,  less<>()) == &a);
+        CHECK(&select_1_3<0,2,1>(c, a, b,  less<>()) == &a);
+        CHECK(&select_1_3<0,2,1>(c, b, a,  less<>()) == &b);
+        CHECK(&select_1_3<0,2,1>(a, b, a2, less<>()) == &a2);
+        CHECK(&select_1_3<0,2,1>(a, a2, b, less<>()) == &b);
+        CHECK(&select_1_3<0,2,1>(b, a, a2, less<>()) == &a2);
+        CHECK(&select_1_3<0,2,1>(b, a2, a, less<>()) == &a);
+        CHECK(&select_1_3<0,2,1>(a2, a, b, less<>()) == &b);
+        CHECK(&select_1_3<0,2,1>(a2, b, a, less<>()) == &a);
+    }
+
+    SUBCASE("[select_i_3] (1,0,2) testing select_i_3 selection algorithm") {
+        CHECK( select_0_3<1,0,2>(a, c, d,  less<>()) == a);
+        CHECK( select_0_3<1,0,2>(c, a, d,  less<>()) == a);
+        CHECK( select_0_3<1,0,2>(d, c, a,  less<>()) == a);
+        CHECK(&select_0_3<1,0,2>(a, b, c,  less<>()) == &b);
+        CHECK(&select_0_3<1,0,2>(a, c, b,  less<>()) == &a);
+        CHECK(&select_0_3<1,0,2>(b, a, c,  less<>()) == &a);
+        CHECK(&select_0_3<1,0,2>(b, c, a,  less<>()) == &b);
+        CHECK(&select_0_3<1,0,2>(c, a, b,  less<>()) == &a);
+        CHECK(&select_0_3<1,0,2>(c, b, a,  less<>()) == &b);
+        CHECK(&select_0_3<1,0,2>(a, b, a2, less<>()) == &b);
+        CHECK(&select_0_3<1,0,2>(a, a2, b, less<>()) == &a2);
+        CHECK(&select_0_3<1,0,2>(b, a, a2, less<>()) == &a);
+        CHECK(&select_0_3<1,0,2>(b, a2, a, less<>()) == &a2);
+        CHECK(&select_0_3<1,0,2>(a2, a, b, less<>()) == &a);
+        CHECK(&select_0_3<1,0,2>(a2, b, a, less<>()) == &b);
+
+        CHECK( select_2_3<1,0,2>(a, c, d,  less<>()) == d);
+        CHECK( select_2_3<1,0,2>(c, a, d,  less<>()) == c);
+        CHECK( select_2_3<1,0,2>(d, c, a,  less<>()) == c);
+        CHECK(&select_2_3<1,0,2>(b, c, d,  less<>()) == &d);
+        CHECK(&select_2_3<1,0,2>(c, b, d,  less<>()) == &d);
+        CHECK(&select_2_3<1,0,2>(b, d, c,  less<>()) == &c);
+        CHECK(&select_2_3<1,0,2>(d, b, c,  less<>()) == &c);
+        CHECK(&select_2_3<1,0,2>(c, d, b,  less<>()) == &c);
+        CHECK(&select_2_3<1,0,2>(d, c, b,  less<>()) == &d);
+        CHECK(&select_2_3<1,0,2>(a, b, a2, less<>()) == &a2);
+        CHECK(&select_2_3<1,0,2>(a, a2, b, less<>()) == &b);
+        CHECK(&select_2_3<1,0,2>(b, a, a2, less<>()) == &a2);
+        CHECK(&select_2_3<1,0,2>(b, a2, a, less<>()) == &a);
+        CHECK(&select_2_3<1,0,2>(a2, a, b, less<>()) == &b);
+        CHECK(&select_2_3<1,0,2>(a2, b, a, less<>()) == &a);
+
+        CHECK( select_1_3<1,0,2>(a, c, d,  less<>()) == c);
+        CHECK( select_1_3<1,0,2>(c, a, d,  less<>()) == c);
+        CHECK( select_1_3<1,0,2>(d, c, a,  less<>()) == c);
+        CHECK(&select_1_3<1,0,2>(a, b, c,  less<>()) == &a);
+        CHECK(&select_1_3<1,0,2>(a, c, b,  less<>()) == &b);
+        CHECK(&select_1_3<1,0,2>(b, a, c,  less<>()) == &b);
+        CHECK(&select_1_3<1,0,2>(b, c, a,  less<>()) == &a);
+        CHECK(&select_1_3<1,0,2>(c, a, b,  less<>()) == &b);
+        CHECK(&select_1_3<1,0,2>(c, b, a,  less<>()) == &a);
+        CHECK(&select_1_3<1,0,2>(a, b, a2, less<>()) == &a);
+        CHECK(&select_1_3<1,0,2>(a, a2, b, less<>()) == &a);
+        CHECK(&select_1_3<1,0,2>(b, a, a2, less<>()) == &b);
+        CHECK(&select_1_3<1,0,2>(b, a2, a, less<>()) == &b);
+        CHECK(&select_1_3<1,0,2>(a2, a, b, less<>()) == &a2);
+        CHECK(&select_1_3<1,0,2>(a2, b, a, less<>()) == &a2);
+    }
+
+    SUBCASE("[select_i_3] (1,2,0) testing select_i_3 selection algorithm") {
+        CHECK( select_0_3<1,2,0>(a, c, d,  less<>()) == a);
+        CHECK( select_0_3<1,2,0>(c, a, d,  less<>()) == a);
+        CHECK( select_0_3<1,2,0>(d, c, a,  less<>()) == a);
+        CHECK(&select_0_3<1,2,0>(a, b, c,  less<>()) == &a);
+        CHECK(&select_0_3<1,2,0>(a, c, b,  less<>()) == &b);
+        CHECK(&select_0_3<1,2,0>(b, a, c,  less<>()) == &b);
+        CHECK(&select_0_3<1,2,0>(b, c, a,  less<>()) == &a);
+        CHECK(&select_0_3<1,2,0>(c, a, b,  less<>()) == &b);
+        CHECK(&select_0_3<1,2,0>(c, b, a,  less<>()) == &a);
+        CHECK(&select_0_3<1,2,0>(a, b, a2, less<>()) == &a2);
+        CHECK(&select_0_3<1,2,0>(a, a2, b, less<>()) == &b);
+        CHECK(&select_0_3<1,2,0>(b, a, a2, less<>()) == &a2);
+        CHECK(&select_0_3<1,2,0>(b, a2, a, less<>()) == &a);
+        CHECK(&select_0_3<1,2,0>(a2, a, b, less<>()) == &b);
+        CHECK(&select_0_3<1,2,0>(a2, b, a, less<>()) == &a);
+
+        CHECK( select_2_3<1,2,0>(a, c, d,  less<>()) == d);
+        CHECK( select_2_3<1,2,0>(c, a, d,  less<>()) == c);
+        CHECK( select_2_3<1,2,0>(d, c, a,  less<>()) == c);
+        CHECK(&select_2_3<1,2,0>(b, c, d,  less<>()) == &c);
+        CHECK(&select_2_3<1,2,0>(c, b, d,  less<>()) == &c);
+        CHECK(&select_2_3<1,2,0>(b, d, c,  less<>()) == &d);
+        CHECK(&select_2_3<1,2,0>(d, b, c,  less<>()) == &d);
+        CHECK(&select_2_3<1,2,0>(c, d, b,  less<>()) == &d);
+        CHECK(&select_2_3<1,2,0>(d, c, b,  less<>()) == &c);
+        CHECK(&select_2_3<1,2,0>(a, b, a2, less<>()) == &b);
+        CHECK(&select_2_3<1,2,0>(a, a2, b, less<>()) == &a2);
+        CHECK(&select_2_3<1,2,0>(b, a, a2, less<>()) == &a);
+        CHECK(&select_2_3<1,2,0>(b, a2, a, less<>()) == &a2);
+        CHECK(&select_2_3<1,2,0>(a2, a, b, less<>()) == &a);
+        CHECK(&select_2_3<1,2,0>(a2, b, a, less<>()) == &b);
+
+        CHECK( select_1_3<1,2,0>(a, c, d,  less<>()) == c);
+        CHECK( select_1_3<1,2,0>(c, a, d,  less<>()) == c);
+        CHECK( select_1_3<1,2,0>(d, c, a,  less<>()) == c);
+        CHECK(&select_1_3<1,2,0>(a, b, c,  less<>()) == &b);
+        CHECK(&select_1_3<1,2,0>(a, c, b,  less<>()) == &a);
+        CHECK(&select_1_3<1,2,0>(b, a, c,  less<>()) == &a);
+        CHECK(&select_1_3<1,2,0>(b, c, a,  less<>()) == &b);
+        CHECK(&select_1_3<1,2,0>(c, a, b,  less<>()) == &a);
+        CHECK(&select_1_3<1,2,0>(c, b, a,  less<>()) == &b);
+        CHECK(&select_1_3<1,2,0>(a, b, a2, less<>()) == &a);
+        CHECK(&select_1_3<1,2,0>(a, a2, b, less<>()) == &a);
+        CHECK(&select_1_3<1,2,0>(b, a, a2, less<>()) == &b);
+        CHECK(&select_1_3<1,2,0>(b, a2, a, less<>()) == &b);
+        CHECK(&select_1_3<1,2,0>(a2, a, b, less<>()) == &a2);
+        CHECK(&select_1_3<1,2,0>(a2, b, a, less<>()) == &a2);
+    }
+
+    SUBCASE("[select_i_3] (2,0,1) testing select_i_3 selection algorithm") {
+        CHECK( select_0_3<2,0,1>(a, c, d,  less<>()) == a);
+        CHECK( select_0_3<2,0,1>(c, a, d,  less<>()) == a);
+        CHECK( select_0_3<2,0,1>(d, c, a,  less<>()) == a);
+        CHECK(&select_0_3<2,0,1>(a, b, c,  less<>()) == &b);
+        CHECK(&select_0_3<2,0,1>(a, c, b,  less<>()) == &b);
+        CHECK(&select_0_3<2,0,1>(b, a, c,  less<>()) == &a);
+        CHECK(&select_0_3<2,0,1>(b, c, a,  less<>()) == &a);
+        CHECK(&select_0_3<2,0,1>(c, a, b,  less<>()) == &a);
+        CHECK(&select_0_3<2,0,1>(c, b, a,  less<>()) == &b);
+        CHECK(&select_0_3<2,0,1>(a, b, a2, less<>()) == &b);
+        CHECK(&select_0_3<2,0,1>(a, a2, b, less<>()) == &a2);
+        CHECK(&select_0_3<2,0,1>(b, a, a2, less<>()) == &a);
+        CHECK(&select_0_3<2,0,1>(b, a2, a, less<>()) == &a2);
+        CHECK(&select_0_3<2,0,1>(a2, a, b, less<>()) == &a);
+        CHECK(&select_0_3<2,0,1>(a2, b, a, less<>()) == &b);
+
+        CHECK( select_2_3<2,0,1>(a, c, d,  less<>()) == d);
+        CHECK( select_2_3<2,0,1>(c, a, d,  less<>()) == c);
+        CHECK( select_2_3<2,0,1>(d, c, a,  less<>()) == c);
+        CHECK(&select_2_3<2,0,1>(b, c, d,  less<>()) == &d);
+        CHECK(&select_2_3<2,0,1>(c, b, d,  less<>()) == &c);
+        CHECK(&select_2_3<2,0,1>(b, d, c,  less<>()) == &c);
+        CHECK(&select_2_3<2,0,1>(d, b, c,  less<>()) == &d);
+        CHECK(&select_2_3<2,0,1>(c, d, b,  less<>()) == &c);
+        CHECK(&select_2_3<2,0,1>(d, c, b,  less<>()) == &d);
+        CHECK(&select_2_3<2,0,1>(a, b, a2, less<>()) == &a);
+        CHECK(&select_2_3<2,0,1>(a, a2, b, less<>()) == &a);
+        CHECK(&select_2_3<2,0,1>(b, a, a2, less<>()) == &b);
+        CHECK(&select_2_3<2,0,1>(b, a2, a, less<>()) == &b);
+        CHECK(&select_2_3<2,0,1>(a2, a, b, less<>()) == &a2);
+        CHECK(&select_2_3<2,0,1>(a2, b, a, less<>()) == &a2);
+
+        CHECK( select_1_3<2,0,1>(a, c, d,  less<>()) == c);
+        CHECK( select_1_3<2,0,1>(c, a, d,  less<>()) == c);
+        CHECK( select_1_3<2,0,1>(d, c, a,  less<>()) == c);
+        CHECK(&select_1_3<2,0,1>(a, b, c,  less<>()) == &a);
+        CHECK(&select_1_3<2,0,1>(a, c, b,  less<>()) == &a);
+        CHECK(&select_1_3<2,0,1>(b, a, c,  less<>()) == &b);
+        CHECK(&select_1_3<2,0,1>(b, c, a,  less<>()) == &b);
+        CHECK(&select_1_3<2,0,1>(c, a, b,  less<>()) == &b);
+        CHECK(&select_1_3<2,0,1>(c, b, a,  less<>()) == &a);
+        CHECK(&select_1_3<2,0,1>(a, b, a2, less<>()) == &a2);
+        CHECK(&select_1_3<2,0,1>(a, a2, b, less<>()) == &b);
+        CHECK(&select_1_3<2,0,1>(b, a, a2, less<>()) == &a2);
+        CHECK(&select_1_3<2,0,1>(b, a2, a, less<>()) == &a);
+        CHECK(&select_1_3<2,0,1>(a2, a, b, less<>()) == &b);
+        CHECK(&select_1_3<2,0,1>(a2, b, a, less<>()) == &a);
+    }
+
+    SUBCASE("[select_i_3] (2,1,0) testing select_i_3 selection algorithm") {
+        CHECK( select_0_3<2,1,0>(a, c, d,  less<>()) == a);
+        CHECK( select_0_3<2,1,0>(c, a, d,  less<>()) == a);
+        CHECK( select_0_3<2,1,0>(d, c, a,  less<>()) == a);
+        CHECK(&select_0_3<2,1,0>(a, b, c,  less<>()) == &b);
+        CHECK(&select_0_3<2,1,0>(a, c, b,  less<>()) == &b);
+        CHECK(&select_0_3<2,1,0>(b, a, c,  less<>()) == &a);
+        CHECK(&select_0_3<2,1,0>(b, c, a,  less<>()) == &a);
+        CHECK(&select_0_3<2,1,0>(c, a, b,  less<>()) == &b);
+        CHECK(&select_0_3<2,1,0>(c, b, a,  less<>()) == &a);
+        CHECK(&select_0_3<2,1,0>(a, b, a2, less<>()) == &a2);
+        CHECK(&select_0_3<2,1,0>(a, a2, b, less<>()) == &b);
+        CHECK(&select_0_3<2,1,0>(b, a, a2, less<>()) == &a2);
+        CHECK(&select_0_3<2,1,0>(b, a2, a, less<>()) == &a);
+        CHECK(&select_0_3<2,1,0>(a2, a, b, less<>()) == &b);
+        CHECK(&select_0_3<2,1,0>(a2, b, a, less<>()) == &a);
+
+        CHECK( select_2_3<2,1,0>(a, c, d,  less<>()) == d);
+        CHECK( select_2_3<2,1,0>(c, a, d,  less<>()) == c);
+        CHECK( select_2_3<2,1,0>(d, c, a,  less<>()) == c);
+        CHECK(&select_2_3<2,1,0>(b, c, d,  less<>()) == &c);
+        CHECK(&select_2_3<2,1,0>(c, b, d,  less<>()) == &c);
+        CHECK(&select_2_3<2,1,0>(b, d, c,  less<>()) == &d);
+        CHECK(&select_2_3<2,1,0>(d, b, c,  less<>()) == &d);
+        CHECK(&select_2_3<2,1,0>(c, d, b,  less<>()) == &c);
+        CHECK(&select_2_3<2,1,0>(d, c, b,  less<>()) == &d);
+        CHECK(&select_2_3<2,1,0>(a, b, a2, less<>()) == &a);
+        CHECK(&select_2_3<2,1,0>(a, a2, b, less<>()) == &a);
+        CHECK(&select_2_3<2,1,0>(b, a, a2, less<>()) == &b);
+        CHECK(&select_2_3<2,1,0>(b, a2, a, less<>()) == &b);
+        CHECK(&select_2_3<2,1,0>(a2, a, b, less<>()) == &a2);
+        CHECK(&select_2_3<2,1,0>(a2, b, a, less<>()) == &a2);
+
+        CHECK( select_1_3<2,1,0>(a, c, d,  less<>()) == c);
+        CHECK( select_1_3<2,1,0>(c, a, d,  less<>()) == c);
+        CHECK( select_1_3<2,1,0>(d, c, a,  less<>()) == c);
+        CHECK(&select_1_3<2,1,0>(a, b, c,  less<>()) == &a);
+        CHECK(&select_1_3<2,1,0>(a, c, b,  less<>()) == &a);
+        CHECK(&select_1_3<2,1,0>(b, a, c,  less<>()) == &b);
+        CHECK(&select_1_3<2,1,0>(b, c, a,  less<>()) == &b);
+        CHECK(&select_1_3<2,1,0>(c, a, b,  less<>()) == &a);
+        CHECK(&select_1_3<2,1,0>(c, b, a,  less<>()) == &b);
+        CHECK(&select_1_3<2,1,0>(a, b, a2, less<>()) == &b);
+        CHECK(&select_1_3<2,1,0>(a, a2, b, less<>()) == &a2);
+        CHECK(&select_1_3<2,1,0>(b, a, a2, less<>()) == &a);
+        CHECK(&select_1_3<2,1,0>(b, a2, a, less<>()) == &a2);
+        CHECK(&select_1_3<2,1,0>(a2, a, b, less<>()) == &a);
+        CHECK(&select_1_3<2,1,0>(a2, b, a, less<>()) == &b);
+    }        
 }
 
 

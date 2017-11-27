@@ -26,6 +26,7 @@
 using namespace std;
 
 
+
 template <Container C, Integral N>
 void measure_and_print_shift_right(C const& copy, N n) {
 	using tao::algorithm::shift_right;

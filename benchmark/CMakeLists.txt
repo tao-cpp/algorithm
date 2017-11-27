@@ -41,15 +41,31 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 add_custom_target(benchmarks COMMENT "Generate all the benchmarks.")
 
-add_custom_target(travis_compiler_slug USES_TERMINAL
-    COMMAND ${CMAKE_COMMAND} -E echo "travis_compiler_slug: $<LOWER_CASE:${CMAKE_CXX_COMPILER_ID}-${CMAKE_CXX_COMPILER_VERSION}>")
-add_custom_target(travis_config_slug USES_TERMINAL
-    COMMAND ${CMAKE_COMMAND} -E echo "travis_config_slug: $<LOWER_CASE:$<CONFIG>>")
+# add_custom_target(travis_compiler_slug USES_TERMINAL
+#     COMMAND ${CMAKE_COMMAND} -E echo "travis_compiler_slug: $<LOWER_CASE:${CMAKE_CXX_COMPILER_ID}-${CMAKE_CXX_COMPILER_VERSION}>")
+# add_custom_target(travis_config_slug USES_TERMINAL
+#     COMMAND ${CMAKE_COMMAND} -E echo "travis_config_slug: $<LOWER_CASE:$<CONFIG>>")
 
 
 file(GLOB_RECURSE TAO_ALGORITHM_BENCHMARKS 
      RELATIVE ${CMAKE_CURRENT_LIST_DIR}
      *.cpp)
+
+
+message(${TAO_ALGORITHM_BENCHMARKS})
+
+add_executable(bench_fer_1
+    instrumented.cpp
+    inst_median_of_3.cpp
+)
+
+add_executable(bench_fer_2
+    instrumented.cpp
+    inst_median_of_5.cpp
+)
+
+add_dependencies(benchmarks bench_fer_1)
+add_dependencies(benchmarks bench_fer_2)
 
 foreach(file IN LISTS TAO_ALGORITHM_BENCHMARKS)
     string(REGEX REPLACE "\\.cpp$" "" name ${file})
