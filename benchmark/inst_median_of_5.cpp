@@ -11,7 +11,7 @@
 #include <random>
 #include <tuple>
 
-#include <tao/algorithm/selection.hpp>
+#include <tao/algorithm/selection_i_5.hpp>
 
 #define Integer typename
 
@@ -61,7 +61,7 @@ int main() {
         instrumented<int> d(gen());
         instrumented<int> e(gen());
 
-        select_2_5(a, b, c, d, e);
+        median_of_5(a, b, c, d, e, std::less<>());
     }
 
     double* count_p = instrumented<int>::counts;
