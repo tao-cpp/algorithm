@@ -43,17 +43,10 @@ int main() {
 
 
     size_t const max = 100000;
-
-    instrumented<int>::initialize(0);
     random_int_generator<int> gen;
 
-    // instrumented<int> a(1);
-    // instrumented<int> b(2);
-    // instrumented<int> c(3);
-
-    // select_1_3(a, b, c);
-
-
+    {
+    instrumented<int>::initialize(0);
     for (size_t i = 0; i < max; ++i) {
         instrumented<int> a(gen());
         instrumented<int> b(gen());
@@ -63,9 +56,56 @@ int main() {
 
         median_of_5(a, b, c, d, e, std::less<>());
     }
-
     double* count_p = instrumented<int>::counts;
-    std::cout << "comparisons: " << count_p[instrumented_base::comparison] << std::endl;
+    std::cout << "median_of_5 comparisons: " << count_p[instrumented_base::comparison] << std::endl;
+    }
+
+    {
+    instrumented<int>::initialize(0);
+    for (size_t i = 0; i < max; ++i) {
+        instrumented<int> a(i++);
+        instrumented<int> b(i++);
+        instrumented<int> c(i++);
+        instrumented<int> d(i++);
+        instrumented<int> e(i++);
+
+        median_of_5(a, b, c, d, e, std::less<>());
+    }
+    double* count_p = instrumented<int>::counts;
+    std::cout << "median_of_5 comparisons: " << count_p[instrumented_base::comparison] << std::endl;
+    }
+
+    // ---------------------------------
+
+    {
+    instrumented<int>::initialize(0);
+    for (size_t i = 0; i < max; ++i) {
+        instrumented<int> a(gen());
+        instrumented<int> b(gen());
+        instrumented<int> c(gen());
+        instrumented<int> d(gen());
+        instrumented<int> e(gen());
+
+        median_of_5_avg(a, b, c, d, e, std::less<>());
+    }
+    double* count_p = instrumented<int>::counts;
+    std::cout << "median_of_5_avg comparisons: " << count_p[instrumented_base::comparison] << std::endl;
+    }
+
+    {
+    instrumented<int>::initialize(0);
+    for (size_t i = 0; i < max; ++i) {
+        instrumented<int> a(i++);
+        instrumented<int> b(i++);
+        instrumented<int> c(i++);
+        instrumented<int> d(i++);
+        instrumented<int> e(i++);
+
+        median_of_5_avg(a, b, c, d, e, std::less<>());
+    }
+    double* count_p = instrumented<int>::counts;
+    std::cout << "median_of_5_avg comparisons: " << count_p[instrumented_base::comparison] << std::endl;
+    }
 
     return 0;
 }
