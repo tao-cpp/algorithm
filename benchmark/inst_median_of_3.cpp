@@ -11,7 +11,7 @@
 #include <random>
 #include <tuple>
 
-#include <tao/algorithm/selection.hpp>
+#include <tao/algorithm/selection/selection_i_1_3.hpp>
 
 #define Integer typename
 

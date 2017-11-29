@@ -1,4 +1,4 @@
-//! \file tao/algorithm/selection.hpp
+//! \file tao/algorithm/selection/selection_i_5.hpp
 // Tao.Algorithm
 //
 // Copyright Fernando Pelliccioni 2017
@@ -6,8 +6,8 @@
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef TAO_ALGORITHM_SELECTION_I_5_HPP_
-#define TAO_ALGORITHM_SELECTION_I_5_HPP_
+#ifndef TAO_ALGORITHM_SELECTION_SELECTION_I_5_HPP_
+#define TAO_ALGORITHM_SELECTION_SELECTION_I_5_HPP_
 
 #include <algorithm>
 #include <iterator>
@@ -15,7 +15,7 @@
 
 #include <tao/algorithm/concepts.hpp>
 #include <tao/algorithm/relation.hpp>
-#include <tao/algorithm/selection_stability.hpp>
+#include <tao/algorithm/selection/selection_stability.hpp>
 #include <tao/algorithm/type_attributes.hpp>
 
 
@@ -163,11 +163,14 @@ namespace tao { namespace algorithm {
 // Order selection procedures with stability indices
 // ------------------------------------------------------------------------------------------------
 
+//the median of five is the second smallest of the four elements remaining after we remove the smallest of the first four.
+
 template <int ia, int ib, int ic, int id, int ie,
           Regular T, Regular U, Regular V, Regular W, Regular X, StrictWeakOrdering R>
     requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && Domain<R, T>)
 inline constexpr
 auto select_2_5_ab_cd(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
+    // precondition: !r(b, a) && !r(d, c) -->  a <= b && c <= d
     CMP((ia < ic), R)(c, a, r) 
         ? (select_1_4_ab<ia,ib,id,ie>(_a, _b, _d, _e, r))
         : (select_1_4_ab<ic,id,ib,ie>(_c, _d, _b, _e, r))
@@ -178,6 +181,7 @@ template <int ia, int ib, int ic, int id, int ie,
     requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && Domain<R, T>)
 inline constexpr
 auto select_2_5_ab(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
+    // precondition: !r(b, a)  -->  a <= b
     CMP((ic < id), R)(d, c, r)
         ? (select_2_5_ab_cd<ia,ib,id,ic,ie>(_a, _b, _d, _c, _e, r))
         : (select_2_5_ab_cd<ia,ib,ic,id,ie>(_a, _b, _c, _d, _e, r))
@@ -209,8 +213,7 @@ template <int ia, int ib, int ic, int id, int ie,
     requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && Domain<R, T>)
 inline constexpr
 auto select_2_5_abc(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
-    //precondition: !r(b, a) && !r(c, b)  -->  a <= b && b <= c
-
+    // precondition: !r(b, a) && !r(c, b)  -->  a <= b && b <= c
     CMP((ib < id), R)(d, b, r)               //d < b 
         ? CMP((ib < ie), R)(e, b, r)         //e < b 
             ? (select_2_3<ia,id,ie>(_a, _d, _e, r))
@@ -225,7 +228,7 @@ template <int ia, int ib, int ic, int id, int ie,
     requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && Domain<R, T>)
 inline constexpr
 auto select_2_5_ab_avg(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
-    //precondition: !r(b, a)  -->  a <= b
+    // precondition: !r(b, a)  -->  a <= b
     CMP((ib < ic), R)(c, b, r)          // c < b
         ? CMP((ia < ic), R)(c, a, r)    // c < a
             ? (select_2_5_abc<ic,ia,ib,id,ie>(_c, _a, _b, _d, _e, r))
@@ -262,8 +265,7 @@ auto median_of_5_avg(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
 
 #include <tao/algorithm/concepts_undef.hpp>
 
-#endif /*TAO_ALGORITHM_SELECTION_I_5_HPP_*/
-
+#endif /*TAO_ALGORITHM_SELECTION_SELECTION_I_5_HPP_*/
 
 #ifdef DOCTEST_LIBRARY_INCLUDED
 using namespace tao::algorithm;

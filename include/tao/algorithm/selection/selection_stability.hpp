@@ -1,4 +1,4 @@
-//! \file tao/algorithm/selection_stability.hpp
+//! \file tao/algorithm/selection/selection_stability.hpp
 // Tao.Algorithm
 //
 // Copyright Fernando Pelliccioni 2017

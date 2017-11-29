@@ -11,7 +11,7 @@
 #include <random>
 #include <tuple>
 
-#include <tao/algorithm/selection/selection_i_5.hpp>
+#include <tao/algorithm/selection/selection_i_7.hpp>
 
 #define Integer typename
 
@@ -41,7 +41,7 @@ struct random_int_generator {
 int main() {
     using namespace tao::algorithm;
 
-
+    std::cout.precision(17);
     size_t const max = 100000;
     random_int_generator<int> gen;
 
@@ -53,11 +53,13 @@ int main() {
         instrumented<int> c(gen());
         instrumented<int> d(gen());
         instrumented<int> e(gen());
+        instrumented<int> f(gen());
+        instrumented<int> g(gen());
 
-        median_of_5(a, b, c, d, e, std::less<>());
+        median_of_7(a, b, c, d, e, f, g, std::less<>());
     }
     double* count_p = instrumented<int>::counts;
-    std::cout << "median_of_5 comparisons: " << count_p[instrumented_base::comparison] << std::endl;
+    std::cout << "median_of_7 comparisons: " << count_p[instrumented_base::comparison] << std::endl;
     }
 
     {
@@ -68,44 +70,48 @@ int main() {
         instrumented<int> c(i++);
         instrumented<int> d(i++);
         instrumented<int> e(i++);
+        instrumented<int> f(i++);
+        instrumented<int> g(i++);
 
-        median_of_5(a, b, c, d, e, std::less<>());
+        median_of_7(a, b, c, d, e, f, g, std::less<>());
     }
     double* count_p = instrumented<int>::counts;
-    std::cout << "median_of_5 comparisons: " << count_p[instrumented_base::comparison] << std::endl;
+    std::cout << "median_of_7 comparisons: " << count_p[instrumented_base::comparison] << std::endl;
     }
 
     // ---------------------------------
 
-    {
-    instrumented<int>::initialize(0);
-    for (size_t i = 0; i < max; ++i) {
-        instrumented<int> a(gen());
-        instrumented<int> b(gen());
-        instrumented<int> c(gen());
-        instrumented<int> d(gen());
-        instrumented<int> e(gen());
+    // {
+    // instrumented<int>::initialize(0);
+    // for (size_t i = 0; i < max; ++i) {
+    //     instrumented<int> a(gen());
+    //     instrumented<int> b(gen());
+    //     instrumented<int> c(gen());
+    //     instrumented<int> d(gen());
+    //     instrumented<int> e(gen());
+    //     instrumented<int> f(gen());
+    //     instrumented<int> g(gen());
 
-        median_of_5_avg(a, b, c, d, e, std::less<>());
-    }
-    double* count_p = instrumented<int>::counts;
-    std::cout << "median_of_5_avg comparisons: " << count_p[instrumented_base::comparison] << std::endl;
-    }
+    //     median_of_7_avg(a, b, c, d, e, f, g, std::less<>());
+    // }
+    // double* count_p = instrumented<int>::counts;
+    // std::cout << "median_of_7_avg comparisons: " << count_p[instrumented_base::comparison] << std::endl;
+    // }
 
-    {
-    instrumented<int>::initialize(0);
-    for (size_t i = 0; i < max; ++i) {
-        instrumented<int> a(i++);
-        instrumented<int> b(i++);
-        instrumented<int> c(i++);
-        instrumented<int> d(i++);
-        instrumented<int> e(i++);
+    // {
+    // instrumented<int>::initialize(0);
+    // for (size_t i = 0; i < max; ++i) {
+    //     instrumented<int> a(i++);
+    //     instrumented<int> b(i++);
+    //     instrumented<int> c(i++);
+    //     instrumented<int> d(i++);
+    //     instrumented<int> e(i++);
 
-        median_of_5_avg(a, b, c, d, e, std::less<>());
-    }
-    double* count_p = instrumented<int>::counts;
-    std::cout << "median_of_5_avg comparisons: " << count_p[instrumented_base::comparison] << std::endl;
-    }
+    //     median_of_7_avg(a, b, c, d, e, f, g, std::less<>());
+    // }
+    // double* count_p = instrumented<int>::counts;
+    // std::cout << "median_of_7_avg comparisons: " << count_p[instrumented_base::comparison] << std::endl;
+    // }
 
     return 0;
 }
