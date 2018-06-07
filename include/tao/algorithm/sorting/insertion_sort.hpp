@@ -65,8 +65,8 @@ I insertion_sort_linear(I f, I l, R r) {
     return f;
 }
 
-// template <ForwardIterator I, Integer N>
-// void insertion_sort_linear_n(I f, N n) {
+// template <ForwardIterator I>
+// void insertion_sort_linear_n(I f, DistanceType<I> n) {
     
 // }
 

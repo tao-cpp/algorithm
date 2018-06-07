@@ -8,6 +8,8 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
+#include <tao/algorithm/copy.hpp>
+
 #include <tao/algorithm/primes.hpp>
 #include <tao/algorithm/selection.hpp>
 // #include <tao/algorithm/selection/selection_stability.hpp>

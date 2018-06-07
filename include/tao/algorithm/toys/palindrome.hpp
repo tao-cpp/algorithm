@@ -25,9 +25,9 @@ namespace tao { namespace algorithm {
 //          Exact:     ???
 //      Space:
 //          O(???)
-template <BidirectionalIterator I, Integer N>
+template <BidirectionalIterator I>
 	requires(Readable<I>)
-bool palindrome_n(I f, I l, N n) {
+bool palindrome_n(I f, I l, DistanceType<I> n) {
     //precondition: readable_bounded_range(f, l) &&
     //              readable_counted_range(f, n)
     //              distance(f, l) == n
