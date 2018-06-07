@@ -10,12 +10,13 @@
 #define TAO_ALGORITHM_BENCHMARK_INSTRUMENTED_HPP_
 
 #include <cstddef>
+#include <utility>
 
 struct instrumented_base {
     enum operations {
-        n, copy, assignment, destructor, default_constructor, equality, comparison, construction
+        n, default_constructor, construction, copy_ctor, copy_assignment, move_ctor, move_assignment, destructor, equality, comparison
     };
-    static size_t const  number_ops = 8;
+    static size_t const  number_ops = 10;
     static double counts[number_ops];
     static char const* counter_names[number_ops];
     static void initialize(size_t);
@@ -28,21 +29,32 @@ struct instrumented : instrumented_base {
     using value_type = T;
     T value;
 
+    instrumented() { ++counts[default_constructor]; }
+
     // Conversions from T and to T:
-    explicit 
+    // explicit 
     instrumented(T const& x) : value(x) { ++counts[construction]; }
 
     // Semiregular:
     instrumented(instrumented const& x) : value(x.value) {
-        ++counts[copy];
+        ++counts[copy_ctor];
     }
 
-    instrumented() { ++counts[default_constructor]; }
+    instrumented(instrumented&& x) : value(std::move(x.value)) {
+        ++counts[move_ctor];
+    }
+
     ~instrumented() { ++counts[destructor]; }
 
     instrumented& operator=(instrumented const& x) {  
-        ++counts[assignment];
+        ++counts[copy_assignment];
         value = x.value;
+        return *this;
+    }
+
+    instrumented& operator=(instrumented&& x) {  
+        ++counts[move_assignment];
+        value = std::move(x.value);
         return *this;
     }
 
@@ -79,6 +91,11 @@ struct instrumented : instrumented_base {
     bool operator>=(instrumented const& x, instrumented const& y) {
         return !(x < y);
     } 
+
+    //Convertion Operator
+    operator T() const {
+        return value;
+    }
 };
 
 #endif /*TAO_ALGORITHM_BENCHMARK_INSTRUMENTED_HPP_*/

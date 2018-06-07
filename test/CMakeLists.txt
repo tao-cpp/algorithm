@@ -11,7 +11,7 @@ add_custom_target(tests ALL
     COMMENT "Build and run all the unit tests.")
 
 function(tao_algorithm_add_test name)
-    add_executable(test.${name} EXCLUDE_FROM_ALL ${name}.cpp)
+    add_executable(test.${name} EXCLUDE_FROM_ALL ${name}.cpp ../src/benchmark/instrumented.cpp)
     add_test(NAME test.${name} COMMAND test.${name})
     add_dependencies(tests test.${name})
 endfunction()

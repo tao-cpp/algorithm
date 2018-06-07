@@ -54,25 +54,25 @@ file(GLOB_RECURSE TAO_ALGORITHM_BENCHMARKS
 
 message(${TAO_ALGORITHM_BENCHMARKS})
 
-add_executable(bench_median_of_3
-    instrumented.cpp
-    inst_median_of_3.cpp
-)
+# add_executable(bench_median_of_3
+#     instrumented.cpp
+#     inst_median_of_3.cpp
+# )
 
-add_executable(bench_median_of_5
-    instrumented.cpp
-    inst_median_of_5.cpp
-)
+# add_executable(bench_median_of_5
+#     instrumented.cpp
+#     inst_median_of_5.cpp
+# )
 
-add_executable(bench_median_of_7
-    instrumented.cpp
-    inst_median_of_7.cpp
-)
+# add_executable(bench_median_of_7
+#     instrumented.cpp
+#     inst_median_of_7.cpp
+# )
 
 
-add_dependencies(benchmarks bench_median_of_3)
-add_dependencies(benchmarks bench_median_of_5)
-add_dependencies(benchmarks bench_median_of_7)
+# add_dependencies(benchmarks bench_median_of_3)
+# add_dependencies(benchmarks bench_median_of_5)
+# add_dependencies(benchmarks bench_median_of_7)
 
 foreach(file IN LISTS TAO_ALGORITHM_BENCHMARKS)
     string(REGEX REPLACE "\\.cpp$" "" name ${file})

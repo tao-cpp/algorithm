@@ -39,7 +39,7 @@ bool miller_rabin_test(I n, I q, I k, I w) {
     if (x == I(1) || x == n - I(1)) return true;
 
     for (I i(1); i < k; ++i) {
-        // invariant x == w^((2^(i-1))*q)
+        // invariant: x == w^((2^(i-1))*q)
         
         x = mmult(x, x);
         if (x == n - I(1)) return true;
