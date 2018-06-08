@@ -16,60 +16,80 @@
 
 namespace tao { namespace algorithm {
 
-//TODO(fernando): find a better name
-template <Regular T>
+template <Semiregular T, Semiregular U>        //TODO(fernando): is Semiregular OK?
+    requires(SameType<T, U>)
 inline
-void swap_2(T& a, T& b, T& c) noexcept {
-    b = std::move(a);
-    a = std::move(c);
+void shift_three(T& a, T& b, U&& c) noexcept {
+    a = std::move(b);
+    b = std::move(c);
 }
 
 }} /*tao::algorithm*/
 
 #endif /*TAO_ALGORITHM_SWAP_HPP_*/
 
-
 #ifdef DOCTEST_LIBRARY_INCLUDED
 
-// #include <iterator>
-// #include <forward_list>
-// #include <list>
-// #include <vector>
+#include <iterator>
+#include <iostream>
+#include <tao/benchmark/instrumented.hpp>
 
-// #include <tao/benchmark/instrumented.hpp>
-
-// using namespace std;
-// using namespace tao::algorithm;
+using namespace std;
+using namespace tao::algorithm;
 
 
-// TEST_CASE("[shift] testing shift_right_by_one_temp") {
-//     //using namespace tao::algorithm;
+TEST_CASE("[shift_three] testing shift_three") {
+    int a = 1;
+    int b = 2;
+    int c = 3;
 
-//     // using T = int;
-//     using T = instrumented<int>;
-//     instrumented<int>::initialize(0);
+    shift_three(a, b, c);
 
-//     vector<T> a = {1, 2, 3, 4, 5, 6};
+    CHECK(a == 2);
+    CHECK(b == 3);
+    CHECK(c == 3);
+}
 
-//     instrumented<int>::initialize(0);
-//     shift_right_by_one_temp(begin(a), end(a));
+TEST_CASE("[shift_three] testing shift_three const last") {
+    int a = 1;
+    int b = 2;
+    int const c = 3;
 
-//     // for (auto&& x : a) {
-//     //     cout << x << endl;
-//     // }
+    shift_three(a, b, c);
 
+    CHECK(a == 2);
+    CHECK(b == 3);
+    CHECK(c == 3);
+}
 
-//     double* count_p = instrumented<int>::counts;
-//     for (size_t i = 0; i < instrumented_base::number_ops; ++i) {
-//         std::cout << instrumented_base::counter_names[i] << ": " 
-//                   << count_p[i] 
-//                   << std::endl;
-//     }
+TEST_CASE("[shift_three] testing shift_three instrumented") {
+    using T = instrumented<int>;
 
-//     CHECK(a == vector<T>{1, 1, 2, 3, 4, 5});
-//     CHECK(a == vector<T>{1, 1, 2, 3, 4, 6});
+    T a = 1;
+    T b = 2;
+    T c = 3;
+
+    instrumented<int>::initialize(0);
+    shift_three(a, b, c);
     
-// }
+    double* count_p = instrumented<int>::counts;
+    CHECK(count_p[instrumented_base::copy_assignment] == 0);
+    CHECK(count_p[instrumented_base::move_assignment] == 2);
+}
 
+TEST_CASE("[shift_three] testing shift_three instrumented const last") {
+    using T = instrumented<int>;
+
+    T a = 1;
+    T b = 2;
+    T const c = 3;
+
+    instrumented<int>::initialize(0);
+    shift_three(a, b, c);
+    
+    double* count_p = instrumented<int>::counts;
+    CHECK(count_p[instrumented_base::copy_assignment] == 1);
+    CHECK(count_p[instrumented_base::move_assignment] == 1);
+}
 
 #endif /*DOCTEST_LIBRARY_INCLUDED*/

@@ -6,8 +6,8 @@
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef TAO_ALGORITHM_SHIFT_HPP
-#define TAO_ALGORITHM_SHIFT_HPP
+#ifndef TAO_ALGORITHM_SHIFT_HPP_
+#define TAO_ALGORITHM_SHIFT_HPP_
 
 #include <algorithm>
 #include <iterator>
@@ -39,13 +39,12 @@ void shift_right_by_one(I f, I l, std::forward_iterator_tag) {
     //precondition: mutable_bounded_range(f, l)
     if (f == l) return;
 
-    ValueType<I> a = std::move(*f);
-    ++f;
+    ValueType<I> a = std::move(*f++);
     ValueType<I> b;
     while (f != l) {
-        swap_2(*f++, b, a);
+        shift_three(b, *f++, a);
         if (f == l) return;
-        swap_2(*f++, a, b);
+        shift_three(a, *f++, b);
     }
 }
 
@@ -98,16 +97,9 @@ void shift_right_by_one_n(I f, DistanceType<I> n, std::forward_iterator_tag) {
     ++f; --n;
     ValueType<I> b;
     while (n != N(0)) {
-        // std::cout << "a: " << a << std::endl;
-        // std::cout << "b: " << b << std::endl;
-        swap_2(*f++, b, a); --n;
-        // std::cout << "a: " << a << std::endl;
-        // std::cout << "b: " << b << std::endl;
-
+        shift_three(b, *f++, a); --n;
         if (n == N(0)) return;
-
-        // std::cout << "------------------------------" << std::endl;
-        swap_2(*f++, a, b); --n;
+        shift_three(a, *f++, b); --n;
     }
 }
 
@@ -225,10 +217,12 @@ I shift_left_by_one(I f, I l) {
 //      Space:
 //          O(1)
 template <ForwardIterator I>
+    requires(Mutable<I>)
 I shift_left_by_one_n(I f, DistanceType<I> n) {
+    //precondition:  mutable_counted_range(f, n)
+    //postcondition: equal_n(old_f + 1, old_n - 1, new_f)
     using N = DistanceType<I>;
 
-    //precondition: mutable_counted_range(f, n)
     if (n == N(0)) return f;
 
     I next = f;
@@ -360,7 +354,7 @@ I shift_right(I f, I l, DistanceType<I> n) {
 
 }} /*tao::algorithm*/
 
-#endif /*TAO_ALGORITHM_SHIFT_HPP*/
+#endif /*TAO_ALGORITHM_SHIFT_HPP_*/
 
 
 #ifdef DOCTEST_LIBRARY_INCLUDED

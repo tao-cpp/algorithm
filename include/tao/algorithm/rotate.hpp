@@ -45,12 +45,12 @@ void rotate_right_by_one(I f, I l, std::forward_iterator_tag) {
     ++f;
     ValueType<I> b;
     while (f != l) {
-        swap_2(*f++, b, a);
+        shift_three(b, *f++, a);
         if (f == l) {
             *first = std::move(b);
             return;
         };
-        swap_2(*f++, a, b);
+        shift_three(a, *f++, b);
     }
     *first = std::move(a);
 }
@@ -107,9 +107,9 @@ void rotate_right_by_one_n(I f, DistanceType<I> n, std::forward_iterator_tag) {
     ++f; --n;
     ValueType<I> b;
     while (n != N(0)) {
-        swap_2(*f++, b, a); --n;
+        shift_three(b, *f++, a); --n;
         if (n == N(0)) return;
-        swap_2(*f++, a, b); --n;
+        shift_three(a, *f++, b); --n;
     }
 }
 
