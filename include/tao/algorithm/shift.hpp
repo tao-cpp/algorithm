@@ -13,14 +13,17 @@
 #include <iterator>
 #include <utility>
 
-#include <iostream>
+// #include <iostream>
+
 
 #include <tao/algorithm/concepts.hpp>
 #include <tao/algorithm/copy.hpp>
+#include <tao/algorithm/iterator.hpp>
 #include <tao/algorithm/swap.hpp>
 #include <tao/algorithm/type_attributes.hpp>
 
 namespace tao { namespace algorithm {
+
 
 // -----------------------------------------------------------------
 // shift_right_by_one
@@ -35,6 +38,7 @@ namespace tao { namespace algorithm {
 //      Space:
 //          O(1)
 template <ForwardIterator I>
+    requires(Mutable<I>)
 void shift_right_by_one(I f, I l, std::forward_iterator_tag) {
     //precondition: mutable_bounded_range(f, l)
     if (f == l) return;
@@ -55,6 +59,7 @@ void shift_right_by_one(I f, I l, std::forward_iterator_tag) {
 //      Space:
 //          O(1)
 template <BidirectionalIterator I>
+    requires(Mutable<I>)
 void shift_right_by_one(I f, I l, std::bidirectional_iterator_tag) {
     //precondition: mutable_bounded_range(f, l)
     if (f == l) return;
@@ -70,6 +75,7 @@ void shift_right_by_one(I f, I l, std::bidirectional_iterator_tag) {
 //      Space:
 //          O(1)
 template <ForwardIterator I>
+    requires(Mutable<I>)
 inline
 void shift_right_by_one(I f, I l) {
     return shift_right_by_one(f, l, IteratorCategory<I>{});
@@ -87,6 +93,7 @@ void shift_right_by_one(I f, I l) {
 //      Space:
 //          O(1)
 template <ForwardIterator I>
+    requires(Mutable<I>)
 void shift_right_by_one_n(I f, DistanceType<I> n, std::forward_iterator_tag) {
     //precondition: mutable_counted_range(f, n)
     using N = DistanceType<I>;
@@ -94,12 +101,20 @@ void shift_right_by_one_n(I f, DistanceType<I> n, std::forward_iterator_tag) {
     if (n == N(0)) return;
 
     ValueType<I> a = std::move(*f);
-    ++f; --n;
+    // ++f; --n;
+    step_n(f, n);
     ValueType<I> b;
     while (n != N(0)) {
-        shift_three(b, *f++, a); --n;
+        // shift_three(b, *f++, a); --n;
+        shift_three(b, *f, a);
+        step_n(f, n);
+
+        
         if (n == N(0)) return;
-        shift_three(a, *f++, b); --n;
+
+        // shift_three(a, *f++, b); --n;
+        shift_three(a, *f, b);
+        step_n(f, n);
     }
 }
 
@@ -110,52 +125,18 @@ void shift_right_by_one_n(I f, DistanceType<I> n, std::forward_iterator_tag) {
 //      Space:
 //          O(1)
 template <BidirectionalIterator I>
+    requires(Mutable<I>)
 void shift_right_by_one_n(I f, DistanceType<I> n, std::bidirectional_iterator_tag) {
     //precondition: mutable_counted_range(f, n)
     using N = DistanceType<I>;
     if (n <= N(1)) return;
 
-    I butl = std::next(f, n - 1);
-    I l = butl;
+    I butlast = std::next(f, n - 1);   //very slow for bidirectional iterators, ok for random access
+    I l = butlast;
     ++l;
 
-    tao::algorithm::move_backward_n(butl, n - 1, l);
+    tao::algorithm::move_backward_n(butlast, n - 1, l);
 }
-
-/*
-
-bool count_down(N& n) {
-    if (n == N(0)) return false;
-    --n;        //n = predecessor(n);
-    return true;
-}
-
-void move_backward_step(I& l_i, O& l_o) {
-}
-
-
-std::pair<I, O> move_backward_n(I l_i, DistanceType<I> n, O l_o) {
-    while (count_down(n)) move_backward_step(l_i, l_o);
-    return {l_i, l_o};
-}
-
-
-std::pair<I, O> move_backward_n(I l_i, DistanceType<I> n, O l_o) {
-    while (n-- != 0) {
-        --l_i;
-        --l_o;
-        *l_o = std::move(*l_i);
-    } 
-    return {l_i, l_o};
-}
-
-
-// 1    2       n = 2
-
-
-
-*/
-
 
 //Complexity: 
 //      Runtime:
@@ -166,6 +147,7 @@ std::pair<I, O> move_backward_n(I l_i, DistanceType<I> n, O l_o) {
 //      Space:
 //          O(1)
 template <ForwardIterator I>
+    requires(Mutable<I>)
 inline
 void shift_right_by_one_n(I f, DistanceType<I> n) {
     return shift_right_by_one_n(f, n, IteratorCategory<I>{});
@@ -188,6 +170,7 @@ void shift_right_by_one_n(I f, DistanceType<I> n) {
 //      Space:
 //          O(1)
 template <ForwardIterator I>
+    requires(Mutable<I>)
 I shift_left_by_one(I f, I l) {
     //precondition: mutable_bounded_range(f, l)
     if (f == l) return f;
@@ -285,8 +268,8 @@ template <BidirectionalIterator I>
 I shift_right(I f, I l, DistanceType<I> n, std::bidirectional_iterator_tag) {
     //precondition: n >= 0 && 
     //              std::distance(f, l) >= n (so [f, n) is a valid range)
-    I butl = std::prev(l, n);
-    return tao::algorithm::move_backward(f, butl, l);
+    I butlast = std::prev(l, n);
+    return tao::algorithm::move_backward(f, butlast, l);
 }
 
 //Complexity: 
@@ -351,6 +334,15 @@ I shift_right(I f, I l, DistanceType<I> n) {
 // I shift_left(I f, I l, DistanceType<I> n) {
 //     return shift_left(f, l, n, IteratorCategory<I>{});
 // }
+
+template <ForwardIterator I>
+void rotate_right_by_one_ALEX(I f, I l) { //, std::forward_iterator_tag) {
+    using std::swap;
+    if (f == l) return;
+    I current = f; 
+    while (++current != l) swap(*f, *current);
+}
+
 
 }} /*tao::algorithm*/
 
@@ -648,6 +640,7 @@ TEST_CASE("[shift] testing shift_right_by_one instrumented forward") {
           count_p[instrumented_base::move_assignment] == 2 * n - 1);
     CHECK(count_p[instrumented_base::destructor] == 2);
 }
+
 
 
 TEST_CASE("[shift] testing shift_right_by_one_n 0 elements random access") {
@@ -1295,6 +1288,72 @@ TEST_CASE("[shift] testing shift_left_by_one_n instrumented forward") {
 }
 
 
+// ------------------------------------------------------------------------
 
+// TEST_CASE("[shift] testing rotate_right_by_one_ALEX instrumented random access") {
+//     using T = instrumented<int>;
+//     vector<T> a = {1, 2, 3, 4, 5, 6};
+
+//     instrumented<int>::initialize(0);
+//     rotate_right_by_one_ALEX(begin(a), end(a));
+
+//     double* count_p = instrumented<int>::counts;
+//     CHECK(count_p[instrumented_base::copy_ctor] + 
+//           count_p[instrumented_base::copy_assignment] + 
+//           count_p[instrumented_base::move_ctor] + 
+//           count_p[instrumented_base::move_assignment] == a.size() - 1);
+//     CHECK(count_p[instrumented_base::destructor] == 0);
+// }
+
+// TEST_CASE("[shift] testing rotate_right_by_one_ALEX instrumented bidirectional") {
+//     using T = instrumented<int>;
+//     list<T> a = {1, 2, 3, 4, 5, 6};
+
+//     instrumented<int>::initialize(0);
+//     rotate_right_by_one_ALEX(begin(a), end(a));
+
+//     // for (auto&& x : a) {
+//     //     cout << x << ", ";
+//     // }
+//     // cout << endl;
+
+
+//     double* count_p = instrumented<int>::counts;
+//     // for (size_t i = 0; i < instrumented_base::number_ops; ++i) {
+//     //     std::cout << instrumented_base::counter_names[i] << ": " 
+//     //         << count_p[i] 
+//     //         << std::endl;
+//     // }
+
+//     // CHECK(1 == 0);
+
+//     CHECK(count_p[instrumented_base::copy_ctor] + 
+//           count_p[instrumented_base::copy_assignment] + 
+//           count_p[instrumented_base::move_ctor] + 
+//           count_p[instrumented_base::move_assignment] == a.size() - 1);
+//     CHECK(count_p[instrumented_base::destructor] == 0);
+// }
+
+TEST_CASE("[shift] testing rotate_right_by_one_ALEX instrumented forward") {
+    using T = instrumented<int>;
+    forward_list<T> a = {1, 2, 3, 4, 5, 6};
+    auto n = distance(begin(a), end(a));
+
+    instrumented<int>::initialize(0);
+    rotate_right_by_one_ALEX(begin(a), end(a));
+
+    double* count_p = instrumented<int>::counts;
+    // for (size_t i = 0; i < instrumented_base::number_ops; ++i) {
+    //     std::cout << instrumented_base::counter_names[i] << ": " 
+    //                 << count_p[i] 
+    //                 << std::endl;
+    // } 
+
+    CHECK(count_p[instrumented_base::copy_ctor] + 
+          count_p[instrumented_base::copy_assignment] + 
+          count_p[instrumented_base::move_ctor] + 
+          count_p[instrumented_base::move_assignment] == 3 * (n - 1));
+    CHECK(count_p[instrumented_base::destructor] == 5);
+}
 
 #endif /*DOCTEST_LIBRARY_INCLUDED*/

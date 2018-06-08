@@ -22,6 +22,7 @@
 #undef BidirectionalIterator
 #undef RandomAccessIterator
 #undef Container
+#undef Relation
 #undef StrictWeakOrdering
 #undef Procedure
 #undef BinaryOperation

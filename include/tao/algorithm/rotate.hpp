@@ -13,10 +13,11 @@
 #include <iterator>
 #include <utility>
 
-#include <iostream>
+// #include <iostream>
 
 #include <tao/algorithm/concepts.hpp>
 #include <tao/algorithm/copy.hpp>
+#include <tao/algorithm/iterator.hpp>
 #include <tao/algorithm/swap.hpp>
 #include <tao/algorithm/type_attributes.hpp>
 
@@ -103,14 +104,26 @@ void rotate_right_by_one_n(I f, DistanceType<I> n, std::forward_iterator_tag) {
 
     if (n == N(0)) return;
 
+    I first = f;
+
     ValueType<I> a = std::move(*f);
-    ++f; --n;
     ValueType<I> b;
+    step_n(f, n);
+    
     while (n != N(0)) {
-        shift_three(b, *f++, a); --n;
-        if (n == N(0)) return;
-        shift_three(a, *f++, b); --n;
+        shift_three(b, *f, a);
+        step_n(f, n);
+
+        if (n == N(0)) {
+            *first = std::move(b);
+            return;
+        };
+        
+        shift_three(a, *f, b);
+        step_n(f, n);
+
     }
+    *first = std::move(a);
 }
 
 //Complexity: 
@@ -125,11 +138,13 @@ void rotate_right_by_one_n(I f, DistanceType<I> n, std::bidirectional_iterator_t
     using N = DistanceType<I>;
     if (n <= N(1)) return;
 
-    I butl = std::next(f, n - 1);
-    I l = butl;
+    I butlast = std::next(f, n - 1);
+    I l = butlast;
     ++l;
 
-    tao::algorithm::move_backward_n(butl, n - 1, l);
+    auto x = std::move(*butlast);
+    tao::algorithm::move_backward_n(butlast, n - 1, l);
+    *f = std::move(x);    
 }
 
 
@@ -256,8 +271,8 @@ template <BidirectionalIterator I>
 I rotate_right(I f, I l, DistanceType<I> n, std::bidirectional_iterator_tag) {
     //precondition: n >= 0 && 
     //              std::distance(f, l) >= n (so [f, n) is a valid range)
-    I butl = std::prev(l, n);
-    return tao::algorithm::move_backward(f, butl, l);
+    I butlast = std::prev(l, n);
+    return tao::algorithm::move_backward(f, butlast, l);
 }
 
 //Complexity: 
@@ -620,7 +635,6 @@ TEST_CASE("[rotate] testing rotate_right_by_one instrumented forward") {
     CHECK(count_p[instrumented_base::destructor] == 2);
 }
 
-
 TEST_CASE("[rotate] testing rotate_right_by_one_n 0 elements random access") {
     using T = int;
     vector<T> a;
@@ -667,7 +681,7 @@ TEST_CASE("[rotate] testing rotate_right_by_one_n 6 elements random access") {
     using T = int;
     vector<T> a = {1, 2, 3, 4, 5, 6};
     rotate_right_by_one_n(begin(a), a.size());
-    CHECK(a == vector<T>{1, 1, 2, 3, 4, 5});
+    CHECK(a == vector<T>{6, 1, 2, 3, 4, 5});
 }
 
 TEST_CASE("[rotate] testing rotate_right_by_one_n 0 elements bidirectional") {
@@ -688,35 +702,35 @@ TEST_CASE("[rotate] testing rotate_right_by_one_n 2 elements bidirectional") {
     using T = int;
     list<T> a = {1, 2};
     rotate_right_by_one_n(begin(a), a.size());
-    CHECK(a == list<T>{1, 1});
+    CHECK(a == list<T>{2, 1});
 }
 
 TEST_CASE("[rotate] testing rotate_right_by_one_n 3 elements bidirectional") {
     using T = int;
     list<T> a = {1, 2, 3};
     rotate_right_by_one_n(begin(a), a.size());
-    CHECK(a == list<T>{1, 1, 2});
+    CHECK(a == list<T>{3, 1, 2});
 }
 
 TEST_CASE("[rotate] testing rotate_right_by_one_n 4 elements bidirectional") {
     using T = int;
     list<T> a = {1, 2, 3, 4};
     rotate_right_by_one_n(begin(a), a.size());
-    CHECK(a == list<T>{1, 1, 2, 3});
+    CHECK(a == list<T>{4, 1, 2, 3});
 }
 
 TEST_CASE("[rotate] testing rotate_right_by_one_n 5 elements bidirectional") {
     using T = int;
     list<T> a = {1, 2, 3, 4, 5};
     rotate_right_by_one_n(begin(a), a.size());
-    CHECK(a == list<T>{1, 1, 2, 3, 4});
+    CHECK(a == list<T>{5, 1, 2, 3, 4});
 }
 
 TEST_CASE("[rotate] testing rotate_right_by_one_n 6 elements bidirectional") {
     using T = int;
     list<T> a = {1, 2, 3, 4, 5, 6};
     rotate_right_by_one_n(begin(a), a.size());
-    CHECK(a == list<T>{1, 1, 2, 3, 4, 5});
+    CHECK(a == list<T>{6, 1, 2, 3, 4, 5});
 }
 
 TEST_CASE("[rotate] testing rotate_right_by_one_n 0 elements forward") {
@@ -740,7 +754,7 @@ TEST_CASE("[rotate] testing rotate_right_by_one_n 2 elements forward") {
     forward_list<T> a = {1, 2};
     auto n = distance(begin(a), end(a));
     rotate_right_by_one_n(begin(a), n);
-    CHECK(a == forward_list<T>{1, 1});
+    CHECK(a == forward_list<T>{2, 1});
 }
 
 TEST_CASE("[rotate] testing rotate_right_by_one_n 3 elements forward") {
@@ -748,7 +762,7 @@ TEST_CASE("[rotate] testing rotate_right_by_one_n 3 elements forward") {
     forward_list<T> a = {1, 2, 3};
     auto n = distance(begin(a), end(a));
     rotate_right_by_one_n(begin(a), n);
-    CHECK(a == forward_list<T>{1, 1, 2});
+    CHECK(a == forward_list<T>{3, 1, 2});
 }
 
 TEST_CASE("[rotate] testing rotate_right_by_one_n 4 elements forward") {
@@ -756,7 +770,7 @@ TEST_CASE("[rotate] testing rotate_right_by_one_n 4 elements forward") {
     forward_list<T> a = {1, 2, 3, 4};
     auto n = distance(begin(a), end(a));
     rotate_right_by_one_n(begin(a), n);
-    CHECK(a == forward_list<T>{1, 1, 2, 3});
+    CHECK(a == forward_list<T>{4, 1, 2, 3});
 }
 
 TEST_CASE("[rotate] testing rotate_right_by_one_n 5 elements forward") {
@@ -764,7 +778,7 @@ TEST_CASE("[rotate] testing rotate_right_by_one_n 5 elements forward") {
     forward_list<T> a = {1, 2, 3, 4, 5};
     auto n = distance(begin(a), end(a));
     rotate_right_by_one_n(begin(a), n);
-    CHECK(a == forward_list<T>{1, 1, 2, 3, 4});
+    CHECK(a == forward_list<T>{5, 1, 2, 3, 4});
 }
 
 TEST_CASE("[rotate] testing rotate_right_by_one_n 6 elements forward") {
@@ -772,7 +786,7 @@ TEST_CASE("[rotate] testing rotate_right_by_one_n 6 elements forward") {
     forward_list<T> a = {1, 2, 3, 4, 5, 6};
     auto n = distance(begin(a), end(a));
     rotate_right_by_one_n(begin(a), n);
-    CHECK(a == forward_list<T>{1, 1, 2, 3, 4, 5});
+    CHECK(a == forward_list<T>{6, 1, 2, 3, 4, 5});
 }
 
 TEST_CASE("[rotate] testing rotate_right_by_one_n instrumented random access") {
@@ -786,8 +800,8 @@ TEST_CASE("[rotate] testing rotate_right_by_one_n instrumented random access") {
     CHECK(count_p[instrumented_base::copy_ctor] + 
           count_p[instrumented_base::copy_assignment] + 
           count_p[instrumented_base::move_ctor] + 
-          count_p[instrumented_base::move_assignment] == a.size() - 1);
-    CHECK(count_p[instrumented_base::destructor] == 0);
+          count_p[instrumented_base::move_assignment] == a.size() + 1);
+    CHECK(count_p[instrumented_base::destructor] == 1);
 }
 
 TEST_CASE("[rotate] testing rotate_right_by_one_n instrumented bidirectional") {
@@ -801,8 +815,8 @@ TEST_CASE("[rotate] testing rotate_right_by_one_n instrumented bidirectional") {
     CHECK(count_p[instrumented_base::copy_ctor] + 
           count_p[instrumented_base::copy_assignment] + 
           count_p[instrumented_base::move_ctor] + 
-          count_p[instrumented_base::move_assignment] == a.size() - 1);
-    CHECK(count_p[instrumented_base::destructor] == 0);
+          count_p[instrumented_base::move_assignment] == a.size() + 1);
+    CHECK(count_p[instrumented_base::destructor] == 1);
 }
 
 TEST_CASE("[rotate] testing rotate_right_by_one_n instrumented forward") {
@@ -817,7 +831,7 @@ TEST_CASE("[rotate] testing rotate_right_by_one_n instrumented forward") {
     CHECK(count_p[instrumented_base::copy_ctor] + 
           count_p[instrumented_base::copy_assignment] + 
           count_p[instrumented_base::move_ctor] + 
-          count_p[instrumented_base::move_assignment] == 2 * n - 1);
+          count_p[instrumented_base::move_assignment] == 2 * n);
     CHECK(count_p[instrumented_base::destructor] == 2);
 }
 

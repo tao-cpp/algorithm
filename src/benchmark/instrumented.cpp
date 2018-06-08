@@ -10,7 +10,7 @@
 #include <algorithm>
 
 double instrumented_base::counts[];
-const char* instrumented_base::counter_names[number_ops] = {"n", "default", "construct", "copy ctor", "copy assign", "move ctor", "move assign", "destruct", "equal", "less"};
+const char* instrumented_base::counter_names[number_ops] = {"n", "default", "construct", "copy ctor", "copy assign", "move ctor", "move assign", "destruct", "equal", "less"}; //, "swap"
 
 void instrumented_base::initialize(size_t m) {
     std::fill(counts, counts + number_ops, 0.0);

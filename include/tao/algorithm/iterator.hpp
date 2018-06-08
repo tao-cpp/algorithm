@@ -43,6 +43,25 @@ template <BidirectionalIterator I>
 inline constexpr 
 I predecessor(I x) noexcept { return --x; }
 
+
+template <Iterator I>
+void step_n(I& f, DistanceType<I>& n) {
+    ++f;
+    --n;
+}
+
+template <Iterator I>
+void step(I& f) {
+    ++f;
+}
+
+template <Iterator I, Iterator... Args>
+void step(I& f, Args&... args) {
+    ++f;
+    step(args...);
+}
+
+
 }} /*tao::algorithm*/
 
 #endif //TAO_ALGORITHM_ITERATOR_HPP

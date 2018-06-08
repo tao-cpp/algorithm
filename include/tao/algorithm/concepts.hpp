@@ -45,6 +45,7 @@
 
 #define Container typename
 
+#define Relation typename
 #define StrictWeakOrdering typename
 
 #define Procedure typename

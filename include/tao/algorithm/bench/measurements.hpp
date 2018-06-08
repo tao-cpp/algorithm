@@ -1,4 +1,4 @@
-//! \file tao/algorithm/benchmark/measurements.hpp
+//! \file tao/algorithm/bench/measurements.hpp
 // Tao.Algorithm
 //
 // Copyright Fernando Pelliccioni 2016-2018
@@ -6,8 +6,8 @@
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef TAOCPP_BENCHMARK_MEASUREMENTS_HPP_
-#define TAOCPP_BENCHMARK_MEASUREMENTS_HPP_
+#ifndef TAOCPP_ALGORITHM_BENCH_MEASUREMENTS_HPP_
+#define TAOCPP_ALGORITHM_BENCH_MEASUREMENTS_HPP_
 
 #include <algorithm>
 #include <array>
@@ -31,6 +31,8 @@
 
 using namespace std::string_literals;
 // using namespace tao::algorithm;
+
+namespace tao {
 
 namespace detail {
 
@@ -559,12 +561,12 @@ auto measure_nullary(P1 setUp, P2 test) {
 
 // 	return get_statistics(samples_list)
 
-
+} //namespace tao
 
 // Concepts emulation undef
 #undef Function
 
 
-#endif /*TAOCPP_BENCHMARK_MEASUREMENTS_HPP_*/
+#endif /*TAOCPP_ALGORITHM_BENCH_MEASUREMENTS_HPP_*/
 
 

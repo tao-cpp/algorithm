@@ -14,7 +14,7 @@
 
 struct instrumented_base {
     enum operations {
-        n, default_constructor, construction, copy_ctor, copy_assignment, move_ctor, move_assignment, destructor, equality, comparison
+        n, default_constructor, construction, copy_ctor, copy_assignment, move_ctor, move_assignment, destructor, equality, comparison//, swaps
     };
     static size_t const  number_ops = 10;
     static double counts[number_ops];
@@ -91,6 +91,13 @@ struct instrumented : instrumented_base {
     bool operator>=(instrumented const& x, instrumented const& y) {
         return !(x < y);
     } 
+
+    // friend 
+    // void swap(instrumented& a, instrumented& b) {
+    //     using std::swap; 
+    //     ++counts[swaps];
+    //     swap(a.value, b.value);
+    // }
 
     //Convertion Operator
     operator T() const {
