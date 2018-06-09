@@ -18,31 +18,32 @@
 
 namespace tao { namespace algorithm {
 
-template <BidirectionalIterator I, Relation R>  //WeakStrictOrdering??
-    requires(Mutable<I>)
-I shift_right_while(I f, I l, R r) {
-    // precondition: mutable_bounded_range(f, l + 1) && is_sorted(f, l, r)
-    while (f != l && r(*predecessor(l))) {
-        *l = *predecessor(l);
-        --l;
-    }
-    return l;
-}
-
 
 
 template <BidirectionalIterator I, Relation R>  //WeakStrictOrdering??
     requires(Mutable<I>)
 I linear_insert(I f, I current, R r) {
     // precondition: mutable_bounded_range(f, current + 1) && is_sorted(f, current, r)
-    auto value = *current;
-    while (f != current && r(value, *predecessor(current))) {
-        *current = *predecessor(current);
-        --current;
-    }
-    *current = value;
+    auto value = std::move(*current);
+    current = shift_right_while(f, current, [r, &value](ValueType<I> const& x){
+        return r(value, x);
+    });
+    *current = std::move(value);
     return current;
 }
+
+// template <BidirectionalIterator I, Relation R>  //WeakStrictOrdering??
+//     requires(Mutable<I>)
+// I linear_insert(I f, I current, R r) {
+//     // precondition: mutable_bounded_range(f, current + 1) && is_sorted(f, current, r)
+//     auto value = *current;
+//     while (f != current && r(value, *predecessor(current))) {
+//         *current = *predecessor(current);
+//         --current;
+//     }
+//     *current = value;
+//     return current;
+// }
 
 
 
@@ -134,12 +135,13 @@ I insertion_sort_binary_n(I f, DistanceType<I> n, R r) {
     //precondition: mutable_bounded_range(f, l)
 
     using N = DistanceType<I>;
-    if (n == N(0)) return f;
-    I s = f++;
-    while (n != N(0)) {
+    if (zero(n)) return f;
+    I s = f;
+    step_n(f, n);
+    while ( ! zero(n)) {
         //invariant: is_sorted(s, f, r) && distance(s, f) == 1
-        binary_insert(s, f++, r);
-        --n;
+        binary_insert(s, f, r);
+        step_n(f, n);
     }
     return f;
 }
@@ -153,6 +155,38 @@ I insertion_sort_binary_n(I f, DistanceType<I> n, R r) {
 #ifdef DOCTEST_LIBRARY_INCLUDED
 
 #include <tao/benchmark/instrumented.hpp>
+
+
+
+
+TEST_CASE("[shift_right_while] testing shift_right_while 6 elements random access") {
+    using T = int;
+    vector<T> a = {1, 2, 3, 4, 5, 6};
+
+    // cout << a[5] << endl;
+    // cout << a[6] << endl;
+
+    shift_right_while(begin(a), end(a), [](int x){
+        return 4 < x;
+    });
+
+    // while (f != l && p(*predecessor(l))) {
+    //     *l = std::move(*predecessor(l));
+    //     --l;
+    // }
+
+    // cout << a[5] << endl;
+    // cout << a[6] << endl;
+
+    // for (auto&& x : a) {
+    //     cout << x << endl;
+    // }    
+
+    CHECK(a == vector<T>{1, 2, 3, 4, 5, 5});
+}
+
+
+
 
 TEST_CASE("[insertion_sort] testing insertion_sort_binary 6 elements random access sorted") {
     using T = int;

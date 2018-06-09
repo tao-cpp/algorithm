@@ -15,7 +15,10 @@
 #include <tao/algorithm/shift.hpp>
 #include <tao/algorithm/swap.hpp>
 
+
+#include <tao/algorithm/selection/min_element.hpp>
 // #include <tao/algorithm/selection/selection_stability.hpp>
 // #include <tao/algorithm/selection/selection_i_5.hpp>
 
 #include <tao/algorithm/sorting/insertion_sort.hpp>
+#include <tao/algorithm/sorting/selection_sort.hpp>

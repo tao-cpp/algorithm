@@ -98,19 +98,19 @@ void shift_right_by_one_n(I f, DistanceType<I> n, std::forward_iterator_tag) {
     //precondition: mutable_counted_range(f, n)
     using N = DistanceType<I>;
 
-    if (n == N(0)) return;
+    if (zero(n)) return;
 
     ValueType<I> a = std::move(*f);
     // ++f; --n;
     step_n(f, n);
     ValueType<I> b;
-    while (n != N(0)) {
+    while ( ! zero(n)) {
         // shift_three(b, *f++, a); --n;
         shift_three(b, *f, a);
         step_n(f, n);
 
         
-        if (n == N(0)) return;
+        if (zero(n)) return;
 
         // shift_three(a, *f++, b); --n;
         shift_three(a, *f, b);
@@ -206,13 +206,13 @@ I shift_left_by_one_n(I f, DistanceType<I> n) {
     //postcondition: equal_n(old_f + 1, old_n - 1, new_f)
     using N = DistanceType<I>;
 
-    if (n == N(0)) return f;
+    if (zero(n)) return f;
 
     I next = f;
     ++next;
     --n;
 
-    while (n != N(0)) {
+    while ( ! zero(n)) {
         //invariant: distance(f, next) == 1
         *f = std::move(*next);
         ++f;
@@ -222,6 +222,59 @@ I shift_left_by_one_n(I f, DistanceType<I> n) {
 
     return f;
 }
+
+
+
+// -----------------------------------------------------------------
+// shift_right_while
+// -----------------------------------------------------------------
+
+//TODO(fernando): refactor
+// template <ForwardIterator I, UnaryPredicate P>  //WeakStrictOrdering??
+//     requires(Mutable<I>)
+// I shift_right_while(I f, I l, P p, std::forward_iterator_tag) {
+//     // precondition: mutable_bounded_range(f, l + 1) 
+//     while (f != l && p(*predecessor(l))) {
+//         *l = std::move(*predecessor(l));
+//         --l;
+//     }
+//     return l;
+// }
+
+template <ForwardIterator I, UnaryPredicate P>  //WeakStrictOrdering??
+    requires(Mutable<I>)
+I shift_right_while(I f, I l, P p, std::forward_iterator_tag) {
+    // precondition: mutable_bounded_range(f, l + 1) 
+    // if (f == l) return f;
+    while (f != l && ! p(*predecessor(l))) {
+        ++f;
+    }
+
+    return shift_right_by_one(f, l);
+}
+
+template <BidirectionalIterator I, UnaryPredicate P>  //WeakStrictOrdering??
+    requires(Mutable<I>)
+I shift_right_while(I f, I l, P p, std::bidirectional_iterator_tag) {
+    // precondition: mutable_bounded_range(f, l + 1) 
+    if (f == l) return f;
+    --l;
+    while (f != l && p(*predecessor(l))) {
+        *l = std::move(*predecessor(l));
+        --l;
+    }
+    return l;
+}
+
+template <ForwardIterator I, UnaryPredicate P>
+    requires(Mutable<I>)
+inline
+I shift_right_while(I f, I l, P p) {
+    return shift_right_while(f, l, p, IteratorCategory<I>{});
+}
+
+
+
 
 // ----------------------------------------------------------------
 

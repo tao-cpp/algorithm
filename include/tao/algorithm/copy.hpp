@@ -14,6 +14,7 @@
 #include <utility>
 
 #include <tao/algorithm/concepts.hpp>
+#include <tao/algorithm/integers.hpp>
 #include <tao/algorithm/swap.hpp>
 #include <tao/algorithm/type_attributes.hpp>
 
@@ -23,8 +24,7 @@ namespace tao { namespace algorithm {
 template <Integer N>
 bool count_down(N& n) {
     //precondition: n >= 0
-    //if (zero(n)) return false;
-    if (n == N(0)) return false;
+    if (zero(n)) return false;
     --n;        //n = predecessor(n);
     return true;
 }

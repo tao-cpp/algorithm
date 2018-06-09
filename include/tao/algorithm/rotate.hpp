@@ -102,7 +102,7 @@ void rotate_right_by_one_n(I f, DistanceType<I> n, std::forward_iterator_tag) {
     //precondition: mutable_counted_range(f, n)
     using N = DistanceType<I>;
 
-    if (n == N(0)) return;
+    if (zero(n)) return;
 
     I first = f;
 
@@ -110,11 +110,11 @@ void rotate_right_by_one_n(I f, DistanceType<I> n, std::forward_iterator_tag) {
     ValueType<I> b;
     step_n(f, n);
     
-    while (n != N(0)) {
+    while ( ! zero(n)) {
         shift_three(b, *f, a);
         step_n(f, n);
 
-        if (n == N(0)) {
+        if (zero(n)) {
             *first = std::move(b);
             return;
         };
@@ -209,13 +209,13 @@ I rotate_left_by_one_n(I f, DistanceType<I> n) {
     using N = DistanceType<I>;
 
     //precondition: mutable_counted_range(f, n)
-    if (n == N(0)) return f;
+    if (zero(n)) return f;
 
     I next = f;
     ++next;
     --n;
 
-    while (n != N(0)) {
+    while ( ! zero(n)) {
         //invariant: distance(f, next) == 1
         *f = std::move(*next);
         ++f;

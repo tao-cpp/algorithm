@@ -45,6 +45,8 @@
 
 #define Container typename
 
+#define UnaryPredicate typename
+
 #define Relation typename
 #define StrictWeakOrdering typename
 

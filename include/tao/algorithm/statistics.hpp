@@ -76,7 +76,7 @@ R median(I f, I l, N n) {
 	//              ValueType<I> is convertible to R
 
 	//TODO: what should return in case of empty range?
-	if (n == N(0)) return R(0);
+	if (zero(n)) return R(0);
 
 	std::sort(f, l); //TODO(fernando): sort or stable_sort
 
