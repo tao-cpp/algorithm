@@ -14,6 +14,7 @@
 
 #define Semiregular typename
 #define Regular typename
+#define TotallyOrdered typename
 
 
 
@@ -69,6 +70,9 @@
 #define SemigroupOperation typename
 #define MonoidOperation typename
 #define GroupOperation typename
+
+#define Generator typename
+
 
 #define requires(...) 
 

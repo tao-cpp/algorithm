@@ -5,12 +5,12 @@
 // #include <boost/hana/product.hpp>
 // #include <boost/hana/tuple.hpp>
 
-#include "instrumented.hpp"
 #include <cstdlib>
 #include <iostream>
 #include <random>
 #include <tuple>
 
+#include <tao/benchmark/instrumented.hpp>
 #include <tao/algorithm/selection/selection_i_5.hpp>
 
 #define Integer typename

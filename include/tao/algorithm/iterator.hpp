@@ -13,6 +13,7 @@
 #include <cstddef>
 
 #include <tao/algorithm/concepts.hpp>
+#include <tao/algorithm/type_attributes.hpp>
 
 namespace tao { namespace algorithm {
 

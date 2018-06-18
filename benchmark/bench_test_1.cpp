@@ -229,8 +229,6 @@ void run_mearurements(size_t min_size, size_t max_size) {
 
 int main() {
     std::cout << std::setprecision(std::numeric_limits<long double>::digits10 + 1);
-
-
 	
 	constexpr size_t min_size = 8;
 	// constexpr size_t max_size = 32;

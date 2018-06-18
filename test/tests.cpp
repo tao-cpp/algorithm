@@ -17,8 +17,11 @@
 
 
 #include <tao/algorithm/selection/min_element.hpp>
+#include <tao/algorithm/selection/max_element.hpp>
+#include <tao/algorithm/selection/min_max_element.hpp>
 // #include <tao/algorithm/selection/selection_stability.hpp>
 // #include <tao/algorithm/selection/selection_i_5.hpp>
 
 #include <tao/algorithm/sorting/insertion_sort.hpp>
 #include <tao/algorithm/sorting/selection_sort.hpp>
+#include <tao/algorithm/sorting/min_max_sort.hpp>

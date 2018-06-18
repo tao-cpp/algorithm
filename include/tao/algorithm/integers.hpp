@@ -44,6 +44,15 @@ template <Integer I>
 inline constexpr 
 bool one(I const& a) { return a == I(1); }
 
+
+
+template <Regular T>
+constexpr auto supremum = std::numeric_limits<T>::max();
+
+template <Regular T>
+constexpr auto infimum = std::numeric_limits<T>::min();
+
+
 }} /*tao::algorithm*/
 
 #endif /*TAO_ALGORITHM_INTEGERS_HPP*/

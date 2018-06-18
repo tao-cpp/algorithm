@@ -11,6 +11,7 @@
 
 #undef Semiregular
 #undef Regular
+#undef TotallyOrdered
 #undef Number
 #undef Integral
 #undef Integer
@@ -38,6 +39,10 @@
 #undef SemigroupOperation
 #undef MonoidOperation
 #undef GroupOperation
+
+
+#undef Generator
+
 #undef requires 
 
 // #undef TAO_ALGORITHM_CONCEPTS_UNDEF_HPP_
