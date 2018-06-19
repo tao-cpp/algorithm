@@ -105,7 +105,8 @@ template <ForwardIterator I, StrictWeakOrdering R>
     requires(Readable<I> && Domain<R, ValueType<I>>)
 std::pair<I, DistanceType<I>> min_element_n(I f, DistanceType<I> n, R r) {
     //precondition:  readable_counted_range(f, n)
-    //postcondition: n != 0 && *min_element_n(f, n, r) == stable_sort_copy_n(f, n, r)[0]
+    //postcondition: n != 0 && *get<0>(result) == stable_sort_copy_n(f, n, r)[0] &&
+    //               *get<1>(result) == n - distance(f, get<0>(result))
     //complexity:    n - 1 comparisons
 
     if (zero(n)) return {f, n};
@@ -191,35 +192,189 @@ ValueType<I> min_value_n(I f, DistanceType<I> n) {
 #endif /*TAO_ALGORITHM_SELECTION_MIN_ELEMENT_HPP_*/
 
 #ifdef DOCTEST_LIBRARY_INCLUDED
-    using namespace tao::algorithm;
-    using namespace std;
+#include <forward_list>
+#include <list>
+#include <vector>
+
+#include <tao/benchmark/instrumented.hpp>
+
+using namespace tao::algorithm;
+using namespace std;
+
+TEST_CASE("[min_element] testing min_element selection algorithm, instrumented, random access") {
+    using T = instrumented<int>;
+    vector<T> a = {3, 6, 2, 1, 4, 5, 1, 6, 2, 3};
+
+    instrumented<int>::initialize(0);
+    auto m0 = tao::algorithm::min_element(begin(a), end(a), less<>());
+
+    double* count_p = instrumented<int>::counts;
+    CHECK(count_p[instrumented_base::comparison] == a.size() - 1);
+}
+
+TEST_CASE("[min_element] testing min_element selection algorithm, random access, no natural order, stability check") {
+    using T = no_natural_order;
+    vector<T> a = {{0, 3}, {1, 6}, {2, 2}, {3, 1}, {4, 4}, {5, 5}, {6, 1}, {7, 6}, {8, 2}, {9, 3}};
+
+    auto salary_cmp = [](no_natural_order const& a, no_natural_order const& b) {
+        return a.salary < b.salary;
+    };
+
+    auto m0 = tao::algorithm::min_element(begin(a), end(a), salary_cmp);
+    CHECK(m0 == next(begin(a), 3));
+    CHECK(m0->salary == 1);
+    CHECK(m0->id == 3);
+
+    auto m1 = tao::algorithm::min_element(successor(m0), end(a), salary_cmp);
+    CHECK(m1 == next(m0, 3));
+    CHECK(m1->salary == 1);
+    CHECK(m1->id == 6);
+}
 
 TEST_CASE("[min_element] testing min_element selection algorithm, random access") {
     using T = int;
     vector<T> a = {3, 6, 2, 1, 4, 5, 1, 6, 2, 3};
-    auto m = tao::algorithm::min_element(begin(a), end(a), std::less<>());
-    CHECK(m == next(begin(a), 3));
+
+    auto m0 = tao::algorithm::min_element(begin(a), end(a), less<>());
+    CHECK(m0 == next(begin(a), 3));
+
+    auto m1 = tao::algorithm::min_element(successor(m0), end(a), less<>());
+    CHECK(m1 == next(m0, 3));
 }
 
 TEST_CASE("[min_element] testing min_element selection algorithm, random access, default relation") {
     using T = int;
     vector<T> a = {3, 6, 2, 1, 4, 5, 1, 6, 2, 3};
-    auto m = tao::algorithm::min_element(begin(a), end(a));
-    CHECK(m == next(begin(a), 3));
+
+    auto m0 = tao::algorithm::min_element(begin(a), end(a));
+    CHECK(m0 == next(begin(a), 3));
+
+    auto m1 = tao::algorithm::min_element(successor(m0), end(a));
+    CHECK(m1 == next(m0, 3));
 }
 
 TEST_CASE("[min_element] testing min_element_n selection algorithm, random access") {
     using T = int;
     vector<T> a = {3, 6, 2, 1, 4, 5, 1, 6, 2, 3};
-    auto m = min_element_n(begin(a), a.size(), std::less<>());
-    CHECK(std::get<0>(m) == next(begin(a), 3));
+
+    auto m0 = min_element_n(begin(a), a.size(), less<>());
+    CHECK(get<0>(m0) == next(begin(a), 3));
+    CHECK(get<1>(m0) == a.size() - 3);
+
+    auto m1 = min_element_n(successor(get<0>(m0)), get<1>(m0) - 1, less<>());
+    CHECK(get<0>(m1) == next(get<0>(m0), 3));
+    CHECK(get<1>(m1) == a.size() - 6);
 }
 
 TEST_CASE("[min_element] testing min_element_n selection algorithm, random access, default relation") {
     using T = int;
     vector<T> a = {3, 6, 2, 1, 4, 5, 1, 6, 2, 3};
-    auto m = min_element_n(begin(a), a.size());
-    CHECK(std::get<0>(m) == next(begin(a), 3));
+
+    auto m0 = min_element_n(begin(a), a.size());
+    CHECK(get<0>(m0) == next(begin(a), 3));
+    CHECK(get<1>(m0) == a.size() - 3);
+
+    auto m1 = min_element_n(successor(get<0>(m0)), get<1>(m0) - 1);
+    CHECK(get<0>(m1) == next(get<0>(m0), 3));
+    CHECK(get<1>(m1) == a.size() - 6);
+}
+
+TEST_CASE("[min_element] testing min_element selection algorithm, bidirectional") {
+    using T = int;
+    list<T> a = {3, 6, 2, 1, 4, 5, 1, 6, 2, 3};
+
+    auto m0 = tao::algorithm::min_element(begin(a), end(a), less<>());
+    CHECK(m0 == next(begin(a), 3));
+
+    auto m1 = tao::algorithm::min_element(successor(m0), end(a), less<>());
+    CHECK(m1 == next(m0, 3));
+}
+
+TEST_CASE("[min_element] testing min_element selection algorithm, bidirectional, default relation") {
+    using T = int;
+    list<T> a = {3, 6, 2, 1, 4, 5, 1, 6, 2, 3};
+
+    auto m0 = tao::algorithm::min_element(begin(a), end(a));
+    CHECK(m0 == next(begin(a), 3));
+
+    auto m1 = tao::algorithm::min_element(successor(m0), end(a));
+    CHECK(m1 == next(m0, 3));
+}
+
+TEST_CASE("[min_element] testing min_element_n selection algorithm, bidirectional") {
+    using T = int;
+    list<T> a = {3, 6, 2, 1, 4, 5, 1, 6, 2, 3};
+
+    auto m0 = min_element_n(begin(a), a.size(), less<>());
+    CHECK(get<0>(m0) == next(begin(a), 3));
+    CHECK(get<1>(m0) == a.size() - 3);
+
+    auto m1 = min_element_n(successor(get<0>(m0)), get<1>(m0) - 1, less<>());
+    CHECK(get<0>(m1) == next(get<0>(m0), 3));
+    CHECK(get<1>(m1) == a.size() - 6);
+}
+
+TEST_CASE("[min_element] testing min_element_n selection algorithm, bidirectional, default relation") {
+    using T = int;
+    list<T> a = {3, 6, 2, 1, 4, 5, 1, 6, 2, 3};
+
+    auto m0 = min_element_n(begin(a), a.size());
+    CHECK(get<0>(m0) == next(begin(a), 3));
+    CHECK(get<1>(m0) == a.size() - 3);
+
+    auto m1 = min_element_n(successor(get<0>(m0)), get<1>(m0) - 1);
+    CHECK(get<0>(m1) == next(get<0>(m0), 3));
+    CHECK(get<1>(m1) == a.size() - 6);
+}
+
+TEST_CASE("[min_element] testing min_element selection algorithm, forward") {
+    using T = int;
+    forward_list<T> a = {3, 6, 2, 1, 4, 5, 1, 6, 2, 3};
+
+    auto m0 = tao::algorithm::min_element(begin(a), end(a), less<>());
+    CHECK(m0 == next(begin(a), 3));
+
+    auto m1 = tao::algorithm::min_element(successor(m0), end(a), less<>());
+    CHECK(m1 == next(m0, 3));
+}
+
+TEST_CASE("[min_element] testing min_element selection algorithm, forward, default relation") {
+    using T = int;
+    forward_list<T> a = {3, 6, 2, 1, 4, 5, 1, 6, 2, 3};
+
+    auto m0 = tao::algorithm::min_element(begin(a), end(a));
+    CHECK(m0 == next(begin(a), 3));
+
+    auto m1 = tao::algorithm::min_element(successor(m0), end(a));
+    CHECK(m1 == next(m0, 3));
+}
+
+TEST_CASE("[min_element] testing min_element_n selection algorithm, forward") {
+    using T = int;
+    forward_list<T> a = {3, 6, 2, 1, 4, 5, 1, 6, 2, 3};
+    auto n = distance(begin(a), end(a));
+
+    auto m0 = min_element_n(begin(a), n, less<>());
+    CHECK(get<0>(m0) == next(begin(a), 3));
+    CHECK(get<1>(m0) == n - 3);
+
+    auto m1 = min_element_n(successor(get<0>(m0)), get<1>(m0) - 1, less<>());
+    CHECK(get<0>(m1) == next(get<0>(m0), 3));
+    CHECK(get<1>(m1) == n - 6);
+}
+
+TEST_CASE("[min_element] testing min_element_n selection algorithm, forward, default relation") {
+    using T = int;
+    forward_list<T> a = {3, 6, 2, 1, 4, 5, 1, 6, 2, 3};
+    auto n = distance(begin(a), end(a));
+
+    auto m0 = min_element_n(begin(a), n);
+    CHECK(get<0>(m0) == next(begin(a), 3));
+    CHECK(get<1>(m0) == n - 3);
+
+    auto m1 = min_element_n(successor(get<0>(m0)), get<1>(m0) - 1);
+    CHECK(get<0>(m1) == next(get<0>(m0), 3));
+    CHECK(get<1>(m1) == n - 6);
 }
 
 #endif /*DOCTEST_LIBRARY_INCLUDED*/

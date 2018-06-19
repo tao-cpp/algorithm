@@ -252,8 +252,32 @@ pair<ValueType<I>, ValueType<I>> min_max_value(I f, I l, R r) {
 #endif /*TAO_ALGORITHM_SELECTION_MIN_MAX_ELEMENT_HPP_*/
 
 #ifdef DOCTEST_LIBRARY_INCLUDED
-    using namespace tao::algorithm;
-    using namespace std;
+
+#include <tao/benchmark/instrumented.hpp>
+
+using namespace tao::algorithm;
+using namespace std;
+
+
+TEST_CASE("[min_max_element] testing min_max_element selection algorithm, instrumented, random access") {
+    using T = instrumented<int>;
+    vector<T> a = {3, 6, 2, 1, 4, 5, 1, 6, 2, 3};   //do it with random number of elements...
+
+    instrumented<int>::initialize(0);
+    auto p = tao::algorithm::min_max_element(begin(a), end(a), less<>());
+
+    double* count_p = instrumented<int>::counts;
+    // ceil(3/2 * 2) - 2
+    CHECK(count_p[instrumented_base::comparison] <= (3 * a.size()) / 2 - 2);
+
+    // for (size_t i = 0; i < instrumented_base::number_ops; ++i) {
+    //     std::cout << instrumented_base::counter_names[i] << ": " 
+    //                 << count_p[i] 
+    //                 << std::endl;
+    // }    
+
+    // CHECK(1 == 0);
+}
 
 TEST_CASE("[min_max_element] testing min_max_element selection algorithm, random access") {
     using T = int;

@@ -17,7 +17,7 @@
 namespace tao { namespace algorithm {
 
 template <Semiregular T, Semiregular U>        //TODO(fernando): is Semiregular OK?
-    requires(SameType<T, U>)
+    requires(Same<T, U>)
 inline
 void shift_three(T& a, T& b, U&& c) noexcept {
     a = std::move(b);

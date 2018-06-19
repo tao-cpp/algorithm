@@ -8,6 +8,11 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
+struct no_natural_order {
+    int id;
+    int salary;
+};
+
 #include <tao/algorithm/copy.hpp>
 #include <tao/algorithm/primes.hpp>
 #include <tao/algorithm/rotate.hpp>
