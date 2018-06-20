@@ -44,7 +44,7 @@ namespace tao { namespace algorithm {
 
 template <int ia, int ib, int ic, int id, int ie, int fi, int ig,
           Regular T, Regular U, Regular V, Regular W, Regular X, Regular Y, Regular Z, StrictWeakOrdering R>
-    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && SameType<X, Y> && SameType<Y, Z> && Domain<R, T>)
+    requires(Same<T, U, V, W, X, Y, Z> && Domain<R, T>)
 inline constexpr
 auto select_3_7_abc_def(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
     // precondition: !r(b, a) && !r(c, b) && !r(e, d) && !r(f, e)  -->  a <= b && b <= c && d <= e && e <= f
@@ -55,7 +55,7 @@ auto select_3_7_abc_def(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN
 
 template <int ia, int ib, int ic, int id, int ie, int fi, int ig,
           Regular T, Regular U, Regular V, Regular W, Regular X, Regular Y, Regular Z, StrictWeakOrdering R>
-    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && SameType<X, Y> && SameType<Y, Z> && Domain<R, T>)
+    requires(Same<T, U, V, W, X, Y, Z> && Domain<R, T>)
 inline constexpr
 auto select_3_7_abc_de(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
     // precondition: !r(b, a) && !r(c, b) && !r(e, d)  -->  a <= b && b <= c && d <= e
@@ -68,7 +68,7 @@ auto select_3_7_abc_de(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
 
 template <int ia, int ib, int ic, int id, int ie, int fi, int ig,
           Regular T, Regular U, Regular V, Regular W, Regular X, Regular Y, Regular Z, StrictWeakOrdering R>
-    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && SameType<X, Y> && SameType<Y, Z> && Domain<R, T>)
+    requires(Same<T, U, V, W, X, Y, Z> && Domain<R, T>)
 inline constexpr
 auto select_3_7_abc(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
     // precondition: !r(b, a) && !r(c, b) -->  a <= b && b <= c
@@ -79,7 +79,7 @@ auto select_3_7_abc(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
 
 template <int ia, int ib, int ic, int id, int ie, int fi, int ig,
           Regular T, Regular U, Regular V, Regular W, Regular X, Regular Y, Regular Z, StrictWeakOrdering R>
-    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && SameType<X, Y> && SameType<Y, Z> && Domain<R, T>)
+    requires(Same<T, U, V, W, X, Y, Z> && Domain<R, T>)
 inline constexpr
 auto select_3_7_ab(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
     // precondition: !r(b, a)  -->  a <= b
@@ -92,7 +92,7 @@ auto select_3_7_ab(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
 
 template <int ia, int ib, int ic, int id, int ie, int fi, int ig,
           Regular T, Regular U, Regular V, Regular W, Regular X, Regular Y, Regular Z, StrictWeakOrdering R>
-    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && SameType<X, Y> && SameType<Y, Z> && Domain<R, T>)
+    requires(Same<T, U, V, W, X, Y, Z> && Domain<R, T>)
 inline constexpr
 auto select_3_7(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
     CMP((ia < ib), R)(b, a, r)
@@ -101,7 +101,7 @@ auto select_3_7(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
 )
 
 template <Regular T, Regular U, Regular V, Regular W, Regular X, Regular Y, Regular Z, StrictWeakOrdering R>
-    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && SameType<X, Y> && SameType<Y, Z> && Domain<R, T>)
+    requires(Same<T, U, V, W, X, Y, Z> && Domain<R, T>)
 inline constexpr
 auto median_of_7(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
     (select_3_7<0,1,2,3,4,5,6>(_a, _b, _c, _d, _e, _f, _g, r))
@@ -117,7 +117,7 @@ auto median_of_7(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
 
 // template <int ia, int ib, int ic, int id, int ie,
 //           Regular T, Regular U, Regular V, Regular W, Regular X, StrictWeakOrdering R>
-//     requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && Domain<R, T>)
+//     requires(Same<T, U> && Same<U, V> && Same<V, W> && Same<W, X> && Domain<R, T>)
 // inline constexpr
 // auto select_3_7_abc(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
 //     // precondition: !r(b, a) && !r(c, b)  -->  a <= b && b <= c
@@ -151,7 +151,7 @@ auto median_of_7(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
 
 // template <int ia, int ib, int ic, int id, int ie, int fi, int ig,
 //           Regular T, Regular U, Regular V, Regular W, Regular X, Regular Y, Regular Z, StrictWeakOrdering R>
-//     requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && SameType<X, Y> && SameType<Y, Z> && Domain<R, T>)
+//     requires(Same<T, U, V, W, X, Y, Z> && Domain<R, T>)
 // inline constexpr
 // auto select_3_7_abcd(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
 //     // precondition: !r(b, a) && !r(c, b) && !r(d, c)  -->  a <= b && b <= c && c <= d
@@ -169,7 +169,7 @@ auto median_of_7(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
 
 // template <int ia, int ib, int ic, int id, int ie, int fi, int ig,
 //           Regular T, Regular U, Regular V, Regular W, Regular X, Regular Y, Regular Z, StrictWeakOrdering R>
-//     requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && SameType<X, Y> && SameType<Y, Z> && Domain<R, T>)
+//     requires(Same<T, U, V, W, X, Y, Z> && Domain<R, T>)
 // inline constexpr
 // auto select_3_7_abc_avg(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
 //     // precondition: !r(b, a) && !r(c, b)  -->  a <= b && b <= c
@@ -184,7 +184,7 @@ auto median_of_7(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
 
 // template <int ia, int ib, int ic, int id, int ie, int fi, int ig,
 //           Regular T, Regular U, Regular V, Regular W, Regular X, Regular Y, Regular Z, StrictWeakOrdering R>
-//     requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && SameType<X, Y> && SameType<Y, Z> && Domain<R, T>)
+//     requires(Same<T, U, V, W, X, Y, Z> && Domain<R, T>)
 // inline constexpr
 // auto select_3_7_ab_avg(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
 //     // precondition: !r(b, a)  -->  a <= b
@@ -197,7 +197,7 @@ auto median_of_7(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
 
 // template <int ia, int ib, int ic, int id, int ie, int fi, int ig,
 //           Regular T, Regular U, Regular V, Regular W, Regular X, Regular Y, Regular Z, StrictWeakOrdering R>
-//     requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && SameType<X, Y> && SameType<Y, Z> && Domain<R, T>)
+//     requires(Same<T, U, V, W, X, Y, Z> && Domain<R, T>)
 // inline constexpr
 // auto select_3_7_avg(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
 //     CMP((ia < ib), R)(b, a, r)
@@ -206,7 +206,7 @@ auto median_of_7(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
 // )
 
 // template <Regular T, Regular U, Regular V, Regular W, Regular X, Regular Y, Regular Z, StrictWeakOrdering R>
-//     requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && SameType<X, Y> && SameType<Y, Z> && Domain<R, T>)
+//     requires(Same<T, U, V, W, X, Y, Z> && Domain<R, T>)
 // inline constexpr
 // auto median_of_7_avg(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
 //     (select_3_7_avg<0,1,2,3,4,5,6>(_a, _b, _c, _d, _e, _f, _g, r))

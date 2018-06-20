@@ -48,7 +48,7 @@ namespace tao { namespace algorithm {
 
 
 // template <Regular T, Regular U, Regular V, Regular W, Regular X, StrictWeakOrdering R>
-//     requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && Domain<R, T>)
+//     requires(Same<T, U, V, W, X> && Domain<R, T>)
 // inline constexpr
 // auto select_0_5(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
 //     select_0_2(
@@ -57,7 +57,7 @@ namespace tao { namespace algorithm {
 // )
 
 // // template <Regular T, Regular U, Regular V, Regular W>
-// //     requires(SameType<T, U> && SameType<U, V> && SameType<V, W>)
+// //     requires(Same<T, U, V, W>)
 // // inline constexpr
 // // auto select_0_5(T&& a, U&& b, V&& c, W&& d) FN(
     
@@ -67,7 +67,7 @@ namespace tao { namespace algorithm {
 // // )
 
 // template <Regular T, Regular U, Regular V, Regular W, Regular X, StrictWeakOrdering R>
-//     requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && Domain<R, T>)
+//     requires(Same<T, U, V, W, X> && Domain<R, T>)
 // inline constexpr
 // auto select_4_5(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
 //     select_1_2(
@@ -76,7 +76,7 @@ namespace tao { namespace algorithm {
 // )
 
 // // template <Regular T, Regular U, Regular V, Regular W>
-// //     requires(SameType<T, U> && SameType<U, V> && SameType<V, W>)
+// //     requires(Same<T, U, V, W>)
 // // inline constexpr
 // // auto select_3_5(T&& a, U&& b, V&& c, W&& d) FN(
     
@@ -88,7 +88,7 @@ namespace tao { namespace algorithm {
 
 
 // template <Regular T, Regular U, Regular V, Regular W, Regular X, StrictWeakOrdering R>
-//     requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && Domain<R, T>)
+//     requires(Same<T, U, V, W, X> && Domain<R, T>)
 // inline constexpr
 // auto select_1_4_ab_cd(T&& a, U&& b, V&& c, W&& d, R r) FN(
 //     // precondition: a <= b && c <= d
@@ -107,7 +107,7 @@ namespace tao { namespace algorithm {
 // )
 
 // // template <Regular T, Regular U, Regular V, Regular W>
-// //     requires(SameType<T, U> && SameType<U, V> && SameType<V, W>)
+// //     requires(Same<T, U, V, W>)
 // // inline constexpr
 // // auto select_1_5_ab_cd(T&& a, U&& b, V&& c, W&& d) FN(
 // //     // precondition: a <= b && c <= d
@@ -119,7 +119,7 @@ namespace tao { namespace algorithm {
 // // )
 
 // template <Regular T, Regular U, Regular V, Regular W, Regular X, StrictWeakOrdering R>
-//     requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && Domain<R, T>)
+//     requires(Same<T, U, V, W, X> && Domain<R, T>)
 // inline constexpr
 // auto select_1_5_ab(T&& a, U&& b, V&& c, W&& d, R r) FN(
 //     // precondition: a <= b
@@ -130,7 +130,7 @@ namespace tao { namespace algorithm {
 // )
 
 // // template <Regular T, Regular U, Regular V, Regular W>
-// //     requires(SameType<T, U> && SameType<U, V> && SameType<V, W>)
+// //     requires(Same<T, U, V, W>)
 // // inline constexpr
 // // auto select_1_5_ab(T&& a, U&& b, V&& c, W&& d) FN(
 // //     // precondition: a <= b
@@ -140,7 +140,7 @@ namespace tao { namespace algorithm {
 // // )
 
 // template <Regular T, Regular U, Regular V, Regular W, Regular X, StrictWeakOrdering R>
-//     requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && Domain<R, T>)
+//     requires(Same<T, U, V, W, X> && Domain<R, T>)
 // inline constexpr
 // auto select_1_5(T&& a, U&& b, V&& c, W&& d, R r) FN(
 //     r(b, a) ? // b < a
@@ -149,7 +149,7 @@ namespace tao { namespace algorithm {
 // )
 
 // // template <Regular T, Regular U, Regular V, Regular W>
-// //     requires(SameType<T, U> && SameType<U, V> && SameType<V, W>)
+// //     requires(Same<T, U, V, W>)
 // // inline constexpr
 // // auto select_1_5(T&& a, U&& b, V&& c, W&& d) FN(
 // //     b < a ? 
@@ -167,7 +167,7 @@ namespace tao { namespace algorithm {
 
 template <int ia, int ib, int ic, int id, int ie,
           Regular T, Regular U, Regular V, Regular W, Regular X, StrictWeakOrdering R>
-    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && Domain<R, T>)
+    requires(Same<T, U, V, W, X> && Domain<R, T>)
 inline constexpr
 auto select_2_5_ab_cd(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
     // precondition: !r(b, a) && !r(d, c) -->  a <= b && c <= d
@@ -178,7 +178,7 @@ auto select_2_5_ab_cd(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
 
 template <int ia, int ib, int ic, int id, int ie,
           Regular T, Regular U, Regular V, Regular W, Regular X, StrictWeakOrdering R>
-    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && Domain<R, T>)
+    requires(Same<T, U, V, W, X> && Domain<R, T>)
 inline constexpr
 auto select_2_5_ab(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
     // precondition: !r(b, a)  -->  a <= b
@@ -189,7 +189,7 @@ auto select_2_5_ab(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
 
 template <int ia, int ib, int ic, int id, int ie,
           Regular T, Regular U, Regular V, Regular W, Regular X, StrictWeakOrdering R>
-    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && Domain<R, T>)
+    requires(Same<T, U, V, W, X> && Domain<R, T>)
 inline constexpr
 auto select_2_5(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
     CMP((ia < ib), R)(b, a, r)
@@ -198,7 +198,7 @@ auto select_2_5(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
 )
 
 template <Regular T, Regular U, Regular V, Regular W, Regular X, StrictWeakOrdering R>
-    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && Domain<R, T>)
+    requires(Same<T, U, V, W, X> && Domain<R, T>)
 inline constexpr
 auto median_of_5(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
     (select_2_5<0,1,2,3,4>(_a, _b, _c, _d, _e, r))
@@ -210,7 +210,7 @@ auto median_of_5(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
 
 template <int ia, int ib, int ic, int id, int ie,
           Regular T, Regular U, Regular V, Regular W, Regular X, StrictWeakOrdering R>
-    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && Domain<R, T>)
+    requires(Same<T, U, V, W, X> && Domain<R, T>)
 inline constexpr
 auto select_2_5_abc(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
     // precondition: !r(b, a) && !r(c, b)  -->  a <= b && b <= c
@@ -225,7 +225,7 @@ auto select_2_5_abc(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
 
 template <int ia, int ib, int ic, int id, int ie,
           Regular T, Regular U, Regular V, Regular W, Regular X, StrictWeakOrdering R>
-    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && Domain<R, T>)
+    requires(Same<T, U, V, W, X> && Domain<R, T>)
 inline constexpr
 auto select_2_5_ab_avg(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
     // precondition: !r(b, a)  -->  a <= b
@@ -238,7 +238,7 @@ auto select_2_5_ab_avg(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
 
 template <int ia, int ib, int ic, int id, int ie,
           Regular T, Regular U, Regular V, Regular W, Regular X, StrictWeakOrdering R>
-    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && Domain<R, T>)
+    requires(Same<T, U, V, W, X> && Domain<R, T>)
 inline constexpr
 auto select_2_5_avg(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
     CMP((ia < ib), R)(b, a, r)
@@ -247,7 +247,7 @@ auto select_2_5_avg(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
 )
 
 template <Regular T, Regular U, Regular V, Regular W, Regular X, StrictWeakOrdering R>
-    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && Domain<R, T>)
+    requires(Same<T, U, V, W, X> && Domain<R, T>)
 inline constexpr
 auto median_of_5_avg(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
     (select_2_5_avg<0,1,2,3,4>(_a, _b, _c, _d, _e, r))

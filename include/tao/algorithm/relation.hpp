@@ -24,7 +24,7 @@ struct compare_strict_or_reflexive;
 template <StrictWeakOrdering R>
 struct compare_strict_or_reflexive<true, R> { // strict
     template <Regular T, Regular U>
-        requires(SameType<T, U> && Domain<R, T>)
+        requires(Same<T, U> && Domain<R, T>)
     inline constexpr
     bool operator()(T&& a, U&& b, R r) const {
         return r(std::forward<T>(a), std::forward<U>(b));
@@ -34,7 +34,7 @@ struct compare_strict_or_reflexive<true, R> { // strict
 template <StrictWeakOrdering R>
 struct compare_strict_or_reflexive<false, R> { // reflexive 
     template <Regular T, Regular U>
-        requires(SameType<T, U> && Domain<R, T>)
+        requires(Same<T, U> && Domain<R, T>)
     inline constexpr
     bool operator()(T&& a, U&& b, R r) const {
         return !r(std::forward<U>(b), std::forward<T>(a)); // complement_of_converse(r(a, b))

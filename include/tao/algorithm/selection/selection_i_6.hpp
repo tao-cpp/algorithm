@@ -46,7 +46,7 @@ namespace tao { namespace algorithm {
 
 template <int ia, int ib, int ic, int id, int ie, int fi,
           Regular T, Regular U, Regular V, Regular W, Regular X, Regular Y, StrictWeakOrdering R>
-    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && SameType<X, Y> && Domain<R, T>)
+    requires(Same<T, U, V, W, X, Y> && Domain<R, T>)
 inline constexpr
 auto select_2_6_abc_def(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, R r) FN(
     // precondition: !r(b, a) && !r(c, b) && !r(e, d) && !r(f, e)  -->  a <= b && b <= c && d <= e && e <= f
@@ -61,7 +61,7 @@ auto select_2_6_abc_def(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, R r) FN(
 
 template <int ia, int ib, int ic, int id, int ie, int fi,
           Regular T, Regular U, Regular V, Regular W, Regular X, Regular Y, StrictWeakOrdering R>
-    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && SameType<X, Y> && Domain<R, T>)
+    requires(Same<T, U, V, W, X, Y> && Domain<R, T>)
 inline constexpr
 auto select_2_6_abc_de(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, R r) FN(
     // precondition: !r(b, a) && !r(c, b) && !r(e, d)  -->  a <= b && b <= c && d <= e
@@ -74,7 +74,7 @@ auto select_2_6_abc_de(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, R r) FN(
 
 template <int ia, int ib, int ic, int id, int ie, int fi,
           Regular T, Regular U, Regular V, Regular W, Regular X, Regular Y, StrictWeakOrdering R>
-    requires(SameType<T, U> && SameType<U, V> && SameType<V, W> && SameType<W, X> && SameType<X, Y> && Domain<R, T>)
+    requires(Same<T, U, V, W, X, Y> && Domain<R, T>)
 inline constexpr
 auto select_2_6_abc(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, R r) FN(
     // precondition: !r(b, a) && !r(c, b)  -->  a <= b && b <= c
