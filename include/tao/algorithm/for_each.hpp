@@ -6,8 +6,8 @@
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef TAO_ALGORITHM_FOR_EACH_HPP
-#define TAO_ALGORITHM_FOR_EACH_HPP
+#ifndef TAO_ALGORITHM_FOR_EACH_HPP_
+#define TAO_ALGORITHM_FOR_EACH_HPP_
 
 #include <algorithm>
 #include <iterator>
@@ -17,6 +17,24 @@
 #include <tao/algorithm/type_attributes.hpp>
 
 namespace tao { namespace algorithm {
+
+//Complexity: 
+//      Runtime:
+//          Amortized: O(n)
+//          Exact:     ???
+//      Space:
+//          O(???)
+template <Iterator I, Procedure Proc>
+    requires(Readable<I> && Procedure<Proc> && Arity<Proc> == 1 &&
+        ValueType<I> == InputType<Proc, 0>)
+Proc for_each(I f, I l, Proc proc) {
+    // precondition: readable_bounded_range(f, l)
+    while (f != l) {
+        proc(*f);
+        ++f;
+    }
+    return proc;
+}
 
 
 //Note: for_each_n was added in C++17
@@ -28,11 +46,10 @@ namespace tao { namespace algorithm {
 //      Space:
 //          O(???)
 template <Iterator I, Procedure Proc>
-    // requires(Readable(I) &&
-    //     Procedure(Proc) && Arity(Proc) == 1 &&
-    //     ValueType(I) == InputType(Proc, 0))
+    requires(Readable<I> && Procedure<Proc> && Arity<Proc> == 1 &&
+        ValueType<I> == InputType<Proc, 0>)
 std::pair<Proc, I> for_each_n(I f, DistanceType<I> n, Proc proc) {
-    // Precondition: $\property{readable\_weak\_range}(f, n)$
+    // precondition: readable_weak_range(f, n)
     while (n != 0) {
         --n;
         proc(*f);
@@ -44,4 +61,4 @@ std::pair<Proc, I> for_each_n(I f, DistanceType<I> n, Proc proc) {
 
 }} /*tao::algorithm*/
 
-#endif /*TAO_ALGORITHM_FOR_EACH_HPP*/
+#endif /*TAO_ALGORITHM_FOR_EACH_HPP_*/
