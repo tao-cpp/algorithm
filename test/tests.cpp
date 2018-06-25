@@ -14,6 +14,7 @@ struct no_natural_order {
 };
 
 #include <tao/algorithm/copy.hpp>
+#include <tao/algorithm/count.hpp>
 #include <tao/algorithm/primes.hpp>
 #include <tao/algorithm/rotate.hpp>
 #include <tao/algorithm/selection.hpp>
