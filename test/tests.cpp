@@ -17,6 +17,7 @@ struct no_natural_order {
 #include <tao/algorithm/count.hpp>
 #include <tao/algorithm/primes.hpp>
 #include <tao/algorithm/rotate.hpp>
+#include <tao/algorithm/rotate_one.hpp>
 #include <tao/algorithm/selection.hpp>
 #include <tao/algorithm/shift.hpp>
 #include <tao/algorithm/swap.hpp>
