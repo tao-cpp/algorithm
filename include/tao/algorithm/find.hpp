@@ -1,7 +1,7 @@
 //! \file tao/algorithm/find.hpp
 // Tao.Algorithm
 //
-// Copyright Fernando Pelliccioni 2016-2018
+// Copyright Fernando Pelliccioni 2016-2019
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -18,6 +18,7 @@
 #include <tao/algorithm/integers.hpp>
 #include <tao/algorithm/swap.hpp>
 #include <tao/algorithm/type_attributes.hpp>
+#include <tao/algorithm/predicates.hpp>
 
 namespace tao { namespace algorithm {
 
@@ -117,7 +118,7 @@ template <Iterator I, UnaryPredicate P>
 inline
 bool all_n(I f, DistanceType<I> n, P p) {
     //precondition: readable_weak_range(f, l)
-    return l == tao::algorithm::find_if_n(f, n, predicate_negator<P>{p});
+    return 0 == tao::algorithm::find_if_n(f, n, predicate_negator<P>{p}).second;
 }
 
 template <Iterator I, UnaryPredicate P>
@@ -125,7 +126,7 @@ template <Iterator I, UnaryPredicate P>
 inline
 bool none_n(I f, DistanceType<I> n, P p) {
     //precondition: readable_weak_range(f, l)
-    return l == tao::algorithm::find_if_n(f, n, p);
+    return 0 == tao::algorithm::find_if_n(f, n, p).second;
 }
 
 template <Iterator I, UnaryPredicate P>
@@ -293,7 +294,7 @@ template <Iterator I, Relation R>
     requires(Readable<I> && Domain<R, ValueType<I>>)
 inline
 I find_adjacent_mismatch(I f, I l, R r) {
-    return find_adjacent_mismatch(f, l, r, IteratorCategory<I>);
+    return find_adjacent_mismatch(f, l, r, IteratorCategory<I>{});
 }
 
 }} /*tao::algorithm*/

@@ -1,7 +1,7 @@
 //! \file tao/algorithm/sorting/insertion_sort.hpp
 // Tao.Algorithm
 //
-// Copyright Fernando Pelliccioni 2016-2018
+// Copyright Fernando Pelliccioni 2016-2019
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -14,7 +14,7 @@
 #include <tao/algorithm/concepts.hpp>
 #include <tao/algorithm/type_attributes.hpp>
 #include <tao/algorithm/iterator.hpp>
-#include <tao/algorithm/rotate.hpp>
+#include <tao/algorithm/rotate_one.hpp>
 
 namespace tao { namespace algorithm {
 

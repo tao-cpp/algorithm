@@ -1,16 +1,17 @@
 //! \file tao/algorithm/iterator.hpp
 // Tao.Algorithm
 //
-// Copyright Fernando Pelliccioni 2016-2018
+// Copyright Fernando Pelliccioni 2016-2019
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
 
-#ifndef TAO_ALGORITHM_ITERATOR_HPP
-#define TAO_ALGORITHM_ITERATOR_HPP
+#ifndef TAO_ALGORITHM_ITERATOR_HPP_
+#define TAO_ALGORITHM_ITERATOR_HPP_
 
 #include <cstddef>
+#include <utility>
 
 #include <tao/algorithm/concepts.hpp>
 #include <tao/algorithm/type_attributes.hpp>
@@ -62,7 +63,27 @@ void step(I& f, Args&... args) {
     step(args...);
 }
 
+template <ForwardIterator I, UnaryPredicate P>
+	requires(Readable<I> && Domain<P, ValueType<I>>)
+std::pair<I, DistanceType<I>> successor_while_n(I f, DistanceType<I> n, P p) {
+    while ( ! zero(n) && p(*f)) {
+        --n;
+        ++f;
+    }
+    return {f, n};
+}
+
+template <BidirectionalIterator I, UnaryPredicate P>
+	requires(Readable<I> && Domain<P, ValueType<I>>)
+std::pair<I, DistanceType<I>> predecessor_while_n(I f, DistanceType<I> n, P p) {
+    while ( ! zero(n) && p(*f)) {
+        --n;
+        --f;
+    }
+    return {f, n};
+}
+
 
 }} /*tao::algorithm*/
 
-#endif //TAO_ALGORITHM_ITERATOR_HPP
+#endif //TAO_ALGORITHM_ITERATOR_HPP_

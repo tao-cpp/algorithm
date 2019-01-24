@@ -1,7 +1,7 @@
 //! \file tao/algorithm/toys/palindrome.hpp
 // Tao.Algorithm
 //
-// Copyright Fernando Pelliccioni 2016-2018
+// Copyright Fernando Pelliccioni 2016-2019
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -18,31 +18,78 @@
 
 #include <tao/algorithm/concepts.hpp>
 #include <tao/algorithm/type_attributes.hpp>
+#include <tao/algorithm/integers.hpp>
+#include <tao/algorithm/iterator.hpp>
 
 namespace tao { namespace algorithm {
 
-template <BidirectionalIterator I>
-	requires(Readable<I>)
-bool palindrome_n(I f, I l, DistanceType<I> n) {
+template <BidirectionalIterator I, Relation R, UnaryPredicate P>
+	requires(Readable<I> && Domain<R, ValueType<I>> && Domain<P, ValueType<I>>)
+bool palindrome_n_filter(I f, I l, DistanceType<I> n, R r, P skip) {
+    //precondition: readable_bounded_range(f, l) &&
+    //              distance(f, l) == n
+
+    while (true) {
+        std::tie(f, n) = successor_while_n(f, n, skip);
+        if (zero(n) || one(n)) break;
+        std::tie(l, n) = predecessor_while_n(--l, n, skip);
+        if (zero(n) || one(n)) break;
+
+        if ( ! r(*f, *l)) return false;
+        
+        ++f;
+        n -= 2;
+    }
+    return true;
+}
+
+template <BidirectionalIterator I, Relation R>
+	requires(Readable<I> && Domain<R, ValueType<I>>)
+bool palindrome_n(I f, I l, DistanceType<I> n, R r) {
     //precondition: readable_bounded_range(f, l) &&
     //              distance(f, l) == n
 
     using N = DistanceType<I>;
     n = half_nonnegative(n);
     while (n-- > N(0)) {
-        if (*f++ != *--l) return false;
+        if ( ! r(*f++, *--l)) return false;
     }
     return true;
 }
 
 template <BidirectionalIterator I>
 	requires(Readable<I>)
-bool palindrome(I f, I l, std::bidirectional_iterator_tag) {
+inline
+bool palindrome_n(I f, I l, DistanceType<I> n) {
+    return palindrome_n(f, l, n, std::equal_to<>{});
+}
+
+template <BidirectionalIterator I, Relation R>
+	requires(Readable<I> && Domain<R, ValueType<I>>)
+bool palindrome(I f, I l, R r, std::bidirectional_iterator_tag) {
     //precondition: readable_bounded_range(f, l)
     while (f != l && f != --l) {
-        if (*f++ != *l) return false;
-    } 
+        if ( ! r(*f++, *l)) return false;
+    }
+    return true;
 }
+
+template <BidirectionalIterator I>
+	requires(Readable<I>)
+inline
+bool palindrome(I f, I l, std::bidirectional_iterator_tag) {
+    //precondition: readable_bounded_range(f, l)
+    return palindrome(f, l,  std::equal_to<>{}, std::bidirectional_iterator_tag{});
+}
+
+template <RandomAccessIterator I, Relation R>
+	requires(Readable<I> && Domain<R, ValueType<I>>)
+inline
+bool palindrome(I f, I l, R r, std::random_access_iterator_tag) {
+    //precondition: readable_bounded_range(f, l)
+    return palindrome_n(f, l, l - f, r);
+}
+
 template <RandomAccessIterator I>
 	requires(Readable<I>)
 inline
@@ -51,50 +98,157 @@ bool palindrome(I f, I l, std::random_access_iterator_tag) {
     return palindrome_n(f, l, l - f);
 }
 
+template <BidirectionalIterator I, Relation R>
+	requires(Readable<I> && Domain<R, ValueType<I>>)
+inline
+bool palindrome(I f, I l, R r) {
+    //precondition: readable_bounded_range(f, l)
+    return palindrome(f, l, r, IteratorCategory<I>{});
+}
+
 template <BidirectionalIterator I>
 	requires(Readable<I>)
 inline
 bool palindrome(I f, I l) {
     //precondition: readable_bounded_range(f, l)
-    return palindrome(f, l, IteratorCategory<I>{});
+    return palindrome(f, l, std::equal_to<>{}, IteratorCategory<I>{});
 }
 
 //Complexity:
 //  Time:   floor(n / 2) equality comparisons
 //  Space:  floor(n / 2) recursive calls
-
-template <ForwardIterator I>
-	requires(Readable<I>)
-std::pair<bool, I> palindrome_recursive(I f, DistanceType<I> n) {
+template <ForwardIterator I, Relation R>
+	requires(Readable<I> && Domain<R, ValueType<I>>)
+std::pair<bool, I> palindrome_recursive(I f, DistanceType<I> n, R r) {
     //precondition: readable_weak_range(f, n)
 
     if (zero(n)) return {true, f};
     if (one(n))  return {true, ++f};
 
-    auto r = palindrome_recursive(std::next(f), n - 2);
+    auto ret = palindrome_recursive(std::next(f), n - 2, r);
 
-    if ( ! r.first) return r;
-    if (*f != *r.second) return {false, r.second};
+    if ( ! ret.first) return ret;
+    if ( ! r(*f, *ret.second)) return {false, ret.second};
 
-    return {true, ++r.second};
+    return {true, ++ret.second};
 }
 
+template <ForwardIterator I>
+	requires(Readable<I>)
+inline
+std::pair<bool, I> palindrome_recursive(I f, DistanceType<I> n) {
+    //precondition: readable_weak_range(f, n)
+    return palindrome_recursive(f, n, std::equal_to<>{});
+}
 
 }} /*tao::algorithm*/
 
 #endif /*TAO_ALGORITHM_TOYS_PALINDROME_HPP_*/
-
 
 #ifdef DOCTEST_LIBRARY_INCLUDED
 
 #include <iterator>
 #include <forward_list>
 // #include <list>
-// #include <vector>
+#include <vector>
+#include <string>
 #include <tao/benchmark/instrumented.hpp>
 
 using namespace std;
 using namespace tao::algorithm;
+
+
+
+struct skipper {
+    bool operator()(char x) const {
+        if (x == ' ') return true;
+        if (x == '\'') return true;
+        if (x == ',') return true;
+        return false;
+    }
+};
+
+struct equal_to_fake {
+    bool operator()(char a, char b) const {
+        if (a == 'x' && b == 'y') return true;
+        if (b == 'x' && a == 'y') return true;
+        return a == b;
+    }
+};
+
+TEST_CASE("[palindrome_n_filter]") {
+    using T = int;
+    string a = "";
+    auto n = distance(begin(a), end(a));
+    auto x = palindrome_n_filter(begin(a), end(a), n, std::equal_to<>{}, skipper{});
+    CHECK(x);
+}
+
+TEST_CASE("[palindrome_n_filter]") {
+    using T = int;
+    string a = " ";
+    auto n = distance(begin(a), end(a));
+    auto x = palindrome_n_filter(begin(a), end(a), n, std::equal_to<>{}, skipper{});
+    CHECK(x);
+}
+
+TEST_CASE("[palindrome_n_filter]") {
+    using T = int;
+    string a = "  ";
+    auto n = distance(begin(a), end(a));
+    auto x = palindrome_n_filter(begin(a), end(a), n, std::equal_to<>{}, skipper{});
+    CHECK(x);
+}
+
+TEST_CASE("[palindrome_n_filter]") {
+    using T = int;
+    string a = "   ";
+    auto n = distance(begin(a), end(a));
+    auto x = palindrome_n_filter(begin(a), end(a), n, std::equal_to<>{}, skipper{});
+    CHECK(x);
+}
+
+TEST_CASE("[palindrome_n_filter]") {
+    using T = int;
+    string a = " x  ";
+    auto n = distance(begin(a), end(a));
+    auto x = palindrome_n_filter(begin(a), end(a), n, std::equal_to<>{}, skipper{});
+    CHECK(x);
+}
+
+TEST_CASE("[palindrome_n_filter]") {
+    using T = int;
+    string a = " xy  ";
+    auto n = distance(begin(a), end(a));
+    auto x = palindrome_n_filter(begin(a), end(a), n, equal_to_fake{}, skipper{});
+    CHECK(x);
+}
+
+TEST_CASE("[palindrome_n_filter]") {
+    using T = int;
+    string a = "x  ";
+    auto n = distance(begin(a), end(a));
+    auto x = palindrome_n_filter(begin(a), end(a), n, equal_to_fake{}, skipper{});
+    CHECK(x);
+}
+
+TEST_CASE("[palindrome_n_filter]") {
+    using T = int;
+    string a = "  x";
+    auto n = distance(begin(a), end(a));
+    auto x = palindrome_n_filter(begin(a), end(a), n, equal_to_fake{}, skipper{});
+    CHECK(x);
+}
+
+TEST_CASE("[palindrome_n_filter]") {
+    using T = int;
+    // string a = "Madam, I'm Adam";
+    string a = "madam, i'm adam";
+    auto n = distance(begin(a), end(a));
+    auto x = palindrome_n_filter(begin(a), end(a), n, equal_to_fake{}, skipper{});
+    CHECK(x);
+}
+
 
 TEST_CASE("[palindrome_recursive] palindrome_recursive empty range forward") {
     using T = int;
