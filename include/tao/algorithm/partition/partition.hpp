@@ -18,6 +18,24 @@
 
 namespace tao { namespace algorithm {
 
+// template <ForwardIterator I, UnaryPredicate P>
+//     requires(Mutable<I> && Domain<P, ValueType<I>>)
+// I partition_semistable(I f, I l, P p) {
+//     //precondition:  mutable_bounded_range(f, l)
+//     //postcondition: 
+//     //complexity:    
+
+//     I i = std::find_if(f, l, p);
+//     if (i == l) return i;
+
+//     I j = successor(i);
+//     while (true) {
+//         j = std::find_if_not(j, l, p);
+//         if (j == l) return i;
+//         swap_step(i, j);
+//     }
+// }
+
 template <ForwardIterator I, UnaryPredicate P>
     requires(Mutable<I> && Domain<P, ValueType<I>>)
 I partition_semistable(I f, I l, P p) {
@@ -25,15 +43,18 @@ I partition_semistable(I f, I l, P p) {
     //postcondition: 
     //complexity:    
 
-    I i = std::find_if(f, l, p);
-    if (i == l) return i;
+    f = std::find_if(f, l, p);
+    if (f == l) return f;
 
-    I j = successor(i);
-    while (true) {
-        j = std::find_if_not(j, l, p);
-        if (j == l) return i;
-        swap_step(i, j);
+    I j = std::next(f);
+    while (j == l) {
+        if ( ! p(*j)) {
+            std::iter_swap(f, j);
+            ++f;
+        }
+        ++j;
     }
+    return f;
 }
 
 }} /*tao::algorithm*/
