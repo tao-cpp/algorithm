@@ -10,7 +10,7 @@
 #define TAO_ALGORITHM_PARTITION_PARTITION_HPP_
 
 // #include <utility>
-#include <functional>   //std::not_fn(), C++17
+// #include <functional>   //std::not_fn(), C++17
 
 #include <tao/algorithm/concepts.hpp>
 #include <tao/algorithm/integers.hpp>
@@ -40,8 +40,10 @@ template <ForwardIterator I, UnaryPredicate P>
     requires(Mutable<I> && Domain<P, ValueType<I>>)
 I partition_semistable(I f, I l, P p) {
     //precondition:  mutable_bounded_range(f, l)
-    //postcondition: 
-    //complexity:    
+    //postcondition: the relative order of the elements not satisfying the Predicate p is preserved.
+    //complexity:    n = distance(f, l) applications of the Predicate p.
+    //               iterators increments?
+    //               exchanges?
 
     f = std::find_if(f, l, p);
     if (f == l) return f;
@@ -56,6 +58,39 @@ I partition_semistable(I f, I l, P p) {
     }
     return f;
 }
+
+//TODO(fernando): EoP's Excercise 11.5
+/*
+{0, 0, 0, 0}
+{0, 0, 1, 1}
+{0, 0, 1, 0}
+*/
+// template <ForwardIterator I, UnaryPredicate P>
+//     requires(Mutable<I> && Domain<P, ValueType<I>>)
+// void partition_semistable_nonempty(I f, I l, P p) {
+// }
+
+
+template <BidirectionalIterator I, UnaryPredicate P>
+    requires(Mutable<I> && Domain<P, ValueType<I>>)
+I partition_bidirectional(I f, I l, P p) {
+    //precondition:  mutable_bounded_range(f, l)
+    //postcondition: the relative order of the elements not satisfying the Predicate p is preserved.
+    //complexity:    n = distance(f, l) applications of the Predicate p.
+    //               iterators increments?
+    //               exchanges?
+
+    while (true) {
+        f = find_if(f, l, p);
+        l = find_backward_if_not(f, l, p);      //TODO(fernando): implement find_backward_if and find_backward_if_not
+        if (f == l) return f;
+        reverse_swap_step(l, f);
+    }
+
+}
+
+//TODO(fernando): EoP's Excercise 11.6
+
 
 }} /*tao::algorithm*/
 
