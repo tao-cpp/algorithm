@@ -51,6 +51,14 @@ I find_if(I f, I l, P p) {
 
 template <Iterator I, UnaryPredicate P>
     requires(Readable<I>, Domain<P, ValueType<I>)
+I find_if_not(I f, I l, P p) {
+    //precondition: readable_bounded_range(f, l)
+    while (f != l && p(*f)) ++f;
+    return f;
+}
+
+template <Iterator I, UnaryPredicate P>
+    requires(Readable<I>, Domain<P, ValueType<I>)
 std::pair<I, DistanceType<I>> find_if_n(I f, DistanceType<I> n, P p) {
     //precondition: readable_weak_range(f, n)
     while (!zero(n) && ! p(*f)) {
