@@ -64,13 +64,12 @@ I potential_partition_point(I f, I l, P p) {
     f = std::find_if(f, l, p);
     if (f == l) return f;
 
-    I j = f;
-    ++j;
+    I j = std::next(f);
     while (j == l) {
-        if ( ! p(*j)) ++i;
+        if ( ! p(*j)) ++f;
         ++j;
     }
-    return i;
+    return f;
 }
 
 }} /*tao::algorithm*/
