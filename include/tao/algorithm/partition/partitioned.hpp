@@ -6,8 +6,8 @@
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 
-#ifndef TAO_ALGORITHM_PARTITION_PARTITION_HPP_
-#define TAO_ALGORITHM_PARTITION_PARTITION_HPP_
+#ifndef TAO_ALGORITHM_PARTITION_PARTITIONED_HPP_
+#define TAO_ALGORITHM_PARTITION_PARTITIONED_HPP_
 
 // #include <utility>
 #include <functional>   //std::not_fn(), C++17
@@ -19,28 +19,32 @@
 namespace tao { namespace algorithm {
 
 template <ForwardIterator I, UnaryPredicate P>
-    requires(Mutable<I> && Domain<P, ValueType<I>>)
-I partition_semistable(I f, I l, P p) {
-    //precondition:  mutable_bounded_range(f, l)
-    //postcondition: 
-    //complexity:    
-
-    I i = std::find_if(f, l, p);
-    if (i == l) return i;
-
-    I j = successor(i);
-    while (true) {
-        j = std::find_if_not(j, l, p);
-        if (j == l) return i;
-        swap_step(i, j);
-    }
+    requires(Readable<I> && Domain<P, ValueType<I>>)
+bool partitioned(I f, I l, P p) {
+    //precondition:  readable_bounded_range(f, l)
+    //complexity:    O(n)
+    return l == std::find_if_not(std::find_if(f, l, p), l, p);
 }
+
+template <ForwardIterator I, UnaryPredicate P>
+    requires(Readable<I> && Domain<P, ValueType<I>>)
+bool partitioned_n(I f, DistanceType<I> n, P p) {
+    //precondition:  readable_counted_range(f, l)
+    //complexity:    O(n)
+
+    std::tie(f, n) = find_if_n(f, n, p);
+    return find_if_n(f, n, std::not_fn(p)).second == 0;
+
+    //Note(fernando): I would like to do something like in C++XX
+    // return find_if_n(find_if_n(f, n, p)..., std::not_fn(p)).second == 0;
+}
+
 
 }} /*tao::algorithm*/
 
 #include <tao/algorithm/concepts_undef.hpp>
 
-#endif /*TAO_ALGORITHM_PARTITION_PARTITION_HPP_*/
+#endif /*TAO_ALGORITHM_PARTITION_PARTITIONED_HPP_*/
 
 // #ifdef DOCTEST_LIBRARY_INCLUDED
 // #include <forward_list>
