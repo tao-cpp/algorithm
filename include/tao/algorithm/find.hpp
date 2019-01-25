@@ -84,6 +84,14 @@ I find_if_unguarded(I f, P p) {
     return f;
 }
 
+template <BidirectionalIterator I, UnaryPredicate P>
+    requires(Readable<I>, Domain<P, ValueType<I>)
+I find_backward_if(I f, I l, P p) {
+    //precondition: readable_bounded_range(f, l)
+    while (l != f && ! p(*std::prev(l))) --l;
+    return l;
+}
+
 
 // Quantifier functions:
 // ---------------------------------------------------------------------------
