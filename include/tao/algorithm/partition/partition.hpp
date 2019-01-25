@@ -49,7 +49,7 @@ I partition_semistable(I f, I l, P p) {
     if (f == l) return f;
 
     I j = std::next(f);
-    while (j == l) {
+    while (j != l) {
         if ( ! p(*j)) {
             std::iter_swap(f, j);
             ++f;
