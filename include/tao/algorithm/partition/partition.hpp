@@ -39,17 +39,20 @@ namespace tao { namespace algorithm {
 template <ForwardIterator I, UnaryPredicate P>
     requires(Mutable<I> && Domain<P, ValueType<I>>)
 I partition_semistable(I f, I l, P p) {
-    //precondition:  mutable_bounded_range(f, l)
-    //postcondition: the relative order of the elements not satisfying the Predicate p is preserved.
-    //complexity:    n = distance(f, l) applications of the Predicate p.
-    //               iterators increments?
-    //               exchanges?
+    // precondition:    mutable_bounded_range(f, l)
+    // postcondition:   partitioned(f, l, p)
+    //                  && partition_point(f, l, p) == returned value
+    //                  && semistability: the relative order of the elements not satisfying the Predicate p is preserved.
+    // complexity:      n = distance(f, l) applications of the Predicate p.
+    //                  iterators increments?
+    //                  exchanges?
 
     f = std::find_if(f, l, p);
     if (f == l) return f;
 
     I j = std::next(f);
     while (j != l) {
+        // loop invariant: all_of((ORIGINAL)f, f, p) && none_of(f, j, p)); // invariant 
         if ( ! p(*j)) {
             std::iter_swap(f, j);
             ++f;
