@@ -24,6 +24,49 @@ void shift_three(T& a, T& b, U&& c) noexcept {
     b = std::move(c);
 }
 
+template <ForwardIterator I1, ForwardIterator I2>
+    requires(Mutable<I1> && Mutable<I1>)
+I2 swap_ranges(I1 f1, I1 l1, I2 f2) {
+    //precondition: mutable_bounded_range(f1, l1)
+    //           && mutable_counted_range(f2, distance(f1, l1))
+
+    while (f1 != l1) {
+        std::iter_swap(f1, f2);
+        ++f1;
+        ++f2;
+    }
+    return f2;
+}
+
+template <ForwardIterator I1, ForwardIterator I2>
+    requires(Mutable<I1> && Mutable<I1>)
+std::pair<I1, I2> swap_ranges(I1 f1, I1 l1, I2 f2, I2 l2) {
+    //precondition: mutable_bounded_range(f1, l1)
+    //           && mutable_bounded_range(f2, l2)
+
+    while (f1 != l1 && f2 != l2) {
+        std::iter_swap(f1, f2);
+        ++f1;
+        ++f2;
+    }
+    return {f1, f2};
+}
+
+template <ForwardIterator I1, ForwardIterator I2>
+    requires(Mutable<I1> && Mutable<I1>)
+std::pair<I1, I2> swap_ranges_n(I1 f1, DistanceType<I1> n, I2 f2) {
+    //precondition: mutable_counted_range(f1, n)
+    //           && mutable_counted_range(f2, n)
+
+    while (n > DistanceType<I1>(0)) {
+        std::iter_swap(f1, f2);
+        ++f1;
+        ++f2;
+        --n;
+    }
+    return {f1, f2};
+}
+
 }} /*tao::algorithm*/
 
 #endif /*TAO_ALGORITHM_SWAP_HPP_*/

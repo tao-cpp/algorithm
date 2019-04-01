@@ -32,7 +32,7 @@ I partition_point_n(I f, DistanceType<I> n, P p) {
             n = h;
         } else {
             n -= h + 1;
-            f = succesor(m);
+            f = std::next(m);
         }
     }
     return f;

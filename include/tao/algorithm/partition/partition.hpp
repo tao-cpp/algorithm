@@ -120,19 +120,6 @@ void partition_semistable_nonempty(I f, I l, P p) {
 }
 
 
-
-/*
-{0, 0, 0, 0}
-{0, 0, 1, 1}
-{0, 0, 1, 0}
-*/
-// template <ForwardIterator I, UnaryPredicate P>
-//     requires(Mutable<I> && Domain<P, ValueType<I>>)
-// void partition_semistable_nonempty(I f, I l, P p) {
-// }
-
-
-
 // C.A.R. Hoare's partition algorithm.
 // ---------------------------------------------------------------------------
 
@@ -147,9 +134,13 @@ I partition_bidirectional(I f, I l, P p) {
 
     while (true) {
         f = find_if(f, l, p);
-        l = find_backward_if_not(f, l, p);      //TODO(fernando): implement find_backward_if and find_backward_if_not
+        l = find_backward_if_not(f, l, p);
         if (f == l) return f;
-        reverse_swap_step(l, f);
+
+        // reverse_swap_step(l, f);
+        --l;
+        swap(*f, *l);
+        ++f;         
     }
 
 }
