@@ -14,6 +14,7 @@ class TaoCppAlgorithm(ConanFile):
     exports_sources = "CMakeLists.txt", "include/*", "test/*"
 
 
+
     # def build(self):
     #      #empty too, nothing to build in header only
     #     pass
@@ -47,6 +48,14 @@ class TaoCppAlgorithm(ConanFile):
     def deploy(self):
         self.copy("*.hpp")
         # self.copy_deps("*.dll") # copy from dependencies
+
+
+    def build(self):
+        cmake = CMake(self)
+        cmake.configure()
+        cmake.build()
+        cmake.install()
+        cmake.test()
 
     # def package_info(self):
     #     self.cpp_info.includedirs = ['include']

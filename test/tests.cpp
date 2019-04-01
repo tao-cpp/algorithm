@@ -8,10 +8,10 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
-struct no_natural_order {
-    int id;
-    int salary;
-};
+// struct no_natural_order {
+//     int id;
+//     int salary;
+// };
 
 // #include <tao/algorithm/copy.hpp>
 // #include <tao/algorithm/count.hpp>
@@ -36,4 +36,6 @@ struct no_natural_order {
 // #include <tao/algorithm/sorting/min_max_sort.hpp>
 
 
-#include <tao/algorithm/toys/palindrome.hpp>
+// #include <tao/algorithm/toys/palindrome.hpp>
+
+#include <tao/algorithm/adjacent_swap.hpp>
