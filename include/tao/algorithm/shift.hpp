@@ -241,7 +241,7 @@ I shift_left_by_one_n(I f, DistanceType<I> n) {
 //     return l;
 // }
 
-template <ForwardIterator I, UnaryPredicate P>  //WeakStrictOrdering??
+template <ForwardIterator I, UnaryPredicate P>
     requires(Mutable<I>)
 I shift_right_while(I f, I l, P p, std::forward_iterator_tag) {
     // precondition: mutable_bounded_range(f, l + 1) 
@@ -253,7 +253,7 @@ I shift_right_while(I f, I l, P p, std::forward_iterator_tag) {
     return shift_right_by_one(f, l);
 }
 
-template <BidirectionalIterator I, UnaryPredicate P>  //WeakStrictOrdering??
+template <BidirectionalIterator I, UnaryPredicate P>
     requires(Mutable<I>)
 I shift_right_while(I f, I l, P p, std::bidirectional_iterator_tag) {
     // precondition: mutable_bounded_range(f, l + 1) 

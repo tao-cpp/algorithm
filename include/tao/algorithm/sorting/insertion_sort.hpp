@@ -18,9 +18,7 @@
 
 namespace tao { namespace algorithm {
 
-
-
-template <BidirectionalIterator I, Relation R>  //WeakStrictOrdering??
+template <BidirectionalIterator I, StrictWeakOrdering R>
     requires(Mutable<I>)
 I linear_insert(I f, I current, R r) {
     // precondition: mutable_bounded_range(f, current + 1) && is_sorted(f, current, r)
@@ -32,25 +30,25 @@ I linear_insert(I f, I current, R r) {
     return current;
 }
 
-// template <BidirectionalIterator I, Relation R>  //WeakStrictOrdering??
-//     requires(Mutable<I>)
-// I linear_insert(I f, I current, R r) {
-//     // precondition: mutable_bounded_range(f, current + 1) && is_sorted(f, current, r)
-//     auto value = *current;
-//     while (f != current && r(value, *predecessor(current))) {
-//         *current = *predecessor(current);
-//         --current;
-//     }
-//     *current = value;
-//     return current;
-// }
+template <BidirectionalIterator I, StrictWeakOrdering R>
+    requires(Mutable<I>)
+I linear_insert(I f, I current, R r) {
+    // precondition: mutable_bounded_range(f, current + 1) && is_sorted(f, current, r)
+    auto value = *current;
+    while (f != current && r(value, *predecessor(current))) {
+        *current = *predecessor(current);
+        --current;
+    }
+    *current = value;
+    return current;
+}
 
 
 
 
 
 // template <ForwardIterator I, Relation R>
-//     requires(WeakStrictOrdering<ValueType<I>>)
+//     requires(StrictWeakOrdering<ValueType<I>>)
 // I linear_insert(I f, I c, R r) {
 //     //precondition: writable_counted_range(f, c) TODO(fernando): ?????
 //     //precondition: sorted(f, c, r)
@@ -75,7 +73,7 @@ I linear_insert(I f, I current, R r) {
 // }
 
 // template <ForwardIterator I, Relation R>
-//     requires(WeakStrictOrdering<ValueType<I>>)
+//     requires(StrictWeakOrdering<ValueType<I>>)
 // I insertion_sort_linear(I f, I l, R r) {
 //     if (f == l) return f;
 
@@ -94,8 +92,14 @@ I linear_insert(I f, I current, R r) {
 // void insertion_sort_linear_n(I f, DistanceType<I> n) {
 // }
 
+
+
+// ----------------------------------------------------------------------
+// Binary Insertion Sort
+// ----------------------------------------------------------------------
+
 // template <ForwardIterator I, Relation R>
-//     requires(Mutable<I> && WeakStrictOrdering<R, ValueType<I>>)
+//     requires(Mutable<I> && StrictWeakOrdering<R, ValueType<I>>)
 // I binary_insert_n(I f, DistanceType<I> n, I current, R r) {
 //     // precondition: mutable_bounded_range(f, current + 1) &&
 //     //               is_sorted(f, current, r) && distance(f, current) == n
@@ -106,7 +110,7 @@ I linear_insert(I f, I current, R r) {
 // }
 
 template <ForwardIterator I, Relation R>
-    requires(Mutable<I> && WeakStrictOrdering<R, ValueType<I>>)
+    requires(Mutable<I> && StrictWeakOrdering<R, ValueType<I>>)
 I binary_insert(I f, I current, R r) {
     // precondition: mutable_bounded_range(f, current + 1) && 
     //               is_sorted(f, current, r)
@@ -117,7 +121,7 @@ I binary_insert(I f, I current, R r) {
 }
 
 template <ForwardIterator I, Relation R>
-    requires(Mutable<I> && WeakStrictOrdering<R, ValueType<I>>)
+    requires(Mutable<I> && StrictWeakOrdering<R, ValueType<I>>)
 I insertion_sort_binary(I f, I l, R r) {
     //precondition: mutable_bounded_range(f, l)
     if (f == l) return f;
@@ -130,7 +134,7 @@ I insertion_sort_binary(I f, I l, R r) {
 }
 
 template <ForwardIterator I, Relation R>
-    requires(Mutable<I> && WeakStrictOrdering<R, ValueType<I>>)
+    requires(Mutable<I> && StrictWeakOrdering<R, ValueType<I>>)
 I insertion_sort_binary_n(I f, DistanceType<I> n, R r) {
     //precondition: mutable_bounded_range(f, l)
 
