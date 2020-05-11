@@ -3,7 +3,7 @@ from conans import ConanFile, CMake
     
 class TaoCppAlgorithm(ConanFile):
     name = "algorithm"
-    # license = "http://www.boost.org/users/license.html"
+    license = "MIT"
     url = "https://github.com/tao-cpp/algorithm"
     description = "C++ general purpose algorithms library"
 
@@ -26,15 +26,17 @@ class TaoCppAlgorithm(ConanFile):
 
         # If header only, the compiler, etc, does not affect the package!
         if not self.options.tests:
+            self.output.info("****** CLEARING THE SETTINGS *******")
             self.settings.clear()
 
     def build(self):
-        self.output.info("****** build ******* self.options.tests: %s" % (self.options.tests,))
-        cmake = CMake(self)
-        cmake.configure()
-        cmake.build()
-        # cmake.install()
-        cmake.test()
+        if self.options.tests:
+            self.output.info("****** build ******* self.options.tests: %s" % (self.options.tests,))
+            cmake = CMake(self)
+            cmake.configure()
+            cmake.build()
+            # cmake.install()
+            cmake.test()
 
     def package(self):
         self.copy("*.h", dst="include", src="include")
