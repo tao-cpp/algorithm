@@ -1,10 +1,10 @@
 //! \file tao/algorithm/copy.hpp
 // Tao.Algorithm
 //
-// Copyright Fernando Pelliccioni 2016-2019
+// Copyright (c) 2016-2020 Fernando Pelliccioni.
 //
-// Distributed under the Boost Software License, Version 1.0. (See accompanying
-// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef TAO_ALGORITHM_COPY_HPP_
 #define TAO_ALGORITHM_COPY_HPP_
@@ -20,13 +20,18 @@
 
 namespace tao { namespace algorithm {
 
+template <Iterator I, Iterator O>
+    requires(Readable<I> && Writable<O> && SameValueType<I, O>)
+void copy_step(I& f, O& o) {
+    //precondition: source(f) and sink(o) are defined 
+    *o++ = *f++;
+}
 
-template <Integer N>
-bool count_down(N& n) {
-    //precondition: n >= 0
-    if (zero(n)) return false;
-    --n;        //n = predecessor(n);
-    return true;
+template <Iterator I, Iterator O>
+    requires(Readable<I> && Writable<O> && SameValueType<I, O>)
+void move_step(I& f, O& o) {
+    //precondition: source(f) and sink(o) are defined 
+    *o++ = std::move(*f++);
 }
 
 template <BidirectionalIterator I, BidirectionalIterator O>
@@ -50,6 +55,47 @@ void move_backward_step(I& l_i, O& l_o) {
     --l_o;
     *l_o = std::move(*l_i);
 }
+
+template <Integer N>
+bool count_down(N& n) {
+    //precondition: n >= 0
+    if (zero(n)) return false;
+    --n;        //n = predecessor(n);
+    return true;
+}
+
+template <Iterator I, Iterator O>
+    requires(Readable<I> && Writable<O> && SameValueType<I, O>)
+O copy(I f, I l, O o) {
+    //precondition: not_overlapped_forward(f, l, o, next(o, distance(f, l))) 
+    while (f != l) copy_step(f, o);
+    return o;
+}
+
+template <Iterator I, Iterator O, Integer N>
+    requires(Readable<I> && Writable<O> && SameValueType<I, O>)
+std::pair<I, O> copy_n(I f, N n, O o) {
+    //precondition: not_overlapped_forward(f, next(f, n), o, next(o, n)) 
+    while (count_down(n)) copy_step(f, o);
+    return {f, o};
+}
+
+template <Iterator I, Iterator O>
+    requires(Readable<I> && Writable<O> && SameValueType<I, O>)
+O move(I f, I l, O o) {
+    //precondition: not_overlapped_forward(f, l, o, next(o, distance(f, l))) 
+    while (f != l) move_step(f, o);
+    return o;
+}
+
+template <Iterator I, Iterator O, Integer N>
+    requires(Readable<I> && Writable<O> && SameValueType<I, O>)
+std::pair<I, O> move_n(I f, N n, O o) {
+    //precondition: not_overlapped_forward(f, next(f, n), o, next(o, n)) 
+    while (count_down(n)) move_step(f, o);
+    return {f, o};
+}
+
 
 // -----------------------------------------------------------------
 // copy_backward and copy_backward_n

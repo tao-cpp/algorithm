@@ -1,17 +1,17 @@
 //! \file tao/algorithm/counter_machine.hpp
 // Tao.Algorithm
 //
-// Copyright Fernando Pelliccioni 2016-2019
+// Copyright (c) 2016-2020 Fernando Pelliccioni.
 //
-// Distributed under the Boost Software License, Version 1.0. (See accompanying
-// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef TAO_ALGORITHM_COUNTER_MACHINE_HPP
 #define TAO_ALGORITHM_COUNTER_MACHINE_HPP
 
 // #include <iterator>
 
-#include <tao/algorithm/add_to_counter.hpp>
+#include <tao/algorithm/binary_counter/add_to_counter.hpp>
 #include <tao/algorithm/concepts.hpp>
 // #include <tao/algorithm/integers.hpp>
 #include <tao/algorithm/type_attributes.hpp>

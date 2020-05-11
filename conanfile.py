@@ -1,18 +1,26 @@
 from conans import ConanFile, CMake
-# import os
 
+    
 class TaoCppAlgorithm(ConanFile):
     name = "algorithm"
-    version = "0.1"
+    # version = "0.1"
+    # version = get_version(0, 1)
     license = "http://www.boost.org/users/license.html"
     url = "https://github.com/tao-cpp/algorithm"
     description = "C++ general purpose algorithms library"
 
-    settings = None
-    generators = "cmake"
+    settings = "os", "compiler", "arch", "build_type"
 
-    exports_sources = "CMakeLists.txt", "include/*", "test/*"
+    # exports_sources = "include/*", "CMakeLists.txt", "example.cpp"
+    exports_sources = "CMakeLists.txt", "include/*", "test/*", "benchmark/*", "src/*"
+    # exports_sources = "include/*"
+    no_copy_source = True
 
+
+    # settings = None
+    # generators = "cmake"
+
+    
 
 
     # def build(self):
@@ -23,40 +31,24 @@ class TaoCppAlgorithm(ConanFile):
     # package_files = "build/lbitprim-node-cint.so"
     # build_policy = "missing"
 
-
-    # def imports(self):
-    #     self.copy("*.h", "./deps/include/bitprim", "include/bitprim")
-    #     self.copy("*.hpp", dst="./deps/include/bitprim", src="include/bitprim")
-    #     self.copy("*.lib", dst="./deps/lib", src="lib")
-    #     self.copy("*.a", dst="./deps/lib", src="lib")
-    #     self.copy("*.dylib", dst="./deps/lib", src="lib")
-    #     self.copy("*.so", dst="./deps/lib", src="lib")
-    #     self.copy("*.dll", dst="./deps/lib", src="lib")
-
+    def build(self):
+        cmake = CMake(self)
+        cmake.configure()
+        cmake.build()
+        # cmake.install()
+        cmake.test()
 
     def package(self):
         self.copy("*.h", dst="include", src="include")
         self.copy("*.hpp", dst="include", src="include")
         self.copy("*.ipp", dst="include", src="include")
-        # self.copy("*.lib", dst="lib", keep_path=False)
-        # self.copy("*.dll", dst="bin", keep_path=False)
-        # self.copy("*.dylib*", dst="lib", keep_path=False)
-        # self.copy("*.so", dst="lib", keep_path=False)
-        # self.copy("*.a", dst="lib", keep_path=False)
+
+    def package_id(self):
+        self.info.header_only()
+
+    # def deploy(self):
+    #     self.copy("*.hpp")
+    #     # self.copy_deps("*.dll") # copy from dependencies
 
 
-    def deploy(self):
-        self.copy("*.hpp")
-        # self.copy_deps("*.dll") # copy from dependencies
 
-
-    def build(self):
-        cmake = CMake(self)
-        cmake.configure()
-        cmake.build()
-        cmake.install()
-        cmake.test()
-
-    # def package_info(self):
-    #     self.cpp_info.includedirs = ['include']
-    #     self.cpp_info.libs = ["algorithm"]

@@ -1,10 +1,10 @@
 //! \file tao/algorithm/reverse.hpp
 // Tao.Algorithm
 //
-// Copyright Fernando Pelliccioni 2016-2019
+// Copyright (c) 2016-2020 Fernando Pelliccioni.
 //
-// Distributed under the Boost Software License, Version 1.0. (See accompanying
-// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef TAO_ALGORITHM_REVERSE_HPP_
 #define TAO_ALGORITHM_REVERSE_HPP_
@@ -86,14 +86,30 @@ std::pair<I, I> reverse(I f, I l, std::random_access_iterator_tag) {
 // -----------------------------------------------------------------
 
 template <BidirectionalIterator I, Iterator O>
-    requires(Readable<I> && Writable<O>)
+    requires(Readable<I> && Writable<O> && SameValueType<I, O>)
 O reverse_copy(I f, I l, O out) {
     //precondition: readable_bounded_range(f, l)
     //           && writable_counted_range(out, distance(f, l))
+    //           && not_overlapped(f, l, out, next(out, distance(f, l)))
 
     while (f != l) {
         --l;
         *out = *l;
+        ++out;
+    }
+    return out;
+}
+
+template <BidirectionalIterator I, Iterator O>
+    requires(Readable<I> && Writable<O> && SameValueType<I, O>)
+O reverse_move(I f, I l, O out) {
+    //precondition: mutable_bounded_range(f, l)
+    //           && writable_counted_range(out, distance(f, l))
+    //           && not_overlapped(f, l, out, next(out, distance(f, l)))
+
+    while (f != l) {
+        --l;
+        *out = std::move(*l);
         ++out;
     }
     return out;
@@ -114,6 +130,20 @@ std::pair<I, O> reverse_copy_n(I l, DistanceType<I> n, O out) {
     return {l, out};
 }
 
+template <BidirectionalIterator I, Iterator O>
+    requires(Readable<I> && Writable<O>)
+std::pair<I, O> reverse_move_n(I l, DistanceType<I> n, O out) {
+    //precondition: mutable_counted_range(l - n, n)
+    //           && writable_counted_range(out, n)
+
+    while (n > DistanceType<I>(0)) {
+        --l;
+        *out = std::move(*l);
+        ++out;
+        --n;
+    }
+    return {l, out};
+}
 // -----------------------------------------------------------------
 // copy_reverse
 // -----------------------------------------------------------------
@@ -152,23 +182,27 @@ std::pair<I, O> copy_reverse_n(I f, DistanceType<I> n, O out) {
 // reverse_with_buffer
 // -----------------------------------------------------------------
 
-template <ForwardIterator I, BidirectionalIterator O>
+template <ForwardIterator I, BidirectionalIterator B>
     requires(Mutable<I> && Mutable<O>)
-void reverse_with_buffer(I f, I l, O buffer) {
+I reverse_with_buffer(I f, I l, B b) {
     //precondition: mutable_bounded_range(f, l)
-    //           && mutable_counted_range(buffer, distance(f, l))
+    //           && mutable_counted_range(b, distance(f, l))
 
-    I c = f;
-    while (c != l) {
-        *buffer = *c;
-        ++c;
-        ++buffer;
-    }
-    while (f != l) {
-        --buffer;
-        *f = std::move(*buffer);
-        ++f;
-    }
+    return reverse_move(b, copy(f, l, b), f);
+
+    // I c = f;
+    // while (c != l) {
+    //     *buffer = *c;
+    //     ++c;
+    //     ++buffer;
+    // }
+    // while (f != l) {
+    //     --buffer;
+    //     *f = std::move(*buffer);
+    //     ++f;
+    // }
+
+    // return f;
 }
 
 // -----------------------------------------------------------------
@@ -177,25 +211,29 @@ void reverse_with_buffer(I f, I l, O buffer) {
 
 template <ForwardIterator I, BidirectionalIterator B>
     requires(Mutable<I> && Mutable<O>)
-void reverse_n_with_buffer(I f, DistanceType<I> n, B buffer) {
+I reverse_n_with_buffer(I f, DistanceType<I> n, B b) {
     //precondition: mutable_counted_range(f, n)
     //           && mutable_counted_range(buffer, n)
 
-    I c = f;
-    auto cn = n;
-    while (cn != DistanceType<I>(0)) {
-        *buffer = *c;
-        ++c;
-        ++buffer;
-        --cn;
-    }
+    return reverse_move(b, copy_n(f, n, b).second, f);
 
-    while (n != DistanceType<I>(0)) {
-        --buffer;
-        *f = std::move(*buffer);
-        ++f;
-        --n;
-    }
+    // I c = f;
+    // auto cn = n;
+    // while (cn != DistanceType<I>(0)) {
+    //     *buffer = *c;
+    //     ++c;
+    //     ++buffer;
+    //     --cn;
+    // }
+
+    // while (n != DistanceType<I>(0)) {
+    //     --buffer;
+    //     *f = std::move(*buffer);
+    //     ++f;
+    //     --n;
+    // }
+
+    // return f;
 }
 
 
@@ -220,7 +258,7 @@ void reverse_n_with_buffer(I f, DistanceType<I> n, B buffer) {
 //     if (n < 2) return;
 //     I m = std::next(f, n/2);
 //     naive_reverse(f, m);
-//     if (is_odd(n)) ++m;
+//     if (odd(n)) ++m;
 //     naive_reverse(m, l);
 //     swap_ranges(m, l, f);
 // }
@@ -239,7 +277,7 @@ I reverse_n_in_place(I f, DistanceType<I> n) {
 
     auto h = half(n);
     I m = reverse_n_in_place(f, h);
-    if (is_odd(n)) ++m;
+    if (odd(n)) ++m;
     I l = reverse_n_in_place(m, h);
     swap_ranges_n(f, n, m);
     return l;
@@ -251,7 +289,7 @@ I reverse_n_in_place(I f, DistanceType<I> n) {
 
 template <ForwardIterator I, BidirectionalIterator B>
     requires(Mutable<I> && Mutable<B>)
-I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m)
+I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m) {
     //precondition: mutable_counted_range(f, n)
     //           && mutable_counted_range(b, m)
 
@@ -260,9 +298,9 @@ I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m)
     if (n <= m) return reverse_n_with_buffer(f, n, b);
 
     auto h = half(n);
-    I m = reverse_n_adaptive(f, h);
-    if (is_odd(n)) ++m;
-    I l = reverse_n_adaptive(m, h);
+    m = reverse_n_adaptive(f, h, b, m);
+    if (odd(n)) ++m;
+    I l = reverse_n_adaptive(m, h, b, m);
     swap_ranges_n(f, n, m);
     return l;
 }

@@ -1,8 +1,8 @@
 # Tao.Algorithm
 #
-# Copyright Fernando Pelliccioni 2016-2019
-# Distributed under the Boost Software License, Version 1.0. (See accompanying
-# file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+# Copyright (c) 2016-2020 Fernando Pelliccioni.
+# Distributed under the MIT software license, see the accompanying
+# file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 project(Tao.Algorithm CXX)
 
@@ -10,7 +10,11 @@ project(Tao.Algorithm CXX)
 cmake_minimum_required(VERSION 3.0)
 # list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-add_compile_options(-std=c++14)
+# add_compile_options(-std=c++14)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 
 ##############################################################################
 # Setup custom functions to ease the creation of targets
@@ -50,5 +54,4 @@ endfunction()
 include_directories(include)
 
 add_subdirectory(benchmark)
-
 add_subdirectory(test)
