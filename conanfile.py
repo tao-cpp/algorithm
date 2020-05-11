@@ -1,5 +1,4 @@
 from conans import ConanFile, CMake
-
     
 class TaoCppAlgorithm(ConanFile):
     name = "algorithm"
@@ -22,16 +21,16 @@ class TaoCppAlgorithm(ConanFile):
     }
 
     def configure(self):
-        self.output.info("****** configure ******* self.options.tests: %s" % (self.options.tests,))
+        # self.output.info("****** configure ******* self.options.tests: %s" % (self.options.tests,))
 
         # If header only, the compiler, etc, does not affect the package!
         if not self.options.tests:
-            self.output.info("****** CLEARING THE SETTINGS *******")
+            # self.output.info("****** CLEARING THE SETTINGS *******")
             self.settings.clear()
 
     def build(self):
         if self.options.tests:
-            self.output.info("****** build ******* self.options.tests: %s" % (self.options.tests,))
+            # self.output.info("****** build ******* self.options.tests: %s" % (self.options.tests,))
             cmake = CMake(self)
             cmake.configure()
             cmake.build()
