@@ -10,10 +10,10 @@ branches:
 env:
    global:
     #  - CONAN_REFERENCE: "algorithm/0.1"
-     - CONAN_USERNAME: "fpelliccioni"
-     - CONAN_LOGIN_USERNAME: "fpelliccioni"
-     - CONAN_CHANNEL: "stable"
-     - CONAN_UPLOAD: "https://api.bintray.com/conan/tao-cpp/tao"
+    #  - CONAN_USERNAME: "fpelliccioni"
+    #  - CONAN_LOGIN_USERNAME: "fpelliccioni"
+    #  - CONAN_CHANNEL: "stable"
+    #  - CONAN_UPLOAD: "https://api.bintray.com/conan/tao-cpp/tao"
      - KTH_VERSION_MAJOR: "0"
      - KTH_VERSION_MINOR: "1"
 
