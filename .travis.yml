@@ -14,8 +14,8 @@ env:
     #  - CONAN_LOGIN_USERNAME: "fpelliccioni"
     #  - CONAN_CHANNEL: "stable"
     #  - CONAN_UPLOAD: "https://api.bintray.com/conan/tao-cpp/tao"
-     - KTH_VERSION_MAJOR: "0"
-     - KTH_VERSION_MINOR: "1"
+     - TAO_VERSION_MAJOR: "0"
+     - TAO_VERSION_MINOR: "1"
 
 
 linux: &linux
@@ -50,6 +50,27 @@ script:
 
   - chmod +x .travis/run.sh
   - ./.travis/run.sh
+
+# Upload Alias
+
+  - |
+    cd ${TRAVIS_BUILD_DIR}
+    echo $TRAVIS_REPO_SLUG
+    REPO_NAME=$(echo $TRAVIS_REPO_SLUG| cut -d'/' -f 2)
+    echo $REPO_NAME
+
+  - eval $(python ci_utils/set_envvars_and_files.py)
+  #TODO(fernando): configure the remote and user using environment variables
+  # - conan remote add taobuild_tao_temp_ https://api.bintray.com/conan/tao-cpp/tao
+  - conan remote list
+  - conan user
+  - conan user ${CONAN_LOGIN_USERNAME} -r taobuild_tao_temp_ -p ${CONAN_PASSWORD}
+  - conan user
+  - echo "conan alias ${REPO_NAME}/0.1.X@tao/${TAO_CONAN_CHANNEL} ${REPO_NAME}/${TAO_CONAN_VERSION}@tao/${TAO_CONAN_CHANNEL}"
+  - conan alias "${REPO_NAME}/0.1.X@tao/${TAO_CONAN_CHANNEL}" "${REPO_NAME}/${TAO_CONAN_VERSION}@tao/${TAO_CONAN_CHANNEL}"
+  - echo "conan upload ${REPO_NAME}/0.1.X@tao/${TAO_CONAN_CHANNEL} --all -r taobuild_tao_temp_"
+  - conan upload "${REPO_NAME}/0.1.X@tao/${TAO_CONAN_CHANNEL}" --all -r taobuild_tao_temp_        
+
 
 # notifications:
 #   email: false

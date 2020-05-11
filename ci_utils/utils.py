@@ -307,8 +307,8 @@ def get_git_commit_count_per_branch(branch='master', default=0):
 
 def get_version():
     branch = get_branch('master')
-    major = os.getenv("KTH_VERSION_MAJOR", "0")
-    minor = os.getenv("KTH_VERSION_MINOR", "1")
+    major = os.getenv("TAO_VERSION_MAJOR", "0")
+    minor = os.getenv("TAO_VERSION_MINOR", "1")
     patch = get_git_commit_count_per_branch(branch, "1")
     return "%s.%s.%s" % (major, minor, patch)
 
