@@ -13,7 +13,7 @@ env:
      - CONAN_USERNAME: "fpelliccioni"
      - CONAN_LOGIN_USERNAME: "fpelliccioni"
      - CONAN_CHANNEL: "stable"
-     - CONAN_UPLOAD: "https://api.bintray.com/conan/tao-cpp/tao-cpp"
+     - CONAN_UPLOAD: "https://api.bintray.com/conan/tao-cpp/tao"
      - KTH_VERSION_MAJOR: "0"
      - KTH_VERSION_MINOR: "1"
 
