@@ -42,6 +42,12 @@ install:
 
 script:
   - cd ${TRAVIS_BUILD_DIR}
+
+  - git rev-list --count
+  - git fetch --unshallow
+  - git fetch origin master:master
+  - git rev-list --count
+
   - chmod +x .travis/run.sh
   - ./.travis/run.sh
 

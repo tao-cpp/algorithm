@@ -3,33 +3,23 @@ from conans import ConanFile, CMake
     
 class TaoCppAlgorithm(ConanFile):
     name = "algorithm"
-    # version = "0.1"
-    # version = get_version(0, 1)
-    license = "http://www.boost.org/users/license.html"
+    # license = "http://www.boost.org/users/license.html"
     url = "https://github.com/tao-cpp/algorithm"
     description = "C++ general purpose algorithms library"
 
     settings = "os", "compiler", "arch", "build_type"
 
-    # exports_sources = "include/*", "CMakeLists.txt", "example.cpp"
     exports_sources = "CMakeLists.txt", "include/*", "test/*", "benchmark/*", "src/*"
-    # exports_sources = "include/*"
     no_copy_source = True
-
-
-    # settings = None
-    # generators = "cmake"
-
-    
-
-
-    # def build(self):
-    #      #empty too, nothing to build in header only
-    #     pass
-
-    # exports_sources = "src/*", "CMakeLists.txt", "cmake/*", "bitprim-node-cintConfig.cmake.in", "include/*", "test/*", "console/*"
-    # package_files = "build/lbitprim-node-cint.so"
     # build_policy = "missing"
+
+    options = {
+        "tests": [True, False],
+    }
+
+    default_options = {
+        "tests": False,
+    }    
 
     def build(self):
         cmake = CMake(self)
@@ -45,6 +35,7 @@ class TaoCppAlgorithm(ConanFile):
 
     def package_id(self):
         self.info.header_only()
+        self.info.options.tests = "ANY"
 
     # def deploy(self):
     #     self.copy("*.hpp")
