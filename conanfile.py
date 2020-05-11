@@ -19,9 +19,17 @@ class TaoCppAlgorithm(ConanFile):
 
     default_options = {
         "tests": False,
-    }    
+    }
+
+    def configure(self):
+        self.output.info("****** configure ******* self.options.tests: %s" % (self.options.tests,))
+
+        # If header only, the compiler, etc, does not affect the package!
+        if not self.options.tests:
+            self.settings.clear()
 
     def build(self):
+        self.output.info("****** build ******* self.options.tests: %s" % (self.options.tests,))
         cmake = CMake(self)
         cmake.configure()
         cmake.build()
@@ -36,10 +44,6 @@ class TaoCppAlgorithm(ConanFile):
     def package_id(self):
         self.info.header_only()
         self.info.options.tests = "ANY"
-
-    # def deploy(self):
-    #     self.copy("*.hpp")
-    #     # self.copy_deps("*.dll") # copy from dependencies
 
 
 
