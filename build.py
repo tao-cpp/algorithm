@@ -11,9 +11,9 @@ if __name__ == "__main__":
     builder.add_common_builds()
 
     filtered_builds = []
-    for settings, options, env_vars, build_requires in builder.builds:
+    for settings, options, env_vars, build_requires, reference in builder.items:
         if settings["build_type"] == "Release":
-            filtered_builds.append([settings, options, env_vars, build_requires])
+            filtered_builds.append([settings, options, env_vars, build_requires, reference])
 
     builder.builds = filtered_builds
     builder.run()
