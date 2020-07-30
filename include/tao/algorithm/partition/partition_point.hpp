@@ -1,4 +1,4 @@
-//! \file tao/algorithm/partition/partition.hpp
+//! \file tao/algorithm/partition/partition_point.hpp
 // Tao.Algorithm
 //
 // Copyright (c) 2016-2020 Fernando Pelliccioni.
