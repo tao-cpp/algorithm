@@ -28,7 +28,7 @@ Tao.Algorithm
 
 ## Introduction ##
 
-**Tao.Algorithm** is a **C++11/14/17** library which contains a collection of general purpose algorithms.
+**Tao.Algorithm** is a **C++17** library which contains a collection of general purpose algorithms.
 
 ## Overview
 <!--  -->
@@ -40,24 +40,6 @@ int main() {
 
 ## Documentation
 You can browse the documentation online at http://tao-cpp.github.io/algorithm.
-
-## Project organization
-
-
-## Related material
-
-
-## Contributing
-Please see [CONTRIBUTING.md](CONTRIBUTING.md).
-
-
-## License
-Please see [LICENSE.md](LICENSE.md).
-
-
-## Releasing
-
-
 
 <!-- Links -->
 
