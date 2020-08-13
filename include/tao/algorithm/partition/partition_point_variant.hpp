@@ -22,7 +22,7 @@ I partition_point_variant_n(I f, DistanceType<I> n, P p) {
     //complexity:    O(log2(n))
 
     while (n != 0) {
-        auto h = half_nonnegative(n);
+        auto h = half(n);
         I m = std::next(f, h);
 
         if (p(m)) {

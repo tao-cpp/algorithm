@@ -50,7 +50,7 @@ bool palindrome_n(I f, I l, DistanceType<I> n, R r) {
     //              distance(f, l) == n
 
     using N = DistanceType<I>;
-    n = half_nonnegative(n);
+    n = half(n);
     while (n-- > N(0)) {
         if ( ! r(*f++, *--l)) return false;
     }
