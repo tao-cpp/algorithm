@@ -181,9 +181,10 @@ jobs:
           echo "My branch name is $TAO_BRANCH"
 
           eval $(python ci_utils/set_envvars_and_files.py)
-          # conan remote add upload_repo https://taocpp.jfrog.io/artifactory/api/conan/tao
-          # conan user
-          # conan user ${CONAN_LOGIN_USERNAME} -r upload_repo -p ${CONAN_PASSWORD}
+          conan user
+          conan remote add upload_repo https://taocpp.jfrog.io/artifactory/api/conan/tao
+          conan user
+          conan user ${CONAN_LOGIN_USERNAME} -r upload_repo -p ${CONAN_PASSWORD}
           conan user
           echo "conan alias ${REPO_NAME}/0.1.X@tao/${TAO_CONAN_CHANNEL} ${REPO_NAME}/${TAO_CONAN_VERSION}@tao/${TAO_CONAN_CHANNEL}"
           conan alias "${REPO_NAME}/0.1.X@tao/${TAO_CONAN_CHANNEL}" "${REPO_NAME}/${TAO_CONAN_VERSION}@tao/${TAO_CONAN_CHANNEL}"
