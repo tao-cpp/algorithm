@@ -1,46 +1,204 @@
-name: CMake
+name: Build and Test
 
-on: [push]
-
-env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Release
+on: [push, pull_request]
 
 jobs:
-  build:
-    # The CMake configure and build commands are platform agnostic and should work equally
-    # well on Windows or Mac.  You can convert this to a matrix build if you need
-    # cross-platform coverage.
-    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-    runs-on: ubuntu-latest
-
+  generate-matrix:
+    name: Generate Job Matrix
+    runs-on: ubuntu-20.04
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
 
-    - name: Create Build Environment
-      # Some projects don't allow in-source building, so create a separate build directory
-      # We'll use this as our working directory for all subsequent commands
-      run: cmake -E make_directory ${{github.workspace}}/build
+      - name: Generate Job Matrix
+        id: set-matrix
+        # env:
+        #   MATRIX: '{"config": [{"name": "Linux GCC 10","compiler": "GCC","version": "10","os": "ubuntu-20.04"},{"name": "Linux GCC 9","compiler": "GCC","version": "9","os": "ubuntu-20.04"},{"name": "Linux GCC 8","compiler": "GCC","version": "8","os": "ubuntu-20.04"},{"name": "macOS apple-clang 12","compiler": "apple-clang","version": "12","os": "macos-10.15"}]}'
+        run: |
+          MATRIX=$(cat ./.github/matrix.json)
+          echo "${MATRIX}"
+          echo "::set-output name=matrix::${MATRIX}"
 
-    - name: Configure CMake
-      # Use a bash shell so we can use the same syntax for environment variable
-      # access regardless of the host operating system
-      shell: bash
-      working-directory: ${{github.workspace}}/build
-      # Note the current convention is to use the -S and -B options here to specify source 
-      # and build directories, but this is only available with CMake 3.13 and higher.  
-      # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
-      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+  builds:
+    needs: generate-matrix
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJson(needs.generate-matrix.outputs.matrix)}}
+    name: ${{ matrix.config.name }}
+    steps:
+      - name: Set git to use LF (Windows)
+        if: ${{ matrix.config.compiler == 'Visual Studio' }}
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+          # git config --global --edit
+          # git config --global core.autocrlf true
+          # git config --global --edit
 
-    - name: Build
-      working-directory: ${{github.workspace}}/build
-      shell: bash
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
-      run: cmake --build . --config $BUILD_TYPE
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - uses: actions/setup-python@v1
+        with:
+          python-version: "3.8"
 
-    - name: Test
-      working-directory: ${{github.workspace}}/build
-      shell: bash
-      # Execute tests defined by the CMake configuration.  
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest -C $BUILD_TYPE
+      - name: Install Dependencies (Unix)
+        if: ${{ matrix.config.compiler != 'Visual Studio' }}
+        run: |
+          chmod +x ci_utils/.travis/install.sh
+          ./ci_utils/.travis/install.sh
+        shell: bash
+
+      - name: Install Dependencies (Windows)
+        if: ${{ matrix.config.compiler == 'Visual Studio' }}
+        run: |
+          set PATH=%PYTHON%;%PYTHON%/Scripts/;%PATH%;
+          python.exe --version
+          cmake --version
+          python.exe -m pip install --upgrade pip
+          pip.exe install conan_package_tools==0.35.0
+          pip.exe install conan --upgrade
+          conan user
+        shell: cmd
+
+      - name: Settting EnvVars (Linux)
+        if: ${{ matrix.config.compiler == 'GCC' }}
+        shell: bash
+        run: |
+          echo "CONAN_GCC_VERSIONS=${{ matrix.config.version }}" >> $GITHUB_ENV
+          echo "CONAN_DOCKER_IMAGE=conanio/gcc${{ matrix.config.version }}" >> $GITHUB_ENV
+
+      - name: Settting EnvVars (macOS)
+        if: ${{ matrix.config.compiler == 'apple-clang' }}
+        shell: bash
+        run: |
+          echo "CONAN_APPLE_CLANG_VERSIONS=${{ matrix.config.version }}.0" >> $GITHUB_ENV
+
+      - name: Settting EnvVars (Windows)
+        if: ${{ matrix.config.compiler == 'Visual Studio' }}
+        # shell: bash
+        shell: powershell
+        run: |
+          echo "CONAN_VISUAL_VERSIONS=${{ matrix.config.version }}" >> $Env:GITHUB_ENV
+          echo "CONAN_VISUAL_RUNTIMES=${{ matrix.config.msvc_runtime }}" >> $Env:GITHUB_ENV
+          # echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $env:GITHUB_ENV
+
+      - name: Build (Unix)
+        if: ${{ matrix.config.compiler != 'Visual Studio' }}
+        env:
+          CONAN_LOGIN_USERNAME: ${{ secrets.CONAN_LOGIN_USERNAME }}
+          CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+          CONAN_STABLE_BRANCH_PATTERN: "master$" #"release/*"
+        shell: bash
+        run: |
+          echo ${{ matrix.config.compiler }}
+          echo ${BPT_MATRIX}
+          echo ${CONAN_STABLE_BRANCH_PATTERN}
+          echo ${CONAN_GCC_VERSIONS}
+          echo ${CONAN_APPLE_CLANG_VERSIONS}
+          echo ${CONAN_DOCKER_IMAGE}
+          echo ${CONAN_LOGIN_USERNAME}
+
+          chmod +x ci_utils/.travis/run.sh
+          ./ci_utils/.travis/run.sh
+
+      - name: Build (Windows)
+        if: ${{ matrix.config.compiler == 'Visual Studio' }}
+        env:
+          CONAN_LOGIN_USERNAME: ${{ secrets.CONAN_LOGIN_USERNAME }}
+          CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+          CONAN_STABLE_BRANCH_PATTERN: "master$" #"release/*"
+          CONAN_UPLOAD: "https://taocpp.jfrog.io/artifactory/api/conan/tao"
+        shell: powershell
+        run: |
+          Write-Host "CONAN_VISUAL_VERSIONS: $Env:CONAN_VISUAL_VERSIONS"
+          Write-Host "CONAN_VISUAL_RUNTIMES: $Env:CONAN_VISUAL_RUNTIMES"
+          Write-Host "CONAN_UPLOAD: $Env:CONAN_UPLOAD"
+
+          # $a = python ci_utils/set_envvars_and_files.py
+          # Write-Host $a
+          # Invoke-Expression $a
+
+          # $ErrorActionPreference = 'SilentlyContinue'
+          # conan remote add kth https://taocpp.jfrog.io/artifactory/api/conan/tao
+          # $ErrorActionPreference = 'Continue'
+
+          # # conan info . --only None
+          # # conan info . --only None -s compiler=gcc -s compiler.version=5 -s compiler.libcxx=libstdc++
+          # python ci_utils/process_conan_reqs.py
+
+          # $ErrorActionPreference = 'SilentlyContinue'
+          # conan remove "*" -f
+          # conan remote remove kth
+          # conan remote remove kthbuild_kth_temp_
+          # $ErrorActionPreference = 'Continue'
+
+          python build.py
+
+  static-checks:
+    needs: wait-for-dependencies
+    name: Static Checks
+    if: github.ref == 'refs/heads/dev' ||
+        startsWith(github.ref, 'refs/heads/testci') ||
+        startsWith(github.ref, 'refs/heads/release') ||
+        startsWith(github.ref, 'refs/heads/hotfix')
+
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Static Checks
+        shell: bash
+        run: |
+          echo ${{github.ref}}
+
+  upload-aliases:
+    name: Upload Aliases
+    needs: [builds, static-checks]
+    if: github.ref == 'refs/heads/dev' ||
+        startsWith(github.ref, 'refs/heads/testci') ||
+        startsWith(github.ref, 'refs/heads/release') ||
+        startsWith(github.ref, 'refs/heads/hotfix') ||
+        startsWith(github.ref, 'refs/heads/feature')
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - uses: actions/setup-python@v1
+        with:
+          python-version: "3.8"
+
+      - name: Install Dependencies
+        run: |
+          chmod +x ci_utils/.travis/install.sh
+          ./ci_utils/.travis/install.sh
+        shell: bash
+
+      - name: Upload Aliases
+        env:
+          CONAN_LOGIN_USERNAME: ${{ secrets.CONAN_LOGIN_USERNAME }}
+          CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+        shell: bash
+        run: |
+
+          # echo "REPO_NAME=$(echo '${{ github.repository }}' | awk -F '/' '{print $1}')" >> $GITHUB_ENV
+          REPO_NAME=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')
+          echo "My repo name is $REPO_NAME"
+
+          eval $(python ci_utils/set_envvars_and_files.py)
+          # conan remote add kthbuild_kth_temp_ https://taocpp.jfrog.io/artifactory/api/conan/tao
+          conan user
+          conan user ${CONAN_LOGIN_USERNAME} -r kthbuild_kth_temp_ -p ${CONAN_PASSWORD}
+          conan user
+          echo "conan alias ${REPO_NAME}/0.X@kth/${KTH_CONAN_CHANNEL} ${REPO_NAME}/${KTH_CONAN_VERSION}@kth/${KTH_CONAN_CHANNEL}"
+          conan alias "${REPO_NAME}/0.X@kth/${KTH_CONAN_CHANNEL}" "${REPO_NAME}/${KTH_CONAN_VERSION}@kth/${KTH_CONAN_CHANNEL}"
+          echo "conan upload ${REPO_NAME}/0.X@kth/${KTH_CONAN_CHANNEL} --all -r kthbuild_kth_temp_"
+          conan upload "${REPO_NAME}/0.X@kth/${KTH_CONAN_CHANNEL}" --all -r kthbuild_kth_temp_
+
+
+
+# References:
+  # https://github.com/radareorg/radare2

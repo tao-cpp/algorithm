@@ -1,0 +1,1 @@
+{"config": [{"name": "Windows VS2019 MD","compiler": "Visual Studio","version": "16","os": "windows-2019","msvc_runtime": "MD"},{"name": "Windows VS2019 MT","compiler": "Visual Studio","version": "16","os": "windows-2019","msvc_runtime": "MT"}]}
