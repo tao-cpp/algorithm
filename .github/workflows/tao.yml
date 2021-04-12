@@ -149,11 +149,6 @@ jobs:
   upload-aliases:
     name: Upload Aliases
     needs: [builds]
-    if: github.ref == 'refs/heads/dev' ||
-        startsWith(github.ref, 'refs/heads/testci') ||
-        startsWith(github.ref, 'refs/heads/release') ||
-        startsWith(github.ref, 'refs/heads/hotfix') ||
-        startsWith(github.ref, 'refs/heads/feature')
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
