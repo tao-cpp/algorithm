@@ -139,24 +139,9 @@ jobs:
 
           python build.py
 
-  static-checks:
-    needs: wait-for-dependencies
-    name: Static Checks
-    if: github.ref == 'refs/heads/dev' ||
-        startsWith(github.ref, 'refs/heads/testci') ||
-        startsWith(github.ref, 'refs/heads/release') ||
-        startsWith(github.ref, 'refs/heads/hotfix')
-
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Static Checks
-        shell: bash
-        run: |
-          echo ${{github.ref}}
-
   upload-aliases:
     name: Upload Aliases
-    needs: [builds, static-checks]
+    needs: [builds]
     if: github.ref == 'refs/heads/dev' ||
         startsWith(github.ref, 'refs/heads/testci') ||
         startsWith(github.ref, 'refs/heads/release') ||
