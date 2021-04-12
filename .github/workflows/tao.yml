@@ -162,8 +162,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          chmod +x ci_utils/.travis/install.sh
-          ./ci_utils/.travis/install.sh
+          chmod +x .travis/install.sh
+          ./.travis/install.sh
         shell: bash
 
       - name: Upload Aliases
