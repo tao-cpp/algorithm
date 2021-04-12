@@ -1,5 +1,5 @@
 import os
-from conan.packager import ConanMultiPackager
+from cpt.packager import ConanMultiPackager
 from ci_utils import get_builder
 
 if __name__ == "__main__":
