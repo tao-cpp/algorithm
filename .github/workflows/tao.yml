@@ -103,6 +103,11 @@ jobs:
           echo ${CONAN_DOCKER_IMAGE}
           echo ${CONAN_LOGIN_USERNAME}
 
+          git rev-list --count master
+          git fetch --unshallow
+          git fetch origin master:master
+          git rev-list --count master
+
           chmod +x .travis/run.sh
           ./.travis/run.sh
 
