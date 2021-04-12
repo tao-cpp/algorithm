@@ -314,7 +314,7 @@ def get_version():
     return "%s.%s.%s" % (major, minor, patch)
 
 def get_conan_packager():
-    pkg = importlib.import_module('conan.packager')
+    pkg = importlib.import_module('cpt.packager')
     return pkg
 
 def get_builder(recipe_dir, args=None):
