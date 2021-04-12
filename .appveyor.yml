@@ -19,7 +19,7 @@ environment:
     CONAN_LOGIN_USERNAME: "fpelliccioni"
     CONAN_CHANNEL: "stable"
     VS150COMNTOOLS: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\Common7\\Tools\\"
-    CONAN_UPLOAD: "https://api.bintray.com/conan/tao-cpp/tao"
+    CONAN_UPLOAD: "https://taocpp.jfrog.io/artifactory/api/conan/tao"
 
     matrix:
         - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017

@@ -39,12 +39,12 @@ def get_git_branch(default=None):
 def get_branch(default=None):
     branch = os.getenv("TAO_BRANCH", None)
 
-    if branch is None: 
+    if branch is None:
         branch = os.getenv("TRAVIS_BRANCH", None)
 
     # print("branch: %s" % (branch,))
 
-    if branch is None: 
+    if branch is None:
         branch = get_git_branch()
 
     # print("branch: %s" % (branch,))
@@ -95,7 +95,7 @@ def get_version_from_file(recipe_dir):
 def get_version_from_branch_name():
     branch = get_branch()
     # print("get_version_from_branch_name - branch: %s" % (branch,))
-    if branch is None: 
+    if branch is None:
         return None
     if branch.startswith("release-") or branch.startswith("hotfix-"):
         return branch.split('-', 1)[1]
@@ -105,10 +105,10 @@ def get_version_from_branch_name():
 
 def is_development_branch():
     branch = get_branch()
-    if branch is None: 
+    if branch is None:
         return False
 
-    # return branch == 'dev' or branch.startswith('feature')    
+    # return branch == 'dev' or branch.startswith('feature')
 
     if branch == 'master':
         return False
@@ -173,7 +173,7 @@ def max_release_branch(default=None):
         line = line.strip()
         # print(line)
         # if line.startswith("origin/release-"):
-        if "release-" in line: 
+        if "release-" in line:
             veri, vers = release_branch_version(line)
             if veri is not None:
                 if max is None or veri > max:
@@ -185,7 +185,7 @@ def max_release_branch(default=None):
 def get_version_from_git_describe(default=None, is_dev_branch=False):
     describe = get_git_describe()
     describe = "v0.0.1-167-g3f9eb8d"
-    
+
     # print('describe')
     # print(describe)
 
@@ -200,11 +200,11 @@ def get_version_from_git_describe(default=None, is_dev_branch=False):
     if is_dev_branch:
         # print(version)
         # print(release_branch_version_to_int(version))
-        
+
         # print(max_release_branch())
 
         max_release_i, max_release_s = max_release_branch()
-        
+
         if max_release_i is not None and max_release_i > release_branch_version_to_int(version):
             version = max_release_s
 
@@ -273,7 +273,8 @@ def get_archs():
 
 def get_user_repository(org_name, repository_name):
     # https://api.bintray.com/conan/tao-cpp/tao
-    return "https://api.bintray.com/conan/{0}/{1}".format(org_name.lower(), repository_name)
+    # return "https://api.bintray.com/conan/{0}/{1}".format(org_name.lower(), repository_name)
+    return "https://taocpp.jfrog.io/artifactory/api/conan/tao"
 
 def get_conan_upload(org_name):
     # if is_pull_request(): return ''

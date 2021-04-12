@@ -13,7 +13,7 @@ env:
     #  - CONAN_USERNAME: "fpelliccioni"
     #  - CONAN_LOGIN_USERNAME: "fpelliccioni"
     #  - CONAN_CHANNEL: "stable"
-    #  - CONAN_UPLOAD: "https://api.bintray.com/conan/tao-cpp/tao"
+    #  - CONAN_UPLOAD: "https://taocpp.jfrog.io/artifactory/api/conan/tao"
      - TAO_VERSION_MAJOR: "0"
      - TAO_VERSION_MINOR: "1"
 
@@ -61,7 +61,7 @@ script:
 
   - eval $(python ci_utils/set_envvars_and_files.py)
   #TODO(fernando): configure the remote and user using environment variables
-  # - conan remote add upload_repo https://api.bintray.com/conan/tao-cpp/tao
+  # - conan remote add upload_repo https://taocpp.jfrog.io/artifactory/api/conan/tao
   # - conan remote list
   - conan user
   # - conan user ${CONAN_LOGIN_USERNAME} -r upload_repo -p ${CONAN_PASSWORD}
@@ -69,7 +69,7 @@ script:
   - echo "conan alias ${REPO_NAME}/0.1.X@tao/${TAO_CONAN_CHANNEL} ${REPO_NAME}/${TAO_CONAN_VERSION}@tao/${TAO_CONAN_CHANNEL}"
   - conan alias "${REPO_NAME}/0.1.X@tao/${TAO_CONAN_CHANNEL}" "${REPO_NAME}/${TAO_CONAN_VERSION}@tao/${TAO_CONAN_CHANNEL}"
   - echo "conan upload ${REPO_NAME}/0.1.X@tao/${TAO_CONAN_CHANNEL} --all -r upload_repo"
-  - conan upload "${REPO_NAME}/0.1.X@tao/${TAO_CONAN_CHANNEL}" --all -r upload_repo        
+  - conan upload "${REPO_NAME}/0.1.X@tao/${TAO_CONAN_CHANNEL}" --all -r upload_repo
 
 
 # notifications:
