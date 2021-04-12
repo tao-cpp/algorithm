@@ -49,8 +49,8 @@ jobs:
       - name: Install Dependencies (Unix)
         if: ${{ matrix.config.compiler != 'Visual Studio' }}
         run: |
-          chmod +x ci_utils/.travis/install.sh
-          ./ci_utils/.travis/install.sh
+          chmod +x .travis/install.sh
+          ./.travis/install.sh
         shell: bash
 
       - name: Install Dependencies (Windows)
@@ -103,8 +103,8 @@ jobs:
           echo ${CONAN_DOCKER_IMAGE}
           echo ${CONAN_LOGIN_USERNAME}
 
-          chmod +x ci_utils/.travis/run.sh
-          ./ci_utils/.travis/run.sh
+          chmod +x .travis/run.sh
+          ./.travis/run.sh
 
       - name: Build (Windows)
         if: ${{ matrix.config.compiler == 'Visual Studio' }}
@@ -174,16 +174,14 @@ jobs:
           echo "My repo name is $REPO_NAME"
 
           eval $(python ci_utils/set_envvars_and_files.py)
-          # conan remote add kthbuild_kth_temp_ https://taocpp.jfrog.io/artifactory/api/conan/tao
+          # conan remote add upload_repo https://taocpp.jfrog.io/artifactory/api/conan/tao
+          # conan user
+          # conan user ${CONAN_LOGIN_USERNAME} -r upload_repo -p ${CONAN_PASSWORD}
           conan user
-          conan user ${CONAN_LOGIN_USERNAME} -r kthbuild_kth_temp_ -p ${CONAN_PASSWORD}
-          conan user
-          echo "conan alias ${REPO_NAME}/0.X@kth/${KTH_CONAN_CHANNEL} ${REPO_NAME}/${KTH_CONAN_VERSION}@kth/${KTH_CONAN_CHANNEL}"
-          conan alias "${REPO_NAME}/0.X@kth/${KTH_CONAN_CHANNEL}" "${REPO_NAME}/${KTH_CONAN_VERSION}@kth/${KTH_CONAN_CHANNEL}"
-          echo "conan upload ${REPO_NAME}/0.X@kth/${KTH_CONAN_CHANNEL} --all -r kthbuild_kth_temp_"
-          conan upload "${REPO_NAME}/0.X@kth/${KTH_CONAN_CHANNEL}" --all -r kthbuild_kth_temp_
-
-
+          echo "conan alias ${REPO_NAME}/0.1.X@tao/${TAO_CONAN_CHANNEL} ${REPO_NAME}/${TAO_CONAN_VERSION}@tao/${TAO_CONAN_CHANNEL}"
+          conan alias "${REPO_NAME}/0.1.X@tao/${TAO_CONAN_CHANNEL}" "${REPO_NAME}/${TAO_CONAN_VERSION}@tao/${TAO_CONAN_CHANNEL}"
+          echo "conan upload ${REPO_NAME}/0.1.X@tao/${TAO_CONAN_CHANNEL} --all -r upload_repo"
+          conan upload "${REPO_NAME}/0.1.X@tao/${TAO_CONAN_CHANNEL}" --all -r upload_repo
 
 # References:
   # https://github.com/radareorg/radare2
