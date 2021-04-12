@@ -1,6 +1,6 @@
 # Tao.Algorithm
 #
-# Copyright (c) 2016-2020 Fernando Pelliccioni.
+# Copyright (c) 2016-2021 Fernando Pelliccioni.
 # Distributed under the MIT software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -47,7 +47,7 @@ add_custom_target(benchmarks COMMENT "Generate all the benchmarks.")
 #     COMMAND ${CMAKE_COMMAND} -E echo "travis_config_slug: $<LOWER_CASE:$<CONFIG>>")
 
 
-file(GLOB_RECURSE TAO_ALGORITHM_BENCHMARKS 
+file(GLOB_RECURSE TAO_ALGORITHM_BENCHMARKS
      RELATIVE ${CMAKE_CURRENT_LIST_DIR}
      *.cpp)
 
@@ -146,7 +146,7 @@ endforeach()
 #     #   COMMAND bench.${name}
 #     #   COMMENT "..."
 #     #   VERBATIM
-#     # )    
+#     # )
 
 #     # add_custom_command(
 #     #     TARGET benchmarks

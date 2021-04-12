@@ -1,7 +1,7 @@
 //! \file tao/algorithm/adjacent_swap.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -39,7 +39,7 @@ I adjacent_swap(I f, I l, std::forward_iterator_tag) {
     return f;
 }
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:
@@ -68,7 +68,7 @@ I adjacent_swap(I f, I l) {
 // adjacent_swap_0
 // -----------------------------------------------------------------
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:
@@ -276,9 +276,9 @@ TEST_CASE("[adjacent_swap] testing adjacent_swap 5 elements forward") {
 // //     std::auto ret = adjacent_swap(begin(a), std::prev(end(a), 1), end(a));
 
 // //     double* count_p = instrumented<int>::counts;
-// //     CHECK(count_p[instrumented_base::copy_ctor] + 
-// //           count_p[instrumented_base::copy_assignment] + 
-// //           count_p[instrumented_base::move_ctor] + 
+// //     CHECK(count_p[instrumented_base::copy_ctor] +
+// //           count_p[instrumented_base::copy_assignment] +
+// //           count_p[instrumented_base::move_ctor] +
 // //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 // //     CHECK(count_p[instrumented_base::destructor] == 0);
 // // }
@@ -291,9 +291,9 @@ TEST_CASE("[adjacent_swap] testing adjacent_swap 5 elements forward") {
 // //     std::auto ret = adjacent_swap(begin(a), std::prev(end(a), 1), end(a));
 
 // //     double* count_p = instrumented<int>::counts;
-// //     CHECK(count_p[instrumented_base::copy_ctor] + 
-// //           count_p[instrumented_base::copy_assignment] + 
-// //           count_p[instrumented_base::move_ctor] + 
+// //     CHECK(count_p[instrumented_base::copy_ctor] +
+// //           count_p[instrumented_base::copy_assignment] +
+// //           count_p[instrumented_base::move_ctor] +
 // //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 // //     CHECK(count_p[instrumented_base::destructor] == 0);
 // // }
@@ -307,9 +307,9 @@ TEST_CASE("[adjacent_swap] testing adjacent_swap 5 elements forward") {
 // //     std::auto ret = adjacent_swap(begin(a), std::next(begin(a), n - 1), end(a));
 
 // //     double* count_p = instrumented<int>::counts;
-// //     CHECK(count_p[instrumented_base::copy_ctor] + 
-// //           count_p[instrumented_base::copy_assignment] + 
-// //           count_p[instrumented_base::move_ctor] + 
+// //     CHECK(count_p[instrumented_base::copy_ctor] +
+// //           count_p[instrumented_base::copy_assignment] +
+// //           count_p[instrumented_base::move_ctor] +
 // //           count_p[instrumented_base::move_assignment] == 2 * n - 1);
 // //     CHECK(count_p[instrumented_base::destructor] == 0);
 // // }
@@ -324,9 +324,9 @@ TEST_CASE("[adjacent_swap] testing adjacent_swap 5 elements forward") {
 //     auto ret = adjacent_swap(begin(a), end(a));
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() + 1);
 //     CHECK(count_p[instrumented_base::destructor] == 1);
 // }
@@ -339,9 +339,9 @@ TEST_CASE("[adjacent_swap] testing adjacent_swap 5 elements forward") {
 //     auto ret = adjacent_swap(begin(a), end(a));
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() + 1);
 //     CHECK(count_p[instrumented_base::destructor] == 1);
 // }
@@ -355,9 +355,9 @@ TEST_CASE("[adjacent_swap] testing adjacent_swap 5 elements forward") {
 //     auto ret = adjacent_swap(begin(a), end(a));
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == 2 * n);
 //     CHECK(count_p[instrumented_base::destructor] == 2);
 // }
@@ -526,9 +526,9 @@ TEST_CASE("[adjacent_swap] testing adjacent_swap 5 elements forward") {
 // //     adjacent_swap_n(begin(a), a.size());
 
 // //     double* count_p = instrumented<int>::counts;
-// //     CHECK(count_p[instrumented_base::copy_ctor] + 
-// //           count_p[instrumented_base::copy_assignment] + 
-// //           count_p[instrumented_base::move_ctor] + 
+// //     CHECK(count_p[instrumented_base::copy_ctor] +
+// //           count_p[instrumented_base::copy_assignment] +
+// //           count_p[instrumented_base::move_ctor] +
 // //           count_p[instrumented_base::move_assignment] == a.size() + 1);
 // //     CHECK(count_p[instrumented_base::destructor] == 1);
 // // }
@@ -541,9 +541,9 @@ TEST_CASE("[adjacent_swap] testing adjacent_swap 5 elements forward") {
 // //     adjacent_swap_n(begin(a), a.size());
 
 // //     double* count_p = instrumented<int>::counts;
-// //     CHECK(count_p[instrumented_base::copy_ctor] + 
-// //           count_p[instrumented_base::copy_assignment] + 
-// //           count_p[instrumented_base::move_ctor] + 
+// //     CHECK(count_p[instrumented_base::copy_ctor] +
+// //           count_p[instrumented_base::copy_assignment] +
+// //           count_p[instrumented_base::move_ctor] +
 // //           count_p[instrumented_base::move_assignment] == a.size() + 1);
 // //     CHECK(count_p[instrumented_base::destructor] == 1);
 // // }
@@ -557,9 +557,9 @@ TEST_CASE("[adjacent_swap] testing adjacent_swap 5 elements forward") {
 // //     adjacent_swap_n(begin(a), n);
 
 // //     double* count_p = instrumented<int>::counts;
-// //     CHECK(count_p[instrumented_base::copy_ctor] + 
-// //           count_p[instrumented_base::copy_assignment] + 
-// //           count_p[instrumented_base::move_ctor] + 
+// //     CHECK(count_p[instrumented_base::copy_ctor] +
+// //           count_p[instrumented_base::copy_assignment] +
+// //           count_p[instrumented_base::move_ctor] +
 // //           count_p[instrumented_base::move_assignment] == 2 * n);
 // //     CHECK(count_p[instrumented_base::destructor] == 2);
 // // }
@@ -578,7 +578,7 @@ TEST_CASE("[adjacent_swap] testing adjacent_swap 5 elements forward") {
 // //     auto ret = adjacent_swap_left_by_one(begin(a), end(a));
 // //     CHECK(a == vector<T>{1});
 // //     CHECK(ret == std::next(begin(a), a.size() - 1));
-    
+
 // // }
 
 // // TEST_CASE("[adjacent_swap] testing adjacent_swap_left_by_one 2 elements random access") {
@@ -748,9 +748,9 @@ TEST_CASE("[adjacent_swap] testing adjacent_swap 5 elements forward") {
 // //     auto ret = adjacent_swap_left_by_one(begin(a), end(a));
 
 // //     double* count_p = instrumented<int>::counts;
-// //     CHECK(count_p[instrumented_base::copy_ctor] + 
-// //           count_p[instrumented_base::copy_assignment] + 
-// //           count_p[instrumented_base::move_ctor] + 
+// //     CHECK(count_p[instrumented_base::copy_ctor] +
+// //           count_p[instrumented_base::copy_assignment] +
+// //           count_p[instrumented_base::move_ctor] +
 // //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 // //     CHECK(count_p[instrumented_base::destructor] == 0);
 // // }
@@ -763,9 +763,9 @@ TEST_CASE("[adjacent_swap] testing adjacent_swap 5 elements forward") {
 // //     auto ret = adjacent_swap_left_by_one(begin(a), end(a));
 
 // //     double* count_p = instrumented<int>::counts;
-// //     CHECK(count_p[instrumented_base::copy_ctor] + 
-// //           count_p[instrumented_base::copy_assignment] + 
-// //           count_p[instrumented_base::move_ctor] + 
+// //     CHECK(count_p[instrumented_base::copy_ctor] +
+// //           count_p[instrumented_base::copy_assignment] +
+// //           count_p[instrumented_base::move_ctor] +
 // //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 // //     CHECK(count_p[instrumented_base::destructor] == 0);
 // // }
@@ -779,9 +779,9 @@ TEST_CASE("[adjacent_swap] testing adjacent_swap 5 elements forward") {
 // //     auto ret = adjacent_swap_left_by_one(begin(a), end(a));
 
 // //     double* count_p = instrumented<int>::counts;
-// //     CHECK(count_p[instrumented_base::copy_ctor] + 
-// //           count_p[instrumented_base::copy_assignment] + 
-// //           count_p[instrumented_base::move_ctor] + 
+// //     CHECK(count_p[instrumented_base::copy_ctor] +
+// //           count_p[instrumented_base::copy_assignment] +
+// //           count_p[instrumented_base::move_ctor] +
 // //           count_p[instrumented_base::move_assignment] == n - 1);
 // //     CHECK(count_p[instrumented_base::destructor] == 0);
 // // }
@@ -800,7 +800,7 @@ TEST_CASE("[adjacent_swap] testing adjacent_swap 5 elements forward") {
 // //     auto ret = adjacent_swap_left_by_one_n(begin(a), a.size());
 // //     CHECK(a == vector<T>{1});
 // //     CHECK(ret == std::next(begin(a), a.size() - 1));
-    
+
 // // }
 
 // // TEST_CASE("[adjacent_swap] testing adjacent_swap_left_by_one_n 2 elements random access") {
@@ -970,9 +970,9 @@ TEST_CASE("[adjacent_swap] testing adjacent_swap 5 elements forward") {
 // //     auto ret = adjacent_swap_left_by_one_n(begin(a), a.size());
 
 // //     double* count_p = instrumented<int>::counts;
-// //     CHECK(count_p[instrumented_base::copy_ctor] + 
-// //           count_p[instrumented_base::copy_assignment] + 
-// //           count_p[instrumented_base::move_ctor] + 
+// //     CHECK(count_p[instrumented_base::copy_ctor] +
+// //           count_p[instrumented_base::copy_assignment] +
+// //           count_p[instrumented_base::move_ctor] +
 // //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 // //     CHECK(count_p[instrumented_base::destructor] == 0);
 // // }
@@ -985,9 +985,9 @@ TEST_CASE("[adjacent_swap] testing adjacent_swap 5 elements forward") {
 // //     auto ret = adjacent_swap_left_by_one_n(begin(a), a.size());
 
 // //     double* count_p = instrumented<int>::counts;
-// //     CHECK(count_p[instrumented_base::copy_ctor] + 
-// //           count_p[instrumented_base::copy_assignment] + 
-// //           count_p[instrumented_base::move_ctor] + 
+// //     CHECK(count_p[instrumented_base::copy_ctor] +
+// //           count_p[instrumented_base::copy_assignment] +
+// //           count_p[instrumented_base::move_ctor] +
 // //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 // //     CHECK(count_p[instrumented_base::destructor] == 0);
 // // }
@@ -1001,9 +1001,9 @@ TEST_CASE("[adjacent_swap] testing adjacent_swap 5 elements forward") {
 // //     auto ret = adjacent_swap_left_by_one_n(begin(a), n);
 
 // //     double* count_p = instrumented<int>::counts;
-// //     CHECK(count_p[instrumented_base::copy_ctor] + 
-// //           count_p[instrumented_base::copy_assignment] + 
-// //           count_p[instrumented_base::move_ctor] + 
+// //     CHECK(count_p[instrumented_base::copy_ctor] +
+// //           count_p[instrumented_base::copy_assignment] +
+// //           count_p[instrumented_base::move_ctor] +
 // //           count_p[instrumented_base::move_assignment] == n - 1);
 // //     CHECK(count_p[instrumented_base::destructor] == 0);
 // // }

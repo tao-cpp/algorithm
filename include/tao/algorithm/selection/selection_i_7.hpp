@@ -1,7 +1,7 @@
 //! \file tao/algorithm/selection/selection_i_7.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -37,7 +37,7 @@ namespace tao { namespace algorithm {
 // ------------------------------------------------------------------------------
 // 7 elements selection
 
-// Complexity: 
+// Complexity:
 //  select_3_7:       12 or 13 .... Acording to TAoCP = 10 comparisons
 
 //the median of seven is the third smallest of the six elements remaining after we remove the smallest of the first six.???????????????????
@@ -48,7 +48,7 @@ template <int ia, int ib, int ic, int id, int ie, int fi, int ig,
 inline constexpr
 auto select_3_7_abc_def(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
     // precondition: !r(b, a) && !r(c, b) && !r(e, d) && !r(f, e)  -->  a <= b && b <= c && d <= e && e <= f
-    CMP((ia < id), R)(d, a, r) 
+    CMP((ia < id), R)(d, a, r)
         ? (select_2_6_abc<ia,ib,ic,ie,fi,ig>(_a, _b, _c, _e, _f, _g, r))
         : (select_2_6_abc<id,ie,fi,ib,ic,ig>(_d, _e, _f, _b, _c, _g, r))
 )
@@ -121,12 +121,12 @@ auto median_of_7(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
 // inline constexpr
 // auto select_3_7_abc(T&& a, U&& b, V&& c, W&& d, X&& e, Y&& f, Z&& g, R r) FN(
 //     // precondition: !r(b, a) && !r(c, b)  -->  a <= b && b <= c
-//     CMP((ib < id), R)(d, b, r)               //d < b 
-//         ? CMP((ib < ie), R)(e, b, r)         //e < b 
+//     CMP((ib < id), R)(d, b, r)               //d < b
+//         ? CMP((ib < ie), R)(e, b, r)         //e < b
 //             ? (select_2_3<ia,id,ie>(_a, _d, _e, r))
 //             : _b
-//         : CMP((ib < ie), R)(e, b, r)         //e < b 
-//             ? _b 
+//         : CMP((ib < ie), R)(e, b, r)         //e < b
+//             ? _b
 //             : (select_0_3<ic,id,ie>(_c, _d, _e, r))
 // )
 

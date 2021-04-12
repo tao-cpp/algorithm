@@ -1,7 +1,7 @@
 //! \file tao/algorithm/power.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -87,7 +87,7 @@ template <Regular A, Integer N, GroupOperation Op>
 A power_group(A a, N n, Op op) {
     if (n < 0) {
         n = -n;
-        a = inverse_operation(op)(a); 
+        a = inverse_operation(op)(a);
     }
     return power_monoid(a, n, op);
 }

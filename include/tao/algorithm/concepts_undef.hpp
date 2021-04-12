@@ -1,7 +1,7 @@
 //! \file tao/algorithm/concepts.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -43,7 +43,7 @@
 
 #undef Generator
 
-#undef requires 
+#undef requires
 
 // #undef TAO_ALGORITHM_CONCEPTS_UNDEF_HPP_
 #undef TAO_ALGORITHM_CONCEPTS_HPP

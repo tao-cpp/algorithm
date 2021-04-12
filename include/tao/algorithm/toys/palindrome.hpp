@@ -1,7 +1,7 @@
 //! \file tao/algorithm/toys/palindrome.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -36,7 +36,7 @@ bool palindrome_n_filter(I f, I l, DistanceType<I> n, R r, P skip) {
         if (zero(n) || one(n)) break;
 
         if ( ! r(*f, *l)) return false;
-        
+
         ++f;
         n -= 2;
     }
@@ -339,8 +339,8 @@ TEST_CASE("[palindrome_recursive] palindrome_recursive 9 elements forward, instr
     // std::cout << "equalities: " << count_p[instrumented_base::equality] << std::endl;
     // double* count_p = instrumented<int>::counts;
     // for (size_t i = 0; i < instrumented_base::number_ops; ++i) {
-    //     std::cout << instrumented_base::counter_names[i] << ": " 
-    //                 << count_p[i] 
+    //     std::cout << instrumented_base::counter_names[i] << ": "
+    //                 << count_p[i]
     //                 << std::endl;
     // }
     // CHECK(false);

@@ -1,7 +1,7 @@
 //! \file tao/algorithm/copy.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -23,14 +23,14 @@ namespace tao { namespace algorithm {
 template <Iterator I, Iterator O>
     requires(Readable<I> && Writable<O> && SameValueType<I, O>)
 void copy_step(I& f, O& o) {
-    //precondition: source(f) and sink(o) are defined 
+    //precondition: source(f) and sink(o) are defined
     *o++ = *f++;
 }
 
 template <Iterator I, Iterator O>
     requires(Readable<I> && Writable<O> && SameValueType<I, O>)
 void move_step(I& f, O& o) {
-    //precondition: source(f) and sink(o) are defined 
+    //precondition: source(f) and sink(o) are defined
     *o++ = std::move(*f++);
 }
 
@@ -67,7 +67,7 @@ bool count_down(N& n) {
 template <Iterator I, Iterator O>
     requires(Readable<I> && Writable<O> && SameValueType<I, O>)
 O copy(I f, I l, O o) {
-    //precondition: not_overlapped_forward(f, l, o, next(o, distance(f, l))) 
+    //precondition: not_overlapped_forward(f, l, o, next(o, distance(f, l)))
     while (f != l) copy_step(f, o);
     return o;
 }
@@ -75,7 +75,7 @@ O copy(I f, I l, O o) {
 template <Iterator I, Iterator O, Integer N>
     requires(Readable<I> && Writable<O> && SameValueType<I, O>)
 std::pair<I, O> copy_n(I f, N n, O o) {
-    //precondition: not_overlapped_forward(f, next(f, n), o, next(o, n)) 
+    //precondition: not_overlapped_forward(f, next(f, n), o, next(o, n))
     while (count_down(n)) copy_step(f, o);
     return {f, o};
 }
@@ -83,7 +83,7 @@ std::pair<I, O> copy_n(I f, N n, O o) {
 template <Iterator I, Iterator O>
     requires(Readable<I> && Writable<O> && SameValueType<I, O>)
 O move(I f, I l, O o) {
-    //precondition: not_overlapped_forward(f, l, o, next(o, distance(f, l))) 
+    //precondition: not_overlapped_forward(f, l, o, next(o, distance(f, l)))
     while (f != l) move_step(f, o);
     return o;
 }
@@ -91,7 +91,7 @@ O move(I f, I l, O o) {
 template <Iterator I, Iterator O, Integer N>
     requires(Readable<I> && Writable<O> && SameValueType<I, O>)
 std::pair<I, O> move_n(I f, N n, O o) {
-    //precondition: not_overlapped_forward(f, next(f, n), o, next(o, n)) 
+    //precondition: not_overlapped_forward(f, next(f, n), o, next(o, n))
     while (count_down(n)) move_step(f, o);
     return {f, o};
 }
@@ -101,7 +101,7 @@ std::pair<I, O> move_n(I f, N n, O o) {
 // copy_backward and copy_backward_n
 // -----------------------------------------------------------------
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:     ????
@@ -115,7 +115,7 @@ O copy_backward(I f_i, I l_i, O l_o) {
     return l_o;
 }
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:     ????
@@ -132,7 +132,7 @@ std::pair<I, O> copy_backward_n(I l_i, DistanceType<I> n, O l_o) {
 // move_backward and move_backward_n
 // -----------------------------------------------------------------
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:     ????
@@ -146,7 +146,7 @@ O move_backward(I f_i, I l_i, O l_o) {
     return l_o;
 }
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:     ????

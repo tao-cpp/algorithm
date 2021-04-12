@@ -1,6 +1,6 @@
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -24,7 +24,7 @@ using namespace tao::algorithm;
 
 TEST_CASE("mean_forward", "mean on ForwardIterator's") {
     forward_list<int> c = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-    
+
     // std::forward_list doesn't have size() member function, so doesn't meet the requirements of Container concept.
     // We can't use mean_c
     // REQUIRE(mean_c(c) == 5.5);

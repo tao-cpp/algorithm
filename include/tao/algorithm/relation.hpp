@@ -1,7 +1,7 @@
 //! \file tao/algorithm/relation.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -32,7 +32,7 @@ struct compare_strict_or_reflexive<true, R> { // strict
 };
 
 template <StrictWeakOrdering R>
-struct compare_strict_or_reflexive<false, R> { // reflexive 
+struct compare_strict_or_reflexive<false, R> { // reflexive
     template <Regular T, Regular U>
         requires(Same<T, U> && Domain<R, T>)
     inline constexpr

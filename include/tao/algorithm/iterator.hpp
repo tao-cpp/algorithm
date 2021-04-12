@@ -1,7 +1,7 @@
 //! \file tao/algorithm/iterator.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -19,7 +19,7 @@
 namespace tao { namespace algorithm {
 
 // ---------------------------------------------------------------------
-// Declarations in the C++17 Standard 
+// Declarations in the C++17 Standard
 // ---------------------------------------------------------------------
 // template < class C >
 // constexpr auto size( const C& c ) -> decltype(c.size());
@@ -29,20 +29,20 @@ namespace tao { namespace algorithm {
 
 
 template <typename T, std::size_t N>
-inline constexpr 
+inline constexpr
 std::size_t size(T const (&)[N]) noexcept { return N; };
 
-template <Container C> 
-inline constexpr 
+template <Container C>
+inline constexpr
 auto size(C const& c) noexcept { return c.size(); }
 // SizeType<C> size(C const& c) noexcept { return c.size(); }
 
 template <Iterator I>
-inline constexpr 
+inline constexpr
 I successor(I x) noexcept { return ++x; }
 
 template <BidirectionalIterator I>
-inline constexpr 
+inline constexpr
 I predecessor(I x) noexcept { return --x; }
 
 

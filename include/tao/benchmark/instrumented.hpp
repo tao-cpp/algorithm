@@ -1,7 +1,7 @@
 //! \file tao/benchmark/instrumented.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -23,7 +23,7 @@ struct instrumented_base {
 };
 
 
-template <typename T> 
+template <typename T>
 // T is Semiregular or Regular or TotallyOrdered
 struct instrumented : instrumented_base {
     using value_type = T;
@@ -32,7 +32,7 @@ struct instrumented : instrumented_base {
     instrumented() { ++counts[default_constructor]; }
 
     // Conversions from T and to T:
-    // explicit 
+    // explicit
     instrumented(T const& x) : value(x) { ++counts[construction]; }
 
     // Semiregular:
@@ -46,13 +46,13 @@ struct instrumented : instrumented_base {
 
     ~instrumented() { ++counts[destructor]; }
 
-    instrumented& operator=(instrumented const& x) {  
+    instrumented& operator=(instrumented const& x) {
         ++counts[copy_assignment];
         value = x.value;
         return *this;
     }
 
-    instrumented& operator=(instrumented&& x) {  
+    instrumented& operator=(instrumented&& x) {
         ++counts[move_assignment];
         value = std::move(x.value);
         return *this;
@@ -72,7 +72,7 @@ struct instrumented : instrumented_base {
 
     // TotallyOrdered
     friend
-    bool operator<(instrumented const& x, instrumented const& y) { 
+    bool operator<(instrumented const& x, instrumented const& y) {
         ++counts[comparison];
         return x.value < y.value;
     }
@@ -86,15 +86,15 @@ struct instrumented : instrumented_base {
     bool operator<=(instrumented const& x, instrumented const& y) {
         return !(y < x);
     }
-    
+
     friend
     bool operator>=(instrumented const& x, instrumented const& y) {
         return !(x < y);
-    } 
+    }
 
-    // friend 
+    // friend
     // void swap(instrumented& a, instrumented& b) {
-    //     using std::swap; 
+    //     using std::swap;
     //     ++counts[swaps];
     //     swap(a.value, b.value);
     // }

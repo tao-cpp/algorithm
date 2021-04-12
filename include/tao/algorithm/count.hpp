@@ -1,7 +1,7 @@
 //! \file tao/algorithm/count.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -19,7 +19,7 @@
 
 namespace tao { namespace algorithm {
 
-//Complexity: 
+//Complexity:
 template <Iterator I, UnaryPredicate P, Iterator J>
     requires(Readable<I> && Procedure<Proc> && Arity<Proc> == 1 &&
         ValueType<I> == Domain<P>)
@@ -47,9 +47,9 @@ struct count_if_func {
     P p;
     J j;
 
-    explicit 
-    count_if_func(P p, J j) 
-        : p(p), j(j) 
+    explicit
+    count_if_func(P p, J j)
+        : p(p), j(j)
     {}
 
     template <Regular T>

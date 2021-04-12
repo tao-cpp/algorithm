@@ -1,7 +1,7 @@
 //! \file tao/algorithm/shift.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -31,7 +31,7 @@ namespace tao { namespace algorithm {
 
 //TODO(fernando): see what we have to return
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:     2 * n - 1 assigments (move or copy)
@@ -52,7 +52,7 @@ void shift_right_by_one(I f, I l, std::forward_iterator_tag) {
     }
 }
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:     n - 1 assigments (move or copy)
@@ -66,11 +66,11 @@ void shift_right_by_one(I f, I l, std::bidirectional_iterator_tag) {
     tao::algorithm::move_backward(f, std::prev(l, 1), l);
 }
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
-//          Exact:     
-//              for ForwardIterator:       2 * n - 1 assigments (move or copy) 
+//          Exact:
+//              for ForwardIterator:       2 * n - 1 assigments (move or copy)
 //              for BidirectionalIterator: n - 1 assigments (move or copy)
 //      Space:
 //          O(1)
@@ -86,7 +86,7 @@ void shift_right_by_one(I f, I l) {
 // shift_right_by_one_n
 // -----------------------------------------------------------------
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:     2 * distance(f, l) - 1 assigments (move or copy)
@@ -109,7 +109,7 @@ void shift_right_by_one_n(I f, DistanceType<I> n, std::forward_iterator_tag) {
         shift_three(b, *f, a);
         step_n(f, n);
 
-        
+
         if (zero(n)) return;
 
         // shift_three(a, *f++, b); --n;
@@ -118,7 +118,7 @@ void shift_right_by_one_n(I f, DistanceType<I> n, std::forward_iterator_tag) {
     }
 }
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:     n - 1 assigments (move or copy)
@@ -138,12 +138,12 @@ void shift_right_by_one_n(I f, DistanceType<I> n, std::bidirectional_iterator_ta
     tao::algorithm::move_backward_n(butlast, n - 1, l);
 }
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
-//          Exact:     
-//              for ForwardIterator:       
-//              for BidirectionalIterator: 
+//          Exact:
+//              for ForwardIterator:
+//              for BidirectionalIterator:
 //      Space:
 //          O(1)
 template <ForwardIterator I>
@@ -163,7 +163,7 @@ void shift_right_by_one_n(I f, DistanceType<I> n) {
 // shift_left_by_one
 // -----------------------------------------------------------------
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:     n - 1 assigments (move or copy)
@@ -193,7 +193,7 @@ I shift_left_by_one(I f, I l) {
 // shift_left_by_one_n
 // -----------------------------------------------------------------
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:     n - 1 assigments (move or copy)
@@ -233,7 +233,7 @@ I shift_left_by_one_n(I f, DistanceType<I> n) {
 // template <ForwardIterator I, UnaryPredicate P>  //WeakStrictOrdering??
 //     requires(Mutable<I>)
 // I shift_right_while(I f, I l, P p, std::forward_iterator_tag) {
-//     // precondition: mutable_bounded_range(f, l + 1) 
+//     // precondition: mutable_bounded_range(f, l + 1)
 //     while (f != l && p(*predecessor(l))) {
 //         *l = std::move(*predecessor(l));
 //         --l;
@@ -244,7 +244,7 @@ I shift_left_by_one_n(I f, DistanceType<I> n) {
 template <ForwardIterator I, UnaryPredicate P>
     requires(Mutable<I>)
 I shift_right_while(I f, I l, P p, std::forward_iterator_tag) {
-    // precondition: mutable_bounded_range(f, l + 1) 
+    // precondition: mutable_bounded_range(f, l + 1)
     // if (f == l) return f;
     while (f != l && ! p(*predecessor(l))) {
         ++f;
@@ -256,7 +256,7 @@ I shift_right_while(I f, I l, P p, std::forward_iterator_tag) {
 template <BidirectionalIterator I, UnaryPredicate P>
     requires(Mutable<I>)
 I shift_right_while(I f, I l, P p, std::bidirectional_iterator_tag) {
-    // precondition: mutable_bounded_range(f, l + 1) 
+    // precondition: mutable_bounded_range(f, l + 1)
     if (f == l) return f;
     --l;
     while (f != l && p(*predecessor(l))) {
@@ -278,7 +278,7 @@ I shift_right_while(I f, I l, P p) {
 
 // ----------------------------------------------------------------
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: ???
 //          Exact:     ???
@@ -289,11 +289,11 @@ void shift_right_by_one_forward_unguarded(I f, I l) {
     //precondition: mutable????_bounded_range(f, l)
     //              distance(f, l) >= 1
     using std::swap;
-    I current = f; 
+    I current = f;
     while (++current != l) swap(*f, *current);
 }
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:     (n * distance(f, l) - (n * (n-1)) / 2) swaps
@@ -311,7 +311,7 @@ I shift_right(I f, I l, DistanceType<I> n, std::forward_iterator_tag) {
     return f;
 }
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:     (distance(f, l) - n) move-assigments or copy-assigments (depending of the ValueType<I> object)
@@ -319,16 +319,16 @@ I shift_right(I f, I l, DistanceType<I> n, std::forward_iterator_tag) {
 //          O(1)
 template <BidirectionalIterator I>
 I shift_right(I f, I l, DistanceType<I> n, std::bidirectional_iterator_tag) {
-    //precondition: n >= 0 && 
+    //precondition: n >= 0 &&
     //              std::distance(f, l) >= n (so [f, n) is a valid range)
     I butlast = std::prev(l, n);
     return tao::algorithm::move_backward(f, butlast, l);
 }
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
-//          Exact:     
+//          Exact:
 //              for ForwardIterator:       (n * distance(f, l) - (n * (n-1)) / 2) swaps
 //              for BidirectionalIterator: (distance(f, l) - n) move-assigments or copy-assigments (depending of the ValueType<I> object)
 //      Space:
@@ -342,7 +342,7 @@ I shift_right(I f, I l, DistanceType<I> n) {
 
 //TODO: shift_left
 
-// //Complexity: 
+// //Complexity:
 // //      Runtime:
 // //          Amortized: O(n)
 // //          Exact:     (n * distance(f, l) - (n * (n-1)) / 2) swaps
@@ -361,7 +361,7 @@ I shift_right(I f, I l, DistanceType<I> n) {
 // }
 
 
-// //Complexity: 
+// //Complexity:
 // //      Runtime:
 // //          Amortized: O(n)
 // //          Exact:     (distance(f, l) - n) move-assigments or copy-assigments (depending of the ValueType<I> object)
@@ -369,15 +369,15 @@ I shift_right(I f, I l, DistanceType<I> n) {
 // //          O(1)
 // template <BidirectionalIterator I>
 // I shift_left(I f, I l, DistanceType<I> n, std::bidirectional_iterator_tag) {
-//     //precondition: n >= 0 && 
+//     //precondition: n >= 0 &&
 //     //              std::distance(f, l) >= n (so [f, n) is a valid range)
 //     //return std::move(f, std::next(f, n), l);
 // }
 
-// //Complexity: 
+// //Complexity:
 // //      Runtime:
 // //          Amortized: O(n)
-// //          Exact:     
+// //          Exact:
 // //              for ForwardIterator:       (n * distance(f, l) - (n * (n-1)) / 2) swaps
 // //              for BidirectionalIterator: (distance(f, l) - n) move-assigments or copy-assigments (depending of the ValueType<I> object)
 // //      Space:
@@ -392,7 +392,7 @@ template <ForwardIterator I>
 void rotate_right_by_one_ALEX(I f, I l) { //, std::forward_iterator_tag) {
     using std::swap;
     if (f == l) return;
-    I current = f; 
+    I current = f;
     while (++current != l) swap(*f, *current);
 }
 
@@ -420,8 +420,8 @@ using namespace tao::algorithm;
 
 // double* count_p = instrumented<int>::counts;
 // for (size_t i = 0; i < instrumented_base::number_ops; ++i) {
-//     std::cout << instrumented_base::counter_names[i] << ": " 
-//                 << count_p[i] 
+//     std::cout << instrumented_base::counter_names[i] << ": "
+//                 << count_p[i]
 //                 << std::endl;
 // }
 
@@ -608,9 +608,9 @@ TEST_CASE("[shift] testing shift_right_by_one 6 elements forward") {
 //     std::rotate(begin(a), std::prev(end(a), 1), end(a));
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 //     CHECK(count_p[instrumented_base::destructor] == 0);
 // }
@@ -623,9 +623,9 @@ TEST_CASE("[shift] testing shift_right_by_one 6 elements forward") {
 //     std::rotate(begin(a), std::prev(end(a), 1), end(a));
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 //     CHECK(count_p[instrumented_base::destructor] == 0);
 // }
@@ -639,9 +639,9 @@ TEST_CASE("[shift] testing shift_right_by_one 6 elements forward") {
 //     std::rotate(begin(a), std::next(begin(a), n - 1), end(a));
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == 2 * n - 1);
 //     CHECK(count_p[instrumented_base::destructor] == 0);
 // }
@@ -656,9 +656,9 @@ TEST_CASE("[shift] testing shift_right_by_one instrumented random access") {
     shift_right_by_one(begin(a), end(a));
 
     double* count_p = instrumented<int>::counts;
-    CHECK(count_p[instrumented_base::copy_ctor] + 
-          count_p[instrumented_base::copy_assignment] + 
-          count_p[instrumented_base::move_ctor] + 
+    CHECK(count_p[instrumented_base::copy_ctor] +
+          count_p[instrumented_base::copy_assignment] +
+          count_p[instrumented_base::move_ctor] +
           count_p[instrumented_base::move_assignment] == a.size() - 1);
     CHECK(count_p[instrumented_base::destructor] == 0);
 }
@@ -671,9 +671,9 @@ TEST_CASE("[shift] testing shift_right_by_one instrumented bidirectional") {
     shift_right_by_one(begin(a), end(a));
 
     double* count_p = instrumented<int>::counts;
-    CHECK(count_p[instrumented_base::copy_ctor] + 
-          count_p[instrumented_base::copy_assignment] + 
-          count_p[instrumented_base::move_ctor] + 
+    CHECK(count_p[instrumented_base::copy_ctor] +
+          count_p[instrumented_base::copy_assignment] +
+          count_p[instrumented_base::move_ctor] +
           count_p[instrumented_base::move_assignment] == a.size() - 1);
     CHECK(count_p[instrumented_base::destructor] == 0);
 }
@@ -687,9 +687,9 @@ TEST_CASE("[shift] testing shift_right_by_one instrumented forward") {
     shift_right_by_one(begin(a), end(a));
 
     double* count_p = instrumented<int>::counts;
-    CHECK(count_p[instrumented_base::copy_ctor] + 
-          count_p[instrumented_base::copy_assignment] + 
-          count_p[instrumented_base::move_ctor] + 
+    CHECK(count_p[instrumented_base::copy_ctor] +
+          count_p[instrumented_base::copy_assignment] +
+          count_p[instrumented_base::move_ctor] +
           count_p[instrumented_base::move_assignment] == 2 * n - 1);
     CHECK(count_p[instrumented_base::destructor] == 2);
 }
@@ -858,9 +858,9 @@ TEST_CASE("[shift] testing shift_right_by_one_n instrumented random access") {
     shift_right_by_one_n(begin(a), a.size());
 
     double* count_p = instrumented<int>::counts;
-    CHECK(count_p[instrumented_base::copy_ctor] + 
-          count_p[instrumented_base::copy_assignment] + 
-          count_p[instrumented_base::move_ctor] + 
+    CHECK(count_p[instrumented_base::copy_ctor] +
+          count_p[instrumented_base::copy_assignment] +
+          count_p[instrumented_base::move_ctor] +
           count_p[instrumented_base::move_assignment] == a.size() - 1);
     CHECK(count_p[instrumented_base::destructor] == 0);
 }
@@ -873,9 +873,9 @@ TEST_CASE("[shift] testing shift_right_by_one_n instrumented bidirectional") {
     shift_right_by_one_n(begin(a), a.size());
 
     double* count_p = instrumented<int>::counts;
-    CHECK(count_p[instrumented_base::copy_ctor] + 
-          count_p[instrumented_base::copy_assignment] + 
-          count_p[instrumented_base::move_ctor] + 
+    CHECK(count_p[instrumented_base::copy_ctor] +
+          count_p[instrumented_base::copy_assignment] +
+          count_p[instrumented_base::move_ctor] +
           count_p[instrumented_base::move_assignment] == a.size() - 1);
     CHECK(count_p[instrumented_base::destructor] == 0);
 }
@@ -889,9 +889,9 @@ TEST_CASE("[shift] testing shift_right_by_one_n instrumented forward") {
     shift_right_by_one_n(begin(a), n);
 
     double* count_p = instrumented<int>::counts;
-    CHECK(count_p[instrumented_base::copy_ctor] + 
-          count_p[instrumented_base::copy_assignment] + 
-          count_p[instrumented_base::move_ctor] + 
+    CHECK(count_p[instrumented_base::copy_ctor] +
+          count_p[instrumented_base::copy_assignment] +
+          count_p[instrumented_base::move_ctor] +
           count_p[instrumented_base::move_assignment] == 2 * n - 1);
     CHECK(count_p[instrumented_base::destructor] == 2);
 }
@@ -910,7 +910,7 @@ TEST_CASE("[shift] testing shift_left_by_one 1 elements random access") {
     auto ret = shift_left_by_one(begin(a), end(a));
     CHECK(a == vector<T>{1});
     CHECK(ret == std::next(begin(a), a.size() - 1));
-    
+
 }
 
 TEST_CASE("[shift] testing shift_left_by_one 2 elements random access") {
@@ -1080,9 +1080,9 @@ TEST_CASE("[shift] testing shift_left_by_one instrumented random access") {
     auto ret = shift_left_by_one(begin(a), end(a));
 
     double* count_p = instrumented<int>::counts;
-    CHECK(count_p[instrumented_base::copy_ctor] + 
-          count_p[instrumented_base::copy_assignment] + 
-          count_p[instrumented_base::move_ctor] + 
+    CHECK(count_p[instrumented_base::copy_ctor] +
+          count_p[instrumented_base::copy_assignment] +
+          count_p[instrumented_base::move_ctor] +
           count_p[instrumented_base::move_assignment] == a.size() - 1);
     CHECK(count_p[instrumented_base::destructor] == 0);
 }
@@ -1095,9 +1095,9 @@ TEST_CASE("[shift] testing shift_left_by_one instrumented bidirectional") {
     auto ret = shift_left_by_one(begin(a), end(a));
 
     double* count_p = instrumented<int>::counts;
-    CHECK(count_p[instrumented_base::copy_ctor] + 
-          count_p[instrumented_base::copy_assignment] + 
-          count_p[instrumented_base::move_ctor] + 
+    CHECK(count_p[instrumented_base::copy_ctor] +
+          count_p[instrumented_base::copy_assignment] +
+          count_p[instrumented_base::move_ctor] +
           count_p[instrumented_base::move_assignment] == a.size() - 1);
     CHECK(count_p[instrumented_base::destructor] == 0);
 }
@@ -1111,9 +1111,9 @@ TEST_CASE("[shift] testing shift_left_by_one instrumented forward") {
     auto ret = shift_left_by_one(begin(a), end(a));
 
     double* count_p = instrumented<int>::counts;
-    CHECK(count_p[instrumented_base::copy_ctor] + 
-          count_p[instrumented_base::copy_assignment] + 
-          count_p[instrumented_base::move_ctor] + 
+    CHECK(count_p[instrumented_base::copy_ctor] +
+          count_p[instrumented_base::copy_assignment] +
+          count_p[instrumented_base::move_ctor] +
           count_p[instrumented_base::move_assignment] == n - 1);
     CHECK(count_p[instrumented_base::destructor] == 0);
 }
@@ -1132,7 +1132,7 @@ TEST_CASE("[shift] testing shift_left_by_one_n 1 elements random access") {
     auto ret = shift_left_by_one_n(begin(a), a.size());
     CHECK(a == vector<T>{1});
     CHECK(ret == std::next(begin(a), a.size() - 1));
-    
+
 }
 
 TEST_CASE("[shift] testing shift_left_by_one_n 2 elements random access") {
@@ -1302,9 +1302,9 @@ TEST_CASE("[shift] testing shift_left_by_one_n instrumented random access") {
     auto ret = shift_left_by_one_n(begin(a), a.size());
 
     double* count_p = instrumented<int>::counts;
-    CHECK(count_p[instrumented_base::copy_ctor] + 
-          count_p[instrumented_base::copy_assignment] + 
-          count_p[instrumented_base::move_ctor] + 
+    CHECK(count_p[instrumented_base::copy_ctor] +
+          count_p[instrumented_base::copy_assignment] +
+          count_p[instrumented_base::move_ctor] +
           count_p[instrumented_base::move_assignment] == a.size() - 1);
     CHECK(count_p[instrumented_base::destructor] == 0);
 }
@@ -1317,9 +1317,9 @@ TEST_CASE("[shift] testing shift_left_by_one_n instrumented bidirectional") {
     auto ret = shift_left_by_one_n(begin(a), a.size());
 
     double* count_p = instrumented<int>::counts;
-    CHECK(count_p[instrumented_base::copy_ctor] + 
-          count_p[instrumented_base::copy_assignment] + 
-          count_p[instrumented_base::move_ctor] + 
+    CHECK(count_p[instrumented_base::copy_ctor] +
+          count_p[instrumented_base::copy_assignment] +
+          count_p[instrumented_base::move_ctor] +
           count_p[instrumented_base::move_assignment] == a.size() - 1);
     CHECK(count_p[instrumented_base::destructor] == 0);
 }
@@ -1333,9 +1333,9 @@ TEST_CASE("[shift] testing shift_left_by_one_n instrumented forward") {
     auto ret = shift_left_by_one_n(begin(a), n);
 
     double* count_p = instrumented<int>::counts;
-    CHECK(count_p[instrumented_base::copy_ctor] + 
-          count_p[instrumented_base::copy_assignment] + 
-          count_p[instrumented_base::move_ctor] + 
+    CHECK(count_p[instrumented_base::copy_ctor] +
+          count_p[instrumented_base::copy_assignment] +
+          count_p[instrumented_base::move_ctor] +
           count_p[instrumented_base::move_assignment] == n - 1);
     CHECK(count_p[instrumented_base::destructor] == 0);
 }
@@ -1351,9 +1351,9 @@ TEST_CASE("[shift] testing shift_left_by_one_n instrumented forward") {
 //     rotate_right_by_one_ALEX(begin(a), end(a));
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 //     CHECK(count_p[instrumented_base::destructor] == 0);
 // }
@@ -1373,16 +1373,16 @@ TEST_CASE("[shift] testing shift_left_by_one_n instrumented forward") {
 
 //     double* count_p = instrumented<int>::counts;
 //     // for (size_t i = 0; i < instrumented_base::number_ops; ++i) {
-//     //     std::cout << instrumented_base::counter_names[i] << ": " 
-//     //         << count_p[i] 
+//     //     std::cout << instrumented_base::counter_names[i] << ": "
+//     //         << count_p[i]
 //     //         << std::endl;
 //     // }
 
 //     // CHECK(1 == 0);
 
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 //     CHECK(count_p[instrumented_base::destructor] == 0);
 // }
@@ -1397,14 +1397,14 @@ TEST_CASE("[shift] testing rotate_right_by_one_ALEX instrumented forward") {
 
     double* count_p = instrumented<int>::counts;
     // for (size_t i = 0; i < instrumented_base::number_ops; ++i) {
-    //     std::cout << instrumented_base::counter_names[i] << ": " 
-    //                 << count_p[i] 
+    //     std::cout << instrumented_base::counter_names[i] << ": "
+    //                 << count_p[i]
     //                 << std::endl;
-    // } 
+    // }
 
-    CHECK(count_p[instrumented_base::copy_ctor] + 
-          count_p[instrumented_base::copy_assignment] + 
-          count_p[instrumented_base::move_ctor] + 
+    CHECK(count_p[instrumented_base::copy_ctor] +
+          count_p[instrumented_base::copy_assignment] +
+          count_p[instrumented_base::move_ctor] +
           count_p[instrumented_base::move_assignment] == 3 * (n - 1));
     CHECK(count_p[instrumented_base::destructor] == 5);
 }

@@ -1,7 +1,7 @@
 //! \file tao/algorithm/selection/selection_i_6.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -33,7 +33,7 @@ namespace tao { namespace algorithm {
 // ------------------------------------------------------------------------------
 // 6 elements selection
 
-// Complexity: 
+// Complexity:
 
 //      select_2_6_abc = 1 + select_2_6_abc_de = 1 + 4 = 5 or 1 + 5 = 6
 

@@ -1,7 +1,7 @@
 //! \file tao/algorithm/swap.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -114,7 +114,7 @@ TEST_CASE("[shift_three] testing shift_three instrumented") {
 
     instrumented<int>::initialize(0);
     shift_three(a, b, c);
-    
+
     double* count_p = instrumented<int>::counts;
     CHECK(count_p[instrumented_base::copy_assignment] == 0);
     CHECK(count_p[instrumented_base::move_assignment] == 2);
@@ -129,7 +129,7 @@ TEST_CASE("[shift_three] testing shift_three instrumented const last") {
 
     instrumented<int>::initialize(0);
     shift_three(a, b, c);
-    
+
     double* count_p = instrumented<int>::counts;
     CHECK(count_p[instrumented_base::copy_assignment] == 1);
     CHECK(count_p[instrumented_base::move_assignment] == 1);

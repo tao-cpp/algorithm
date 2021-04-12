@@ -1,7 +1,7 @@
 //! \file tao/algorithm/partition/partition.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -43,7 +43,7 @@ namespace tao { namespace algorithm {
 
 //     I j = std::next(f);
 //     while (j != l) {
-//         // loop invariant: all_of((ORIGINAL)f, f, p) && none_of(f, j, p)); // invariant 
+//         // loop invariant: all_of((ORIGINAL)f, f, p) && none_of(f, j, p)); // invariant
 //         if ( ! p(*j)) {
 //             std::iter_swap(f, j);
 //             ++f;
@@ -71,9 +71,9 @@ I partition_semistable(I f, I l, P p) {
         ++f;
     }
 
-    I j = f; 
+    I j = f;
     while (++j != l) {
-        // loop invariant: all_of((ORIGINAL)f, f, p) && none_of(f, j, p)); // invariant 
+        // loop invariant: all_of((ORIGINAL)f, f, p) && none_of(f, j, p)); // invariant
         if ( ! p(*j)) {
             swap(*f, *j);
             ++f;
@@ -103,19 +103,19 @@ void partition_semistable_nonempty(I f, I l, P p) {
         if (f == l) return;
     }
 
-    I j = f; 
+    I j = f;
     ++j;
     if (j == l) return;
 
     while (std::next(j) != l) {
-        // loop invariant: all_of((ORIGINAL)f, f, p) && none_of(f, j, p)); // invariant 
+        // loop invariant: all_of((ORIGINAL)f, f, p) && none_of(f, j, p)); // invariant
         if ( ! p(*j)) {
             swap(*f, *j);
             ++f;
         }
         ++j;
     }
-    
+
     swap(*f, *j);
 }
 
@@ -140,7 +140,7 @@ I partition_bidirectional(I f, I l, P p) {
         // reverse_swap_step(l, f);
         --l;
         swap(*f, *l);
-        ++f;         
+        ++f;
     }
 
 }
@@ -293,7 +293,7 @@ TEST_CASE("[partition_semistable_nonempty]") {
     }
 
 
-    
+
 
 
 

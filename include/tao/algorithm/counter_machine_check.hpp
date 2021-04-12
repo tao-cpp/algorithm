@@ -1,7 +1,7 @@
 //! \file tao/algorithm/counter_machine_check.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -29,7 +29,7 @@ struct counter_machine_check {
 
     counter_machine_check(counter_machine_check const&) = delete;
     counter_machine_check& operator=(counter_machine_check const&) = delete;
-    
+
     //Move Constructor and Move Assignment Operator are deleted too
     //See http://stackoverflow.com/questions/37092864/should-i-delete-the-move-constructor-and-the-move-assignment-of-a-smart-pointer/38820178#38820178
     // and http://talesofcpp.fusionfenix.com/post-24/episode-eleven-to-kill-a-move-constructor
@@ -40,7 +40,7 @@ struct counter_machine_check {
         if (x != e) {
             *l = x;
             ++l;
-        }        
+        }
     }
 
     void add_to(T x, T* to) {

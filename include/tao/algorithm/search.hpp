@@ -1,7 +1,7 @@
 //! \file tao/algorithm/search.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -22,7 +22,7 @@ namespace tao { namespace algorithm {
 //Note: std::search is wrong, because, in some cases we will need the last iterator.
 //TODO: Implement another search algorithms, like Boyer-Moore, ...
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:     TODO???
@@ -50,7 +50,7 @@ std::pair<I1, I1> search(I1 f, I1 l, I2 fs, I2 ls) {
 
 //Note: is called search_counted_range, because search_n exists in the C++ Standard Library with different semantics.
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:     TODO???

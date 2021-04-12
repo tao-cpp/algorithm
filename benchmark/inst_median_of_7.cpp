@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -24,7 +24,7 @@ struct random_int_generator {
 
 	random_int_generator()
 		: mt{ rd() }
-		, dis{ from, to }  // closed range [1, 1000]		
+		, dis{ from, to }  // closed range [1, 1000]
 	{}
 
 	random_int_generator(random_int_generator const&) = default;

@@ -1,7 +1,7 @@
 //! \file tao/algorithm/primes.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -23,7 +23,7 @@ template <Integer I>
 struct modulo_multiply {
     I modulus;
     modulo_multiply(I const& i) : modulus(i) {}
-      
+
     I operator()(I const& n, I const& m) const {
         return (n * m) % modulus;
     }
@@ -32,7 +32,7 @@ struct modulo_multiply {
 template <Integer I>
 bool miller_rabin_test(I n, I q, I k, I w) {
     // precondition: n > 1 && n - 1 == (2^k)*q && odd(q)
-    
+
     modulo_multiply<I> mmult(n);
     I x = power_semigroup(w, q, mmult);
 
@@ -40,7 +40,7 @@ bool miller_rabin_test(I n, I q, I k, I w) {
 
     for (I i(1); i < k; ++i) {
         // invariant: x == w^((2^(i-1))*q)
-        
+
         x = mmult(x, x);
         if (x == n - I(1)) return true;
         if (x == I(1))     return false;
@@ -117,9 +117,9 @@ void sift_nofill(I first, N n) {
     N i(0);
     N index_square(3);
     N factor(3);
-    
+
     while (index_square < n) {
-        // invariant: index_square = 2i^2 + 6i + 3 && 
+        // invariant: index_square = 2i^2 + 6i + 3 &&
         //            factor = 2i + 3
         if (first[i]) mark_sieve(first + index_square, last, factor);
         ++i;
@@ -147,8 +147,8 @@ struct sift_gen {
     }
 
     //TODO(fernando): Improvements: 1. Put a sentinel in the buffer
-    //                              2. 
-    
+    //                              2.
+
     N operator()() {
         while (true) {
             while (i < buffer.size() && ! buffer[i]) ++i;
@@ -172,7 +172,7 @@ struct sift_gen {
             buffer.insert(buffer.end(), S, true);
             sift_nofill(buffer.begin(), buffer.size());
         }
-    }    
+    }
 
     // sift_gen& operator+=(N k) {
     //     while (true) {
@@ -186,7 +186,7 @@ struct sift_gen {
     //         buffer.insert(buffer.end(), S, true);
     //         sift_nofill(buffer.begin(), buffer.size());
     //     }
-    // }    
+    // }
 
     N operator*() const {
         return 2 * i + 3;
@@ -251,7 +251,7 @@ TEST_CASE("[primes] testing the Primality Test functionality") {
 
     CHECK(prime_nth(0) == 2);
     CHECK(prime_nth(1) == 3);
-    
+
     CHECK(prime_nth(9) == 29);
     CHECK(prime_nth(100-1) == 541);
     CHECK(prime_nth(200-1) == 1223);
@@ -260,7 +260,7 @@ TEST_CASE("[primes] testing the Primality Test functionality") {
     CHECK(prime_nth(500-1) == 3571);
     CHECK(prime_nth(550-1) == 3989);
     CHECK(prime_nth(563-1) == 4091);
-    
+
     CHECK(prime_nth(564-1) == 4093);
     CHECK(prime_nth(565-1) == 4099);
 
@@ -275,7 +275,7 @@ TEST_CASE("[primes] testing the Primality Test functionality") {
     CHECK(prime_nth(10000-1) == 104729);
     // CHECK(prime_nth(100000-1) ==  1299709);
     // CHECK(prime_nth(1000000-1) == 15485863);
-    // CHECK(prime_nth(10000000-1) == 179424673); 
+    // CHECK(prime_nth(10000000-1) == 179424673);
 
     // The 100000000th prime is 2038074743.
     // The 1000000000th prime is 22801763489

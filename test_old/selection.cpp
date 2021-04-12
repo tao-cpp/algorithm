@@ -1,6 +1,6 @@
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -71,9 +71,9 @@ int main() {
     // // using another (unnatural) ordering
     // employee m2 = select_0_2(e1, e2, salary_comparator{});
 
-    // // using another (unnatural) ordering, with lambdas   
-    // employee m3 = select_0_2(e1, e2, [](employee const& a, 
+    // // using another (unnatural) ordering, with lambdas
+    // employee m3 = select_0_2(e1, e2, [](employee const& a,
     //                         employee const& b) {
-    //     return a.name < b.name; 
+    //     return a.name < b.name;
     // });
 }

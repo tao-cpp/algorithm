@@ -1,7 +1,7 @@
 //! \file tao/algorithm/iota.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -29,7 +29,7 @@ namespace tao { namespace algorithm {
 // shift_right_by_one
 // -----------------------------------------------------------------
 
-template <ForwardIterator I> 
+template <ForwardIterator I>
     requires(Writable<I>)
 // DistanceType<I> iota(I f, I l, DistanceType<I> start = DistanceType<I>(0), DistanceType<I> step = DistanceType<I>(1)) {
 DistanceType<I> iota(I f, I l, DistanceType<I> start, DistanceType<I> step) {
@@ -43,7 +43,7 @@ DistanceType<I> iota(I f, I l, DistanceType<I> start, DistanceType<I> step) {
     return start;
 }
 
-template <ForwardIterator I> 
+template <ForwardIterator I>
     requires(Writable<I>)
 inline
 DistanceType<I> iota(I f, I l) {
@@ -58,8 +58,8 @@ void random_iota(I f, I l) {
     // std::random_shuffle(f, l);
     std::random_device rd;
     std::mt19937 g(rd());
- 
-    std::shuffle(f, l, g);    
+
+    std::shuffle(f, l, g);
 }
 
 template <BidirectionalIterator I>
@@ -70,7 +70,7 @@ void reverse_iota(I f, I l) {
 }
 
 
-// //Complexity: 
+// //Complexity:
 // //      Runtime:
 // //          Amortized: O(n)
 // //          Exact:     2 * n - 1 assigments (move or copy)
@@ -103,13 +103,13 @@ void reverse_iota(I f, I l) {
 
 template <RandomAccessIterator I, Integral N>
 inline
-I successor(I x, N n, std::random_access_iterator_tag) { 
+I successor(I x, N n, std::random_access_iterator_tag) {
     return x + n;
 }
 
 template <Iterator I, Integral N>
 inline
-I successor(I x, N n, std::input_iterator_tag) { 
+I successor(I x, N n, std::input_iterator_tag) {
     while (n != N(0)) {
         ++x;
         --n;

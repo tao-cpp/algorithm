@@ -1,7 +1,7 @@
 //! \file tao/algorithm/reverse.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -29,10 +29,10 @@ namespace tao { namespace algorithm {
 // reverse_n
 // -----------------------------------------------------------------
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
-//          Exact:     
+//          Exact:
 //      Space:
 //          O(1)
 
@@ -54,10 +54,10 @@ std::pair<I, I> reverse_n(I f, I l, DistanceType<I> n) {
 // reverse
 // -----------------------------------------------------------------
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
-//          Exact:     
+//          Exact:
 //      Space:
 //          O(1)
 template <BidirectionalIterator I>
@@ -69,8 +69,8 @@ std::pair<I, I> reverse(I f, I l, std::bidirectional_iterator_tag) {
         --l;
         if (f == l) return {f, next(l)};
         std::iter_swap(f, l);
-        ++f; 
-    }   
+        ++f;
+    }
 }
 
 template <RandomAccessIterator I>
@@ -158,7 +158,7 @@ O copy_reverse(I f, I l, O out) {
     while (f != l) {
         --out;
         *out = *f;
-        ++f; 
+        ++f;
     }
     return out;
 }
@@ -310,10 +310,10 @@ I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m) {
 // // reverse_0
 // // -----------------------------------------------------------------
 
-// //Complexity: 
+// //Complexity:
 // //      Runtime:
 // //          Amortized: O(n)
-// //          Exact:     
+// //          Exact:
 // //      Space:
 // //          O(1)
 // template <BidirectionalIterator I>
@@ -326,7 +326,7 @@ I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m) {
 //         if (f == l) return;
 //         std::iter_swap(f, l);
 //         ++f;
-//     }    
+//     }
 // }
 
 
@@ -354,8 +354,8 @@ I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m) {
 
 // // double* count_p = instrumented<int>::counts;
 // // for (size_t i = 0; i < instrumented_base::number_ops; ++i) {
-// //     std::cout << instrumented_base::counter_names[i] << ": " 
-// //                 << count_p[i] 
+// //     std::cout << instrumented_base::counter_names[i] << ": "
+// //                 << count_p[i]
 // //                 << std::endl;
 // // }
 
@@ -542,9 +542,9 @@ I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m) {
 // //     std::rotate(begin(a), std::prev(end(a), 1), end(a));
 
 // //     double* count_p = instrumented<int>::counts;
-// //     CHECK(count_p[instrumented_base::copy_ctor] + 
-// //           count_p[instrumented_base::copy_assignment] + 
-// //           count_p[instrumented_base::move_ctor] + 
+// //     CHECK(count_p[instrumented_base::copy_ctor] +
+// //           count_p[instrumented_base::copy_assignment] +
+// //           count_p[instrumented_base::move_ctor] +
 // //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 // //     CHECK(count_p[instrumented_base::destructor] == 0);
 // // }
@@ -557,9 +557,9 @@ I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m) {
 // //     std::rotate(begin(a), std::prev(end(a), 1), end(a));
 
 // //     double* count_p = instrumented<int>::counts;
-// //     CHECK(count_p[instrumented_base::copy_ctor] + 
-// //           count_p[instrumented_base::copy_assignment] + 
-// //           count_p[instrumented_base::move_ctor] + 
+// //     CHECK(count_p[instrumented_base::copy_ctor] +
+// //           count_p[instrumented_base::copy_assignment] +
+// //           count_p[instrumented_base::move_ctor] +
 // //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 // //     CHECK(count_p[instrumented_base::destructor] == 0);
 // // }
@@ -573,9 +573,9 @@ I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m) {
 // //     std::rotate(begin(a), std::next(begin(a), n - 1), end(a));
 
 // //     double* count_p = instrumented<int>::counts;
-// //     CHECK(count_p[instrumented_base::copy_ctor] + 
-// //           count_p[instrumented_base::copy_assignment] + 
-// //           count_p[instrumented_base::move_ctor] + 
+// //     CHECK(count_p[instrumented_base::copy_ctor] +
+// //           count_p[instrumented_base::copy_assignment] +
+// //           count_p[instrumented_base::move_ctor] +
 // //           count_p[instrumented_base::move_assignment] == 2 * n - 1);
 // //     CHECK(count_p[instrumented_base::destructor] == 0);
 // // }
@@ -590,9 +590,9 @@ I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m) {
 //     rotate_right_by_one(begin(a), end(a));
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() + 1);
 //     CHECK(count_p[instrumented_base::destructor] == 1);
 // }
@@ -605,9 +605,9 @@ I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m) {
 //     rotate_right_by_one(begin(a), end(a));
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() + 1);
 //     CHECK(count_p[instrumented_base::destructor] == 1);
 // }
@@ -621,9 +621,9 @@ I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m) {
 //     rotate_right_by_one(begin(a), end(a));
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == 2 * n);
 //     CHECK(count_p[instrumented_base::destructor] == 2);
 // }
@@ -790,9 +790,9 @@ I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m) {
 //     rotate_right_by_one_n(begin(a), a.size());
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() + 1);
 //     CHECK(count_p[instrumented_base::destructor] == 1);
 // }
@@ -805,9 +805,9 @@ I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m) {
 //     rotate_right_by_one_n(begin(a), a.size());
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() + 1);
 //     CHECK(count_p[instrumented_base::destructor] == 1);
 // }
@@ -821,9 +821,9 @@ I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m) {
 //     rotate_right_by_one_n(begin(a), n);
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == 2 * n);
 //     CHECK(count_p[instrumented_base::destructor] == 2);
 // }
@@ -842,7 +842,7 @@ I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m) {
 //     auto ret = rotate_left_by_one(begin(a), end(a));
 //     CHECK(a == vector<T>{1});
 //     CHECK(ret == std::next(begin(a), a.size() - 1));
-    
+
 // }
 
 // TEST_CASE("[rotate] testing rotate_left_by_one 2 elements random access") {
@@ -1012,9 +1012,9 @@ I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m) {
 //     auto ret = rotate_left_by_one(begin(a), end(a));
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 //     CHECK(count_p[instrumented_base::destructor] == 0);
 // }
@@ -1027,9 +1027,9 @@ I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m) {
 //     auto ret = rotate_left_by_one(begin(a), end(a));
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 //     CHECK(count_p[instrumented_base::destructor] == 0);
 // }
@@ -1043,9 +1043,9 @@ I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m) {
 //     auto ret = rotate_left_by_one(begin(a), end(a));
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == n - 1);
 //     CHECK(count_p[instrumented_base::destructor] == 0);
 // }
@@ -1064,7 +1064,7 @@ I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m) {
 //     auto ret = rotate_left_by_one_n(begin(a), a.size());
 //     CHECK(a == vector<T>{1});
 //     CHECK(ret == std::next(begin(a), a.size() - 1));
-    
+
 // }
 
 // TEST_CASE("[rotate] testing rotate_left_by_one_n 2 elements random access") {
@@ -1234,9 +1234,9 @@ I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m) {
 //     auto ret = rotate_left_by_one_n(begin(a), a.size());
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 //     CHECK(count_p[instrumented_base::destructor] == 0);
 // }
@@ -1249,9 +1249,9 @@ I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m) {
 //     auto ret = rotate_left_by_one_n(begin(a), a.size());
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 //     CHECK(count_p[instrumented_base::destructor] == 0);
 // }
@@ -1265,9 +1265,9 @@ I reverse_n_adaptive(I f, DistanceType<I> n, B b, DistanceType<B> m) {
 //     auto ret = rotate_left_by_one_n(begin(a), n);
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == n - 1);
 //     CHECK(count_p[instrumented_base::destructor] == 0);
 // }

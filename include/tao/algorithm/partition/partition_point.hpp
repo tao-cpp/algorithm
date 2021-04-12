@@ -1,7 +1,7 @@
 //! \file tao/algorithm/partition/partition_point.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -57,7 +57,7 @@ template <ForwardIterator I, UnaryPredicate P>
     requires(Readable<I> && Domain<P, ValueType<I>>)
 I potential_partition_point(I f, I l, P p) {
     //precondition:  readable_bounded_range(f, l)
-    //postcondition: count_if(f, potential_partition_point(f, l, p), p) 
+    //postcondition: count_if(f, potential_partition_point(f, l, p), p)
     //            == count_if_not(potential_partition_point(f, l, p), l, p)
     //complexity: O(n)
 

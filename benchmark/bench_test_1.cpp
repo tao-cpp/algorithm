@@ -1,4 +1,4 @@
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE.md or copy at http://boost.org/LICENSE_1_0.txt)
 
@@ -38,10 +38,10 @@ void measure_and_print_shift_right(C const& copy, N n) {
 		[&]() {return shift_right(begin(data), end(data), n);});
 
 	cout << '\t' << '\t'
-        << n << ";" 
-        << get<0>(t) << ";" 
-        << get<1>(t) << ";" 
-        << get<2>(t) << endl;	
+        << n << ";"
+        << get<0>(t) << ";"
+        << get<1>(t) << ";"
+        << get<2>(t) << endl;
 }
 
 
@@ -59,12 +59,12 @@ void measure_and_print_shift_right(C const& copy, N n) {
 // 			[&]() {data = copy;},
 // 			[&]() {return shift_right(begin(data), end(data), i);});
 
-// 		cout << "shift_right     ;" << cat << ";" 
-// 		 					        << i << ";" 
-// 		                            << data.size() << ";" 
-// 		                            << get<0>(t) << ";" 
-// 		                            << get<1>(t) << ";" 
-// 		                            << get<2>(t) << endl;	
+// 		cout << "shift_right     ;" << cat << ";"
+// 		 					        << i << ";"
+// 		                            << data.size() << ";"
+// 		                            << get<0>(t) << ";"
+// 		                            << get<1>(t) << ";"
+// 		                            << get<2>(t) << endl;
 // 	}
 // }
 
@@ -93,7 +93,7 @@ void print(C const& c) {
 
 /*
 Categorías (ortogonales) a medir:
-	
+
 	- Algoritmo (sort, rotate, shift, binary_search)
 	- Tipo de Contenedor (IteratorCategory: forward, bidirectional, random_access,...)
 	- Tamaño del elemento (value_type: int32_t, int64_t)
@@ -117,20 +117,20 @@ void run_mearurements_generic(std::string const& algo_name, size_t min_size, siz
 	auto type_name = builtin_type_name<N>();
 
 
-	cout << algo_name << ";" 
-		 << cat << ";" 
+	cout << algo_name << ";"
+		 << cat << ";"
 		 << type_name << ";"
-		 << endl;	
+		 << endl;
 
 
 	size_t array_size = min_size;
 	while (array_size <= max_size) {
-		
+
 		auto cont = random_container_creator<Cont>(array_size, eng);
 
 		cout << '\t'
-			 << "data size: " << array_size << ";" 
-			 << endl;	
+			 << "data size: " << array_size << ";"
+			 << endl;
 
 
 		p(cont);
@@ -188,17 +188,17 @@ void run_mearurements(size_t min_size, size_t max_size) {
 
 // 	size_t array_size = min_size;
 // 	while (array_size <= max_size) {
-		
+
 // 		auto data_random_access = random_container_creator<std::vector>(array_size, eng);
 
 
 // 		// auto cat = iterator_category_str<IteratorType<C>>();
 // 		auto cat = iterator_category_str(data_random_access);
 
-// 		cout << "shift_right;" << cat << ";" 
+// 		cout << "shift_right;" << cat << ";"
 //                             << "int32_t" << ";"
-//                             << array_size << ";" 
-//                             << endl;	
+//                             << array_size << ";"
+//                             << endl;
 
 
 // 		measure_and_print_shift_right(data_random_access);
@@ -229,7 +229,7 @@ void run_mearurements(size_t min_size, size_t max_size) {
 
 int main() {
     std::cout << std::setprecision(std::numeric_limits<long double>::digits10 + 1);
-	
+
 	constexpr size_t min_size = 8;
 	// constexpr size_t max_size = 32;
 	// constexpr size_t max_size = 1024;

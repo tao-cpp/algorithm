@@ -1,7 +1,7 @@
 //! \file tao/algorithm/selection/selection_stability.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -65,13 +65,13 @@ auto select_1_2(T&& a, U&& b) FN(
 
 // ------------------------------------------------------------------------------
 // 3 elements selection
-// Complexity: 
+// Complexity:
 //  select_0_3:       2 comparisons
 //  select_1_3_ab:
 //      best case:    1 comparisons
 //      worst case:   2 comparisons
 //      average:    5/3 comparisons, assuming a uniform distribution of inputs
-//  select_1_3: 
+//  select_1_3:
 //      best case:    2 comparisons
 //      worst case:   3 comparisons
 //      average:    8/3 comparisons, assuming a uniform distribution of inputs
@@ -81,7 +81,7 @@ template <int ia, int ib, int ic, Regular T, Regular U, Regular V, StrictWeakOrd
     requires(Same<T, U, V> && Domain<R, T>)
 inline constexpr
 auto select_0_3(T&& a, U&& b, V&& c, R r) FN(
-    CMP((ia < ib), R)(b, a, r) 
+    CMP((ia < ib), R)(b, a, r)
         ? (select_0_2<ib,ic>(_b, _c, r))
         : (select_0_2<ia,ic>(_a, _c, r))
 )
@@ -90,9 +90,9 @@ auto select_0_3(T&& a, U&& b, V&& c, R r) FN(
 //     requires(Same<T, U, V>)
 // inline constexpr
 // auto select_0_3(T&& a, U&& b, V&& c) FN(
-    
+
 //     select_0_2(
-//             select_0_2(_a, _b), 
+//             select_0_2(_a, _b),
 //             _c)
 // )
 
@@ -100,19 +100,19 @@ template <int ia, int ib, int ic, Regular T, Regular U, Regular V, StrictWeakOrd
     requires(Same<T, U, V> && Domain<R, T>)
 inline constexpr
 auto select_2_3(T&& a, U&& b, V&& c, R r) FN(
-    CMP((ia < ib), R)(b, a, r) 
+    CMP((ia < ib), R)(b, a, r)
         ? (select_1_2<ia,ic>(_a, _c, r))
         : (select_1_2<ib,ic>(_b, _c, r))
-            
+
 )
 
 // template <int ia, int ib, int ic, Regular T, Regular U, Regular V>
 //     requires(Same<T, U, V>)
 // inline constexpr
 // auto select_2_3(T&& a, U&& b, V&& c) FN(
-    
+
 //     select_1_2(
-//             select_1_2(_a, _b), 
+//             select_1_2(_a, _b),
 //             _c)
 // )
 
@@ -121,7 +121,7 @@ template <int ia, int ib, int ic, Regular T, Regular U, Regular V, StrictWeakOrd
 inline constexpr
 auto select_1_3_ab(T&& a, U&& b, V&& c, R r) FN(
     // precondition: a <= b
-    
+
     ! CMP((ib < ic), R)(c, b, r) //!(c < b) -> c >= b
         ? _b                                              // a, b, c are sorted
         : (select_1_2<ia,ic>(_a, _c, r))  // b is not the median
@@ -131,7 +131,7 @@ template <int ia, int ib, int ic, Regular T, Regular U, Regular V, StrictWeakOrd
     requires(Same<T, U, V> && Domain<R, T>)
 inline constexpr
 auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
-    CMP((ia < ib), R)(b, a, r) 
+    CMP((ia < ib), R)(b, a, r)
         ? (select_1_3_ab<ib,ia,ic>(_b, _a, _c, r))
         : (select_1_3_ab<ia,ib,ic>(_a, _b, _c, r))
 )
@@ -141,7 +141,7 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
 // inline constexpr
 // auto select_1_3_ab(T&& a, U&& b, V&& c) FN(
 //     // precondition: a <= b
-    
+
 //     !(c < b) ? //!(c < b) -> c >= b
 //                   _b                              // a, b, c are sorted
 //                 : select_1_2(_a, _c)  // b is not the median
@@ -151,16 +151,16 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
 //     requires(Same<T, U, V>)
 // inline constexpr
 // auto select_1_3(T&& a, U&& b, V&& c) FN(
-    
-//     b < a ? 
-//               select_1_3_ab(_b, _a, _c) 
+
+//     b < a ?
+//               select_1_3_ab(_b, _a, _c)
 //             : select_1_3_ab(_a, _b, _c)
 // )
 
 // // ------------------------------------------------------------------------------
 // // 4 elements selection
 
-// // Complexity: 
+// // Complexity:
 // //  select_0_4:       3 comparisons
 // //  select_1_4_ab_cd: 2 comparisons
 // //  select_1_4_ab:    3 comparisons
@@ -176,9 +176,9 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
 //     requires(Same<T, U, V, W> && Domain<R, T>)
 // inline constexpr
 // auto select_0_4(T&& a, U&& b, V&& c, W&& d, R r) FN(
-    
+
 //     select_0_2(
-//             select_0_3(_a, _b, _c, r), 
+//             select_0_3(_a, _b, _c, r),
 //             _d, r)
 // )
 
@@ -187,9 +187,9 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
 //     requires(Same<T, U, V, W>)
 // inline constexpr
 // auto select_0_4(T&& a, U&& b, V&& c, W&& d) FN(
-    
+
 //     select_0_2(
-//             select_0_3(_a, _b, _c), 
+//             select_0_3(_a, _b, _c),
 //             _d)
 // )
 
@@ -198,9 +198,9 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
 //     requires(Same<T, U, V, W> && Domain<R, T>)
 // inline constexpr
 // auto select_3_4(T&& a, U&& b, V&& c, W&& d, R r) FN(
-    
+
 //     select_1_2(
-//             select_2_3(_a, _b, _c, r), 
+//             select_2_3(_a, _b, _c, r),
 //             _d, r)
 // )
 
@@ -209,9 +209,9 @@ auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
 //     requires(Same<T, U, V, W>)
 // inline constexpr
 // auto select_3_4(T&& a, U&& b, V&& c, W&& d) FN(
-    
+
 //     select_1_2(
-//             select_2_3(_a, _b, _c), 
+//             select_2_3(_a, _b, _c),
 //             _d)
 // )
 
@@ -242,7 +242,7 @@ auto select_1_4_ab_cd(T&& a, U&& b, V&& c, W&& d, R r) FN(
 // inline constexpr
 // auto select_1_4_ab_cd(T&& a, U&& b, V&& c, W&& d) FN(
 //     // precondition: a <= b && c <= d
-//     c < a ? 
+//     c < a ?
 //               select_0_2(_a, _d)
 //             : select_0_2(_b, _c)
 // )
@@ -265,8 +265,8 @@ auto select_1_4_ab(T&& a, U&& b, V&& c, W&& d, R r) FN(
 // auto select_1_4_ab(T&& a, U&& b, V&& c, W&& d) FN(
 //     // precondition: a <= b
 
-    
-//     d < c ? 
+
+//     d < c ?
 //               select_1_4_ab_cd(_a, _b, _d, _c)
 //             : select_1_4_ab_cd(_a, _b, _c, _d)
 // )
@@ -276,7 +276,7 @@ auto select_1_4_ab(T&& a, U&& b, V&& c, W&& d, R r) FN(
 //     requires(Same<T, U, V, W> && Domain<R, T>)
 // inline constexpr
 // auto select_1_4(T&& a, U&& b, V&& c, W&& d, R r) FN(
-    
+
 //     CMP((ia < ib), R)(b, a) ? // b < a
 //               select_1_4_ab(_b, _a, _c, _d, r)
 //             : select_1_4_ab(_a, _b, _c, _d, r)
@@ -287,11 +287,11 @@ auto select_1_4_ab(T&& a, U&& b, V&& c, W&& d, R r) FN(
 //     requires(Same<T, U, V, W>)
 // inline constexpr
 // auto select_1_4(T&& a, U&& b, V&& c, W&& d) FN(
-//     b < a ? 
+//     b < a ?
 //               select_1_4_ab(_b, _a, _c, _d)
 //             : select_1_4_ab(_a, _b, _c, _d)
 // )
-        
+
 // template <int ia, int ib, int ic, int id,
 //           Regular T, Regular U, Regular V, Regular W, StrictWeakOrdering R>
 //     requires(Same<T, U, V, W> && Domain<R, T>)
@@ -306,7 +306,7 @@ auto select_1_4_ab(T&& a, U&& b, V&& c, W&& d, R r) FN(
 //     // acbd ... !(d < b)
 //     // cabd ... !(d < b)
 
-    
+
 //     CMP((ia < ib), R)(d, b) ? // d < b
 //               select_1_2(_a, _d, r)
 //             : select_1_2(_b, _c, r)
@@ -319,12 +319,12 @@ auto select_1_4_ab(T&& a, U&& b, V&& c, W&& d, R r) FN(
 // auto select_2_4_ab_cd(T&& a, U&& b, V&& c, W&& d) FN(
 //     // precondition: a <= b && c <= d
 
-    
-//     d < b ? 
+
+//     d < b ?
 //               select_1_2(_a, _d)
 //             : select_1_2(_b, _c)
 // )
-        
+
 // template <int ia, int ib, int ic, int id,
 //           Regular T, Regular U, Regular V, Regular W, StrictWeakOrdering R>
 //     requires(Same<T, U, V, W> && Domain<R, T>)
@@ -332,7 +332,7 @@ auto select_1_4_ab(T&& a, U&& b, V&& c, W&& d, R r) FN(
 // auto select_2_4_cd(T&& a, U&& b, V&& c, W&& d, R r) FN(
 //     // precondition: c <= d
 
-    
+
 //     CMP((ia < ib), R)(b, a) ? // b < a
 //               select_2_4_ab_cd(std::forward<T>(b), std::forward<U>(a), std::forward<W>(c), std::forward<V>(d), r)
 //             : select_2_4_ab_cd(_a, _b, _c, _d, r)
@@ -345,8 +345,8 @@ auto select_1_4_ab(T&& a, U&& b, V&& c, W&& d, R r) FN(
 // auto select_2_4_cd(T&& a, U&& b, V&& c, W&& d) FN(
 //     // precondition: c <= d
 
-    
-//     b < a ? 
+
+//     b < a ?
 //               select_2_4_ab_cd(std::forward<T>(b), std::forward<U>(a), std::forward<W>(c), std::forward<V>(d))
 //             : select_2_4_ab_cd(_a, _b, _c, _d)
 // )
@@ -356,7 +356,7 @@ auto select_1_4_ab(T&& a, U&& b, V&& c, W&& d, R r) FN(
 //     requires(Same<T, U, V, W> && Domain<R, T>)
 // inline constexpr
 // auto select_2_4(T&& a, U&& b, V&& c, W&& d, R r) FN(
-    
+
 //     CMP((ia < ib), R)(d, c) ? // d < c
 //               select_2_4_cd(std::forward<U>(a), std::forward<T>(b), std::forward<V>(d), std::forward<W>(c), r)
 //             : select_2_4_cd(_a, _b, _c, _d, r)
@@ -536,7 +536,7 @@ TEST_CASE("[select_i_j] testing select_i_j selection algorithm") {
         // CHECK(&select_1_3<0,1,2>(c, b, a) == &a);
         // CHECK(select_1_3<0,1,2>(a, c, d) == c);
         // CHECK(select_1_3<0,1,2>(c, a, d) == c);
-        // CHECK(select_1_3<0,1,2>(d, c, a) == c);        
+        // CHECK(select_1_3<0,1,2>(d, c, a) == c);
     }
 
     SUBCASE("[select_i_3] (0,2,1) testing select_i_3 selection algorithm") {
@@ -787,7 +787,7 @@ TEST_CASE("[select_i_j] testing select_i_j selection algorithm") {
         CHECK(&select_1_3<2,1,0>(b, a2, a, less<>()) == &a2);
         CHECK(&select_1_3<2,1,0>(a2, a, b, less<>()) == &a);
         CHECK(&select_1_3<2,1,0>(a2, b, a, less<>()) == &b);
-    }        
+    }
 }
 
 
@@ -856,7 +856,7 @@ TEST_CASE("[select_i_j] testing select_i_j selection algorithm") {
 //     CHECK(select_1_4(d, b, c, a, less<>()) == b);
 //     CHECK(select_1_4(d, c, a, b, less<>()) == b);
 //     CHECK(select_1_4(d, c, b, a, less<>()) == b);
- 
+
 
 //     CHECK(select_2_4(a, b, c, d, less<>()) == c);
 //     CHECK(select_2_4(a, b, d, c, less<>()) == c);
@@ -975,7 +975,7 @@ TEST_CASE("[select_i_j] testing select_i_j selection algorithm") {
 //     CHECK(select_1_4(d, b, c, a) == b);
 //     CHECK(select_1_4(d, c, a, b) == b);
 //     CHECK(select_1_4(d, c, b, a) == b);
- 
+
 
 //     CHECK(select_2_4(a, b, c, d) == c);
 //     CHECK(select_2_4(a, b, d, c) == c);

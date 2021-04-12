@@ -1,7 +1,7 @@
 //! \file tao/algorithm/selection/max_element.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -30,7 +30,7 @@ I max_element(I f, I l, R r) {
     //complexity:    distance(f, l) - 1 comparisons
 
     if (f == l) return l;
- 
+
     I m = f++;
     while (f != l) {
         if ( ! r(*f, *m)) {
@@ -110,7 +110,7 @@ std::pair<I, DistanceType<I>> max_element_n(I f, DistanceType<I> n, R r) {
     //complexity:    n - 1 comparisons
 
     if (zero(n)) return {f, n};
- 
+
     I m = f;
     auto m_n = n;
     step_n(f, n);

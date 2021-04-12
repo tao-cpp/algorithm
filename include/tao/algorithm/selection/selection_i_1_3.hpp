@@ -1,7 +1,7 @@
 //! \file tao/algorithm/selection/selection_i_1_3.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -94,13 +94,13 @@ auto max(T&& a, U&& b) FN(
 
 // ------------------------------------------------------------------------------
 // 3 elements selection
-// Complexity: 
+// Complexity:
 //  select_0_3:       2 comparisons
 //  select_1_3_ab:
 //      best case:    1 comparisons
 //      worst case:   2 comparisons
 //      average:    5/3 comparisons, assuming a uniform distribution of inputs
-//  select_1_3: 
+//  select_1_3:
 //      best case:    2 comparisons
 //      worst case:   3 comparisons
 //      average:    8/3 comparisons, assuming a uniform distribution of inputs
@@ -110,9 +110,9 @@ template <Regular T, Regular U, Regular V, StrictWeakOrdering R>
     requires(Same<T, U, V> && Domain<R, T>)
 inline constexpr
 auto select_0_3(T&& a, U&& b, V&& c, R r) FN(
-    
+
     select_0_2(
-            select_0_2(std::forward<T>(a), std::forward<U>(b), r), 
+            select_0_2(std::forward<T>(a), std::forward<U>(b), r),
             std::forward<V>(c), r)
 )
 
@@ -120,9 +120,9 @@ template <Regular T, Regular U, Regular V>
     requires(Same<T, U, V>)
 inline constexpr
 auto select_0_3(T&& a, U&& b, V&& c) FN(
-    
+
     select_0_2(
-            select_0_2(std::forward<T>(a), std::forward<U>(b)), 
+            select_0_2(std::forward<T>(a), std::forward<U>(b)),
             std::forward<V>(c))
 )
 
@@ -130,9 +130,9 @@ template <Regular T, Regular U, Regular V, StrictWeakOrdering R>
     requires(Same<T, U, V> && Domain<R, T>)
 inline constexpr
 auto select_2_3(T&& a, U&& b, V&& c, R r) FN(
-    
+
     select_1_2(
-            select_1_2(std::forward<T>(a), std::forward<U>(b), r), 
+            select_1_2(std::forward<T>(a), std::forward<U>(b), r),
             std::forward<V>(c), r)
 )
 
@@ -140,9 +140,9 @@ template <Regular T, Regular U, Regular V>
     requires(Same<T, U, V>)
 inline constexpr
 auto select_2_3(T&& a, U&& b, V&& c) FN(
-    
+
     select_1_2(
-            select_1_2(std::forward<T>(a), std::forward<U>(b)), 
+            select_1_2(std::forward<T>(a), std::forward<U>(b)),
             std::forward<V>(c))
 )
 
@@ -151,7 +151,7 @@ template <Regular T, Regular U, Regular V, StrictWeakOrdering R>
 inline constexpr
 auto select_1_3_ab(T&& a, U&& b, V&& c, R r) FN(
     // precondition: a <= b
-    
+
     ! r(c, b) ? //!(c < b) -> c >= b
                 std::forward<U>(b) :                               // a, b, c are sorted
                 select_1_2(std::forward<T>(a), std::forward<V>(c), r)  // b is not the median
@@ -161,8 +161,8 @@ template <Regular T, Regular U, Regular V, StrictWeakOrdering R>
     requires(Same<T, U, V> && Domain<R, T>)
 inline constexpr
 auto select_1_3(T&& a, U&& b, V&& c, R r) FN(
-    
-    r(b, a) ? select_1_3_ab(std::forward<U>(b), std::forward<T>(a), std::forward<V>(c), r) 
+
+    r(b, a) ? select_1_3_ab(std::forward<U>(b), std::forward<T>(a), std::forward<V>(c), r)
             : select_1_3_ab(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), r)
 )
 
@@ -171,7 +171,7 @@ template <Regular T, Regular U, Regular V>
 inline constexpr
 auto select_1_3_ab(T&& a, U&& b, V&& c) FN(
     // precondition: a <= b
-    
+
     !(c < b) ? //!(c < b) -> c >= b
                   std::forward<U>(b)                              // a, b, c are sorted
                 : select_1_2(std::forward<T>(a), std::forward<V>(c))  // b is not the median
@@ -181,16 +181,16 @@ template <TotallyOrdered T, TotallyOrdered U, TotallyOrdered V>
     requires(Same<T, U, V>)
 inline constexpr
 auto select_1_3(T&& a, U&& b, V&& c) FN(
-    
-    b < a ? 
-              select_1_3_ab(std::forward<U>(b), std::forward<T>(a), std::forward<V>(c)) 
+
+    b < a ?
+              select_1_3_ab(std::forward<U>(b), std::forward<T>(a), std::forward<V>(c))
             : select_1_3_ab(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c))
 )
 
 // ------------------------------------------------------------------------------
 // 4 elements selection
 
-// Complexity: 
+// Complexity:
 //  select_0_4:       3 comparisons
 //  select_1_4_ab_cd: 2 comparisons
 //  select_1_4_ab:    3 comparisons
@@ -205,9 +205,9 @@ template <Regular T, Regular U, Regular V, Regular W, StrictWeakOrdering R>
     requires(Same<T, U, V, W> && Domain<R, T>)
 inline constexpr
 auto select_0_4(T&& a, U&& b, V&& c, W&& d, R r) FN(
-    
+
     select_0_2(
-            select_0_3(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), r), 
+            select_0_3(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), r),
             std::forward<W>(d), r)
 )
 
@@ -215,9 +215,9 @@ template <Regular T, Regular U, Regular V, Regular W>
     requires(Same<T, U, V, W>)
 inline constexpr
 auto select_0_4(T&& a, U&& b, V&& c, W&& d) FN(
-    
+
     select_0_2(
-            select_0_3(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c)), 
+            select_0_3(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c)),
             std::forward<W>(d))
 )
 
@@ -225,9 +225,9 @@ template <Regular T, Regular U, Regular V, Regular W, StrictWeakOrdering R>
     requires(Same<T, U, V, W> && Domain<R, T>)
 inline constexpr
 auto select_3_4(T&& a, U&& b, V&& c, W&& d, R r) FN(
-    
+
     select_1_2(
-            select_2_3(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), r), 
+            select_2_3(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), r),
             std::forward<W>(d), r)
 )
 
@@ -235,9 +235,9 @@ template <Regular T, Regular U, Regular V, Regular W>
     requires(Same<T, U, V, W>)
 inline constexpr
 auto select_3_4(T&& a, U&& b, V&& c, W&& d) FN(
-    
+
     select_1_2(
-            select_2_3(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c)), 
+            select_2_3(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c)),
             std::forward<W>(d))
 )
 
@@ -256,7 +256,7 @@ auto select_1_4_ab_cd(T&& a, U&& b, V&& c, W&& d, R r) FN(
     // acbd ... !(c < a)
     // acdb ... !(c < a)
 
-    
+
     r(c, a) ? // c < a
               select_0_2(std::forward<T>(a), std::forward<W>(d), r)
             : select_0_2(std::forward<U>(b), std::forward<V>(c), r)
@@ -268,8 +268,8 @@ inline constexpr
 auto select_1_4_ab_cd(T&& a, U&& b, V&& c, W&& d) FN(
     // precondition: a <= b && c <= d
 
-    
-    c < a ? 
+
+    c < a ?
               select_0_2(std::forward<T>(a), std::forward<W>(d))
             : select_0_2(std::forward<U>(b), std::forward<V>(c))
 )
@@ -280,7 +280,7 @@ inline constexpr
 auto select_1_4_ab(T&& a, U&& b, V&& c, W&& d, R r) FN(
     // precondition: a <= b
 
-    
+
     r(d, c) ? // d < c
               select_1_4_ab_cd(std::forward<T>(a), std::forward<U>(b), std::forward<W>(d), std::forward<V>(c), r)
             : select_1_4_ab_cd(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), std::forward<W>(d), r)
@@ -292,8 +292,8 @@ inline constexpr
 auto select_1_4_ab(T&& a, U&& b, V&& c, W&& d) FN(
     // precondition: a <= b
 
-    
-    d < c ? 
+
+    d < c ?
               select_1_4_ab_cd(std::forward<T>(a), std::forward<U>(b), std::forward<W>(d), std::forward<V>(c))
             : select_1_4_ab_cd(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), std::forward<W>(d))
 )
@@ -302,7 +302,7 @@ template <Regular T, Regular U, Regular V, Regular W, StrictWeakOrdering R>
     requires(Same<T, U, V, W> && Domain<R, T>)
 inline constexpr
 auto select_1_4(T&& a, U&& b, V&& c, W&& d, R r) FN(
-    
+
     r(b, a) ? // b < a
               select_1_4_ab(std::forward<U>(b), std::forward<T>(a), std::forward<V>(c), std::forward<W>(d), r)
             : select_1_4_ab(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), std::forward<W>(d), r)
@@ -312,11 +312,11 @@ template <TotallyOrdered T, TotallyOrdered U, TotallyOrdered V, TotallyOrdered W
     requires(Same<T, U, V, W>)
 inline constexpr
 auto select_1_4(T&& a, U&& b, V&& c, W&& d) FN(
-    b < a ? 
+    b < a ?
               select_1_4_ab(std::forward<U>(b), std::forward<T>(a), std::forward<V>(c), std::forward<W>(d))
             : select_1_4_ab(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), std::forward<W>(d))
 )
-        
+
 template <Regular T, Regular U, Regular V, Regular W, StrictWeakOrdering R>
     requires(Same<T, U, V, W> && Domain<R, T>)
 inline constexpr
@@ -330,7 +330,7 @@ auto select_2_4_ab_cd(T&& a, U&& b, V&& c, W&& d, R r) FN(
     // acbd ... !(d < b)
     // cabd ... !(d < b)
 
-    
+
     r(d, b) ? // d < b
               select_1_2(std::forward<T>(a), std::forward<W>(d), r)
             : select_1_2(std::forward<U>(b), std::forward<V>(c), r)
@@ -342,19 +342,19 @@ inline constexpr
 auto select_2_4_ab_cd(T&& a, U&& b, V&& c, W&& d) FN(
     // precondition: a <= b && c <= d
 
-    
-    d < b ? 
+
+    d < b ?
               select_1_2(std::forward<T>(a), std::forward<W>(d))
             : select_1_2(std::forward<U>(b), std::forward<V>(c))
 )
-        
+
 template <Regular T, Regular U, Regular V, Regular W, StrictWeakOrdering R>
     requires(Same<T, U, V, W> && Domain<R, T>)
 inline constexpr
 auto select_2_4_cd(T&& a, U&& b, V&& c, W&& d, R r) FN(
     // precondition: c <= d
 
-    
+
     r(b, a) ? // b < a
               select_2_4_ab_cd(std::forward<T>(b), std::forward<U>(a), std::forward<W>(c), std::forward<V>(d), r)
             : select_2_4_ab_cd(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), std::forward<W>(d), r)
@@ -366,8 +366,8 @@ inline constexpr
 auto select_2_4_cd(T&& a, U&& b, V&& c, W&& d) FN(
     // precondition: c <= d
 
-    
-    b < a ? 
+
+    b < a ?
               select_2_4_ab_cd(std::forward<T>(b), std::forward<U>(a), std::forward<W>(c), std::forward<V>(d))
             : select_2_4_ab_cd(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), std::forward<W>(d))
 )
@@ -376,7 +376,7 @@ template <Regular T, Regular U, Regular V, Regular W, StrictWeakOrdering R>
     requires(Same<T, U, V, W> && Domain<R, T>)
 inline constexpr
 auto select_2_4(T&& a, U&& b, V&& c, W&& d, R r) FN(
-    
+
     r(d, c) ? // d < c
               select_2_4_cd(std::forward<U>(a), std::forward<T>(b), std::forward<V>(d), std::forward<W>(c), r)
             : select_2_4_cd(std::forward<T>(a), std::forward<U>(b), std::forward<V>(c), std::forward<W>(d), r)
@@ -503,7 +503,7 @@ TEST_CASE("[select_i_j] testing select_i_j selection algorithm") {
         CHECK(&select_1_3(c, b, a) == &a);
         CHECK(select_1_3(a, c, d) == c);
         CHECK(select_1_3(c, a, d) == c);
-        CHECK(select_1_3(d, c, a) == c);        
+        CHECK(select_1_3(d, c, a) == c);
     }
 }
 
@@ -573,7 +573,7 @@ TEST_CASE("[select_i_4] testing select_i_4 selection algorithm") {
     CHECK(select_1_4(d, b, c, a, less<>()) == b);
     CHECK(select_1_4(d, c, a, b, less<>()) == b);
     CHECK(select_1_4(d, c, b, a, less<>()) == b);
- 
+
 
     CHECK(select_2_4(a, b, c, d, less<>()) == c);
     CHECK(select_2_4(a, b, d, c, less<>()) == c);
@@ -692,7 +692,7 @@ TEST_CASE("[select_i_4] testing select_i_4 selection algorithm") {
     CHECK(select_1_4(d, b, c, a) == b);
     CHECK(select_1_4(d, c, a, b) == b);
     CHECK(select_1_4(d, c, b, a) == b);
- 
+
 
     CHECK(select_2_4(a, b, c, d) == c);
     CHECK(select_2_4(a, b, d, c) == c);

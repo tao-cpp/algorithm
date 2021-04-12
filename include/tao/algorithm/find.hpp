@@ -1,7 +1,7 @@
 //! \file tao/algorithm/find.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -165,7 +165,7 @@ bool some_n(I f, DistanceType<I> n, P p) {
 // ---------------------------------------------------------------------------
 
 template <Iterator I0, Iterator I1, Relation R>
-    requires(Readable<I0>, Readable<I1>, Same<ValueType<I0>, ValueType<I1>> 
+    requires(Readable<I0>, Readable<I1>, Same<ValueType<I0>, ValueType<I1>>
              && Domain<R, ValueType<I0>>)
 std::pair<I0, I1> find_mismatch(I0 f0, I0 l0, I1 f1, I1 l1, R r) {
     //precondition: readable_bounded_range(f0, l0) &&
@@ -180,7 +180,7 @@ std::pair<I0, I1> find_mismatch(I0 f0, I0 l0, I1 f1, I1 l1, R r) {
 }
 
 template <Iterator I0, Iterator I1>
-    requires(Readable<I0>, Readable<I1>, Same<ValueType<I0>, ValueType<I1>> 
+    requires(Readable<I0>, Readable<I1>, Same<ValueType<I0>, ValueType<I1>>
              && Regular<ValueType<I0>>)
 inline
 std::pair<I0, I1> find_mismatch(I0 f0, I0 l0, I1 f1, I1 l1) {
@@ -191,7 +191,7 @@ std::pair<I0, I1> find_mismatch(I0 f0, I0 l0, I1 f1, I1 l1) {
 }
 
 template <Iterator I0, Iterator I1, Relation R>
-    requires(Readable<I0>, Readable<I1>, Same<ValueType<I0>, ValueType<I1>> 
+    requires(Readable<I0>, Readable<I1>, Same<ValueType<I0>, ValueType<I1>>
              && Domain<R, ValueType<I0>>)
 std::tuple<I0, I1, DistanceType<I1>> find_mismatch_bn(I0 f0, I0 l0, I1 f1, DistanceType<I1> n1, R r) {
     //precondition: readable_bounded_range(f0, l0) &&
@@ -207,7 +207,7 @@ std::tuple<I0, I1, DistanceType<I1>> find_mismatch_bn(I0 f0, I0 l0, I1 f1, Dista
 }
 
 template <Iterator I0, Iterator I1>
-    requires(Readable<I0>, Readable<I1>, Same<ValueType<I0>, ValueType<I1>> 
+    requires(Readable<I0>, Readable<I1>, Same<ValueType<I0>, ValueType<I1>>
              && Regular<ValueType<I0>>)
 inline
 std::tuple<I0, I1, DistanceType<I1>> find_mismatch_bn(I0 f0, I0 l0, I1 f1, DistanceType<I1> n1) {
@@ -218,7 +218,7 @@ std::tuple<I0, I1, DistanceType<I1>> find_mismatch_bn(I0 f0, I0 l0, I1 f1, Dista
 }
 
 template <Iterator I0, Iterator I1, Relation R>
-    requires(Readable<I0>, Readable<I1>, Same<ValueType<I0>, ValueType<I1>> 
+    requires(Readable<I0>, Readable<I1>, Same<ValueType<I0>, ValueType<I1>>
              && Domain<R, ValueType<I0>>)
 std::tuple<I0, DistanceType<I0>, I1> find_mismatch_nb(I0 f0, DistanceType<I0> n0, I1 f1, I1 l1, R r) {
     //precondition: readable_weak_range(f0, l0) &&
@@ -234,7 +234,7 @@ std::tuple<I0, DistanceType<I0>, I1> find_mismatch_nb(I0 f0, DistanceType<I0> n0
 }
 
 template <Iterator I0, Iterator I1>
-    requires(Readable<I0>, Readable<I1>, Same<ValueType<I0>, ValueType<I1>> 
+    requires(Readable<I0>, Readable<I1>, Same<ValueType<I0>, ValueType<I1>>
              && Regular<ValueType<I0>>)
 inline
 std::tuple<I0, DistanceType<I0>, I1> find_mismatch_nb(I0 f0, DistanceType<I0> n0, I1 f1, I1 l1) {
@@ -245,7 +245,7 @@ std::tuple<I0, DistanceType<I0>, I1> find_mismatch_nb(I0 f0, DistanceType<I0> n0
 }
 
 template <Iterator I0, Iterator I1, Relation R>
-    requires(Readable<I0>, Readable<I1>, Same<ValueType<I0>, ValueType<I1>> 
+    requires(Readable<I0>, Readable<I1>, Same<ValueType<I0>, ValueType<I1>>
              && Domain<R, ValueType<I0>>)
 std::tuple<I0, DistanceType<I0>, I1, DistanceType<I1>> find_mismatch_nn(I0 f0, DistanceType<I0> n0, I1 f1, DistanceType<I1> n1, R r) {
     //precondition: readable_weak_range(f0, l0) &&
@@ -262,7 +262,7 @@ std::tuple<I0, DistanceType<I0>, I1, DistanceType<I1>> find_mismatch_nn(I0 f0, D
 }
 
 template <Iterator I0, Iterator I1>
-    requires(Readable<I0>, Readable<I1>, Same<ValueType<I0>, ValueType<I1>> 
+    requires(Readable<I0>, Readable<I1>, Same<ValueType<I0>, ValueType<I1>>
              && Regular<ValueType<I0>>)
 inline
 std::tuple<I0, DistanceType<I0>, I1, DistanceType<I1>> find_mismatch_nn(I0 f0, DistanceType<I0> n0, I1 f1, DistanceType<I1> n1) {

@@ -1,7 +1,7 @@
 //! \file tao/algorithm/accumulate.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -19,7 +19,7 @@
 
 namespace tao { namespace algorithm {
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:     ???
@@ -28,7 +28,7 @@ namespace tao { namespace algorithm {
 template <Iterator I, typename T, BinaryOperation Op>
 // requires T == Domain(Op)
 inline
-T accumulate(I f, I l, T init, Op op) {   
+T accumulate(I f, I l, T init, Op op) {
     // return sum of init and all in [f, l), using op
     while (f != l) {
         init = op(init, *f);
@@ -37,7 +37,7 @@ T accumulate(I f, I l, T init, Op op) {
     return init;
 }
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:     ???
@@ -46,7 +46,7 @@ T accumulate(I f, I l, T init, Op op) {
 template <Iterator I, typename T, BinaryOperation Op>
 // requires T == Domain(Op)
 inline
-T accumulate_n(I f, DistanceType<I> n, T init, Op op) {   
+T accumulate_n(I f, DistanceType<I> n, T init, Op op) {
     // return sum of init and all in [f, n), using op
     while (n != 0) {
         init = op(init, *f);
@@ -56,7 +56,7 @@ T accumulate_n(I f, DistanceType<I> n, T init, Op op) {
     return init;
 }
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:     ???
@@ -65,12 +65,12 @@ T accumulate_n(I f, DistanceType<I> n, T init, Op op) {
 template <Iterator I, typename T>
 // requires T == Domain(Op)
 inline
-T accumulate_n(I f, DistanceType<I> n, T init) {   
+T accumulate_n(I f, DistanceType<I> n, T init) {
     return accumulate_n(f, n, init, std::plus<>{});
 }
 
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:     ???
@@ -80,7 +80,7 @@ template <Iterator I, typename T, BinaryOperation Op, UnaryFunction F>
 // requires T == Domain(F)
 //          Codomain(F) == Domain(Op))
 inline
-T accumulate(I f, I l, T init, Op op, F fun) {   
+T accumulate(I f, I l, T init, Op op, F fun) {
     // return sum of init and all in [f, l), using op and fun
     while (f != l) {
         init = op(init, fun(*f));
@@ -89,7 +89,7 @@ T accumulate(I f, I l, T init, Op op, F fun) {
     return init;
 }
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:     ???
@@ -99,7 +99,7 @@ template <Iterator I, typename T, BinaryOperation Op, UnaryFunction F>
 // requires T == Domain(F)
 //          Codomain(F) == Domain(Op))
 inline
-T accumulate_n(I f, DistanceType<I> n, T init, Op op, F fun) {   
+T accumulate_n(I f, DistanceType<I> n, T init, Op op, F fun) {
     // return sum of init and all in [f, n), using op and fun
     while (n != 0) {
         init = op(init, fun(*f));
@@ -109,7 +109,7 @@ T accumulate_n(I f, DistanceType<I> n, T init, Op op, F fun) {
     return init;
 }
 
-// //Complexity: 
+// //Complexity:
 // //      Runtime:
 // //          Amortized: O(n)
 // //          Exact:     ???
@@ -119,7 +119,7 @@ T accumulate_n(I f, DistanceType<I> n, T init, Op op, F fun) {
 // // requires T == Domain(F)
 // //          Codomain(F) == Domain(Op))
 // inline
-// T accumulate_n(I f, DistanceType<I> n, T init, F fun) {   
+// T accumulate_n(I f, DistanceType<I> n, T init, F fun) {
 //     return accumulate_n(f, n, init, fun, std::plus<>{});
 // }
 

@@ -1,6 +1,6 @@
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -35,8 +35,8 @@ TEST_CASE("shift_right_forward", "shift_right on ForwardIterator's") {
 
     forward_list<int> c = { 1, 2, 3 };
 
-    // For n < 0 or n > std::distance(first, last) it is a violation of the precondition of the function. 
-    // No need to check these cases 
+    // For n < 0 or n > std::distance(first, last) it is a violation of the precondition of the function.
+    // No need to check these cases
 
     SECTION( "for 0" ) {
         check(begin(c), end(c), 0, false, 1);
@@ -58,8 +58,8 @@ TEST_CASE("shift_right_bidirectional", "shift_right on BidirectionalIterator's")
 
     list<int> c = { 1, 2, 3 };
 
-    // For n < 0 or n > std::distance(first, last) it is a violation of the precondition of the function. 
-    // No need to check these cases 
+    // For n < 0 or n > std::distance(first, last) it is a violation of the precondition of the function.
+    // No need to check these cases
 
     SECTION( "for 0" ) {
         check(begin(c), end(c), 0, false, 1);

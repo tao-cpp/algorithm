@@ -1,7 +1,7 @@
 //! \file tao/algorithm/sorting/insertion_sort.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -69,7 +69,7 @@ I linear_insert(I f, I current, R r) {
 //     }
 //     ++c;
 //     *c = value;
-//     return c; 
+//     return c;
 // }
 
 // template <ForwardIterator I, Relation R>
@@ -106,18 +106,18 @@ I linear_insert(I f, I current, R r) {
 
 //     I where = upper_bound_n(f, n, *current, r);
 //     rotate_right_by_one(where, ++current);
-//     return where; 
+//     return where;
 // }
 
 template <ForwardIterator I, Relation R>
     requires(Mutable<I> && StrictWeakOrdering<R, ValueType<I>>)
 I binary_insert(I f, I current, R r) {
-    // precondition: mutable_bounded_range(f, current + 1) && 
+    // precondition: mutable_bounded_range(f, current + 1) &&
     //               is_sorted(f, current, r)
 
     I where = upper_bound(f, current, *current, r);
     rotate_right_by_one(where, ++current);
-    return where; 
+    return where;
 }
 
 template <ForwardIterator I, Relation R>
@@ -184,7 +184,7 @@ TEST_CASE("[shift_right_while] testing shift_right_while 6 elements random acces
 
     // for (auto&& x : a) {
     //     cout << x << endl;
-    // }    
+    // }
 
     CHECK(a == vector<T>{1, 2, 3, 4, 5, 5});
 }

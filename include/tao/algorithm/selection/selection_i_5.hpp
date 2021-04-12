@@ -1,7 +1,7 @@
 //! \file tao/algorithm/selection/selection_i_5.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -32,7 +32,7 @@ namespace tao { namespace algorithm {
 // ------------------------------------------------------------------------------
 // 5 elements selection
 
-// Complexity: 
+// Complexity:
 //  select_2_5_ab_cd: ? comparisons
 //  select_2_5_cd:    ? comparisons
 //  select_2_5:       6 comparisons
@@ -52,7 +52,7 @@ namespace tao { namespace algorithm {
 // inline constexpr
 // auto select_0_5(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
 //     select_0_2(
-//             select_0_4(_a, _b, _c, _d, r), 
+//             select_0_4(_a, _b, _c, _d, r),
 //             _e, r)
 // )
 
@@ -60,9 +60,9 @@ namespace tao { namespace algorithm {
 // //     requires(Same<T, U, V, W>)
 // // inline constexpr
 // // auto select_0_5(T&& a, U&& b, V&& c, W&& d) FN(
-    
+
 // //     select_0_2(
-// //             select_0_3(_a, _b, _c), 
+// //             select_0_3(_a, _b, _c),
 // //             _d)
 // // )
 
@@ -71,7 +71,7 @@ namespace tao { namespace algorithm {
 // inline constexpr
 // auto select_4_5(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
 //     select_1_2(
-//             select_3_4(_a, _b, _c, _d, r), 
+//             select_3_4(_a, _b, _c, _d, r),
 //             _e, r)
 // )
 
@@ -79,9 +79,9 @@ namespace tao { namespace algorithm {
 // //     requires(Same<T, U, V, W>)
 // // inline constexpr
 // // auto select_3_5(T&& a, U&& b, V&& c, W&& d) FN(
-    
+
 // //     select_1_2(
-// //             select_2_3(_a, _b, _c), 
+// //             select_2_3(_a, _b, _c),
 // //             _d)
 // // )
 
@@ -100,7 +100,7 @@ namespace tao { namespace algorithm {
 //     // acbd ... !(c < a)
 //     // acdb ... !(c < a)
 
-    
+
 //     r(c, a) ? // c < a
 //               select_0_2(_a, _d, r)
 //             : select_0_2(_b, _c, r)
@@ -112,8 +112,8 @@ namespace tao { namespace algorithm {
 // // auto select_1_5_ab_cd(T&& a, U&& b, V&& c, W&& d) FN(
 // //     // precondition: a <= b && c <= d
 
-    
-// //     c < a ? 
+
+// //     c < a ?
 // //               select_0_2(_a, _d)
 // //             : select_0_2(_b, _c)
 // // )
@@ -123,7 +123,7 @@ namespace tao { namespace algorithm {
 // inline constexpr
 // auto select_1_5_ab(T&& a, U&& b, V&& c, W&& d, R r) FN(
 //     // precondition: a <= b
-    
+
 //     r(d, c) ? // d < c
 //               select_1_5_ab_cd(_a, _b, _d, _c, r)
 //             : select_1_5_ab_cd(_a, _b, _c, _d, r)
@@ -134,7 +134,7 @@ namespace tao { namespace algorithm {
 // // inline constexpr
 // // auto select_1_5_ab(T&& a, U&& b, V&& c, W&& d) FN(
 // //     // precondition: a <= b
-// //     d < c ? 
+// //     d < c ?
 // //               select_1_5_ab_cd(_a, _b, _d, _c)
 // //             : select_1_5_ab_cd(_a, _b, _c, _d)
 // // )
@@ -152,7 +152,7 @@ namespace tao { namespace algorithm {
 // //     requires(Same<T, U, V, W>)
 // // inline constexpr
 // // auto select_1_5(T&& a, U&& b, V&& c, W&& d) FN(
-// //     b < a ? 
+// //     b < a ?
 // //               select_1_5_ab(_b, _a, _c, _d)
 // //             : select_1_5_ab(_a, _b, _c, _d)
 // // )
@@ -171,7 +171,7 @@ template <int ia, int ib, int ic, int id, int ie,
 inline constexpr
 auto select_2_5_ab_cd(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
     // precondition: !r(b, a) && !r(d, c) -->  a <= b && c <= d
-    CMP((ia < ic), R)(c, a, r) 
+    CMP((ia < ic), R)(c, a, r)
         ? (select_1_4_ab<ia,ib,id,ie>(_a, _b, _d, _e, r))
         : (select_1_4_ab<ic,id,ib,ie>(_c, _d, _b, _e, r))
 )
@@ -214,12 +214,12 @@ template <int ia, int ib, int ic, int id, int ie,
 inline constexpr
 auto select_2_5_abc(T&& a, U&& b, V&& c, W&& d, X&& e, R r) FN(
     // precondition: !r(b, a) && !r(c, b)  -->  a <= b && b <= c
-    CMP((ib < id), R)(d, b, r)               //d < b 
-        ? CMP((ib < ie), R)(e, b, r)         //e < b 
+    CMP((ib < id), R)(d, b, r)               //d < b
+        ? CMP((ib < ie), R)(e, b, r)         //e < b
             ? (select_2_3<ia,id,ie>(_a, _d, _e, r))
             : _b
-        : CMP((ib < ie), R)(e, b, r)         //e < b 
-            ? _b 
+        : CMP((ib < ie), R)(e, b, r)         //e < b
+            ? _b
             : (select_0_3<ic,id,ie>(_c, _d, _e, r))
 )
 

@@ -1,7 +1,7 @@
 //! \file tao/algorithm/predicates.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -15,8 +15,8 @@
 template <UnaryPredicate P>
 struct predicate_negator {
     P p;
-    
-    explicit 
+
+    explicit
     predicate_negator(P p) : p(p) {}
 
     template <Semiregular T>

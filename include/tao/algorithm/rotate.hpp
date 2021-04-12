@@ -1,7 +1,7 @@
 // //! \file tao/algorithm/rotate.hpp
 // // Tao.Algorithm
 // //
-// // Copyright (c) 2016-2020 Fernando Pelliccioni.
+// // Copyright (c) 2016-2021 Fernando Pelliccioni.
 // //
 // // Distributed under the MIT software license, see the accompanying
 // // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -29,7 +29,7 @@
 
 // //TODO(fernando): see what we have to return
 
-// //Complexity: 
+// //Complexity:
 // //      Runtime:
 // //          Amortized: O(n)
 // //          Exact:     2 * n - 1 assigments (move or copy)
@@ -56,7 +56,7 @@
 //     *first = std::move(a);
 // }
 
-// //Complexity: 
+// //Complexity:
 // //      Runtime:
 // //          Amortized: O(n)
 // //          Exact:     n - 1 assigments (move or copy)
@@ -72,11 +72,11 @@
 //     *f = std::move(x);
 // }
 
-// //Complexity: 
+// //Complexity:
 // //      Runtime:
 // //          Amortized: O(n)
-// //          Exact:     
-// //              for ForwardIterator:       2 * n - 1 assigments (move or copy) 
+// //          Exact:
+// //              for ForwardIterator:       2 * n - 1 assigments (move or copy)
 // //              for BidirectionalIterator: n - 1 assigments (move or copy)
 // //      Space:
 // //          O(1)
@@ -91,7 +91,7 @@
 // // rotate_right_by_one_n
 // // -----------------------------------------------------------------
 
-// //Complexity: 
+// //Complexity:
 // //      Runtime:
 // //          Amortized: O(n)
 // //          Exact:     2 * distance(f, l) - 1 assigments (move or copy)
@@ -109,7 +109,7 @@
 //     ValueType<I> a = std::move(*f);
 //     ValueType<I> b;
 //     step_n(f, n);
-    
+
 //     while ( ! zero(n)) {
 //         shift_three(b, *f, a);
 //         step_n(f, n);
@@ -118,7 +118,7 @@
 //             *first = std::move(b);
 //             return;
 //         };
-        
+
 //         shift_three(a, *f, b);
 //         step_n(f, n);
 
@@ -126,7 +126,7 @@
 //     *first = std::move(a);
 // }
 
-// //Complexity: 
+// //Complexity:
 // //      Runtime:
 // //          Amortized: O(n)
 // //          Exact:     n - 1 assigments (move or copy)
@@ -144,16 +144,16 @@
 
 //     auto x = std::move(*butlast);
 //     tao::algorithm::move_backward_n(butlast, n - 1, l);
-//     *f = std::move(x);    
+//     *f = std::move(x);
 // }
 
 
-// //Complexity: 
+// //Complexity:
 // //      Runtime:
 // //          Amortized: O(n)
-// //          Exact:     
-// //              for ForwardIterator:       
-// //              for BidirectionalIterator: 
+// //          Exact:
+// //              for ForwardIterator:
+// //              for BidirectionalIterator:
 // //      Space:
 // //          O(1)
 // template <ForwardIterator I>
@@ -169,7 +169,7 @@
 // // rotate_left_by_one
 // // -----------------------------------------------------------------
 
-// //Complexity: 
+// //Complexity:
 // //      Runtime:
 // //          Amortized: O(n)
 // //          Exact:     n - 1 assigments (move or copy)
@@ -198,7 +198,7 @@
 // // rotate_left_by_one_n
 // // -----------------------------------------------------------------
 
-// //Complexity: 
+// //Complexity:
 // //      Runtime:
 // //          Amortized: O(n)
 // //          Exact:     n - 1 assigments (move or copy)
@@ -228,7 +228,7 @@
 
 // // ----------------------------------------------------------------
 
-// //Complexity: 
+// //Complexity:
 // //      Runtime:
 // //          Amortized: ???
 // //          Exact:     ???
@@ -239,11 +239,11 @@
 //     //precondition: mutable????_bounded_range(f, l)
 //     //              distance(f, l) >= 1
 //     using std::swap;
-//     I current = f; 
+//     I current = f;
 //     while (++current != l) swap(*f, *current);
 // }
 
-// //Complexity: 
+// //Complexity:
 // //      Runtime:
 // //          Amortized: O(n)
 // //          Exact:     (n * distance(f, l) - (n * (n-1)) / 2) swaps
@@ -261,7 +261,7 @@
 //     return f;
 // }
 
-// //Complexity: 
+// //Complexity:
 // //      Runtime:
 // //          Amortized: O(n)
 // //          Exact:     (distance(f, l) - n) move-assigments or copy-assigments (depending of the ValueType<I> object)
@@ -269,16 +269,16 @@
 // //          O(1)
 // template <BidirectionalIterator I>
 // I rotate_right(I f, I l, DistanceType<I> n, std::bidirectional_iterator_tag) {
-//     //precondition: n >= 0 && 
+//     //precondition: n >= 0 &&
 //     //              std::distance(f, l) >= n (so [f, n) is a valid range)
 //     I butlast = std::prev(l, n);
 //     return tao::algorithm::move_backward(f, butlast, l);
 // }
 
-// //Complexity: 
+// //Complexity:
 // //      Runtime:
 // //          Amortized: O(n)
-// //          Exact:     
+// //          Exact:
 // //              for ForwardIterator:       (n * distance(f, l) - (n * (n-1)) / 2) swaps
 // //              for BidirectionalIterator: (distance(f, l) - n) move-assigments or copy-assigments (depending of the ValueType<I> object)
 // //      Space:
@@ -292,7 +292,7 @@
 
 // //TODO: rotate_left
 
-// // //Complexity: 
+// // //Complexity:
 // // //      Runtime:
 // // //          Amortized: O(n)
 // // //          Exact:     (n * distance(f, l) - (n * (n-1)) / 2) swaps
@@ -311,7 +311,7 @@
 // // }
 
 
-// // //Complexity: 
+// // //Complexity:
 // // //      Runtime:
 // // //          Amortized: O(n)
 // // //          Exact:     (distance(f, l) - n) move-assigments or copy-assigments (depending of the ValueType<I> object)
@@ -319,15 +319,15 @@
 // // //          O(1)
 // // template <BidirectionalIterator I>
 // // I rotate_left(I f, I l, DistanceType<I> n, std::bidirectional_iterator_tag) {
-// //     //precondition: n >= 0 && 
+// //     //precondition: n >= 0 &&
 // //     //              std::distance(f, l) >= n (so [f, n) is a valid range)
 // //     //return std::move(f, std::next(f, n), l);
 // // }
 
-// // //Complexity: 
+// // //Complexity:
 // // //      Runtime:
 // // //          Amortized: O(n)
-// // //          Exact:     
+// // //          Exact:
 // // //              for ForwardIterator:       (n * distance(f, l) - (n * (n-1)) / 2) swaps
 // // //              for BidirectionalIterator: (distance(f, l) - n) move-assigments or copy-assigments (depending of the ValueType<I> object)
 // // //      Space:
@@ -361,8 +361,8 @@
 
 // // double* count_p = instrumented<int>::counts;
 // // for (size_t i = 0; i < instrumented_base::number_ops; ++i) {
-// //     std::cout << instrumented_base::counter_names[i] << ": " 
-// //                 << count_p[i] 
+// //     std::cout << instrumented_base::counter_names[i] << ": "
+// //                 << count_p[i]
 // //                 << std::endl;
 // // }
 
@@ -549,9 +549,9 @@
 // //     std::rotate(begin(a), std::prev(end(a), 1), end(a));
 
 // //     double* count_p = instrumented<int>::counts;
-// //     CHECK(count_p[instrumented_base::copy_ctor] + 
-// //           count_p[instrumented_base::copy_assignment] + 
-// //           count_p[instrumented_base::move_ctor] + 
+// //     CHECK(count_p[instrumented_base::copy_ctor] +
+// //           count_p[instrumented_base::copy_assignment] +
+// //           count_p[instrumented_base::move_ctor] +
 // //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 // //     CHECK(count_p[instrumented_base::destructor] == 0);
 // // }
@@ -564,9 +564,9 @@
 // //     std::rotate(begin(a), std::prev(end(a), 1), end(a));
 
 // //     double* count_p = instrumented<int>::counts;
-// //     CHECK(count_p[instrumented_base::copy_ctor] + 
-// //           count_p[instrumented_base::copy_assignment] + 
-// //           count_p[instrumented_base::move_ctor] + 
+// //     CHECK(count_p[instrumented_base::copy_ctor] +
+// //           count_p[instrumented_base::copy_assignment] +
+// //           count_p[instrumented_base::move_ctor] +
 // //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 // //     CHECK(count_p[instrumented_base::destructor] == 0);
 // // }
@@ -580,9 +580,9 @@
 // //     std::rotate(begin(a), std::next(begin(a), n - 1), end(a));
 
 // //     double* count_p = instrumented<int>::counts;
-// //     CHECK(count_p[instrumented_base::copy_ctor] + 
-// //           count_p[instrumented_base::copy_assignment] + 
-// //           count_p[instrumented_base::move_ctor] + 
+// //     CHECK(count_p[instrumented_base::copy_ctor] +
+// //           count_p[instrumented_base::copy_assignment] +
+// //           count_p[instrumented_base::move_ctor] +
 // //           count_p[instrumented_base::move_assignment] == 2 * n - 1);
 // //     CHECK(count_p[instrumented_base::destructor] == 0);
 // // }
@@ -597,9 +597,9 @@
 //     rotate_right_by_one(begin(a), end(a));
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() + 1);
 //     CHECK(count_p[instrumented_base::destructor] == 1);
 // }
@@ -612,9 +612,9 @@
 //     rotate_right_by_one(begin(a), end(a));
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() + 1);
 //     CHECK(count_p[instrumented_base::destructor] == 1);
 // }
@@ -628,9 +628,9 @@
 //     rotate_right_by_one(begin(a), end(a));
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == 2 * n);
 //     CHECK(count_p[instrumented_base::destructor] == 2);
 // }
@@ -797,9 +797,9 @@
 //     rotate_right_by_one_n(begin(a), a.size());
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() + 1);
 //     CHECK(count_p[instrumented_base::destructor] == 1);
 // }
@@ -812,9 +812,9 @@
 //     rotate_right_by_one_n(begin(a), a.size());
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() + 1);
 //     CHECK(count_p[instrumented_base::destructor] == 1);
 // }
@@ -828,9 +828,9 @@
 //     rotate_right_by_one_n(begin(a), n);
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == 2 * n);
 //     CHECK(count_p[instrumented_base::destructor] == 2);
 // }
@@ -849,7 +849,7 @@
 //     auto ret = rotate_left_by_one(begin(a), end(a));
 //     CHECK(a == vector<T>{1});
 //     CHECK(ret == std::next(begin(a), a.size() - 1));
-    
+
 // }
 
 // TEST_CASE("[rotate] testing rotate_left_by_one 2 elements random access") {
@@ -1019,9 +1019,9 @@
 //     auto ret = rotate_left_by_one(begin(a), end(a));
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 //     CHECK(count_p[instrumented_base::destructor] == 0);
 // }
@@ -1034,9 +1034,9 @@
 //     auto ret = rotate_left_by_one(begin(a), end(a));
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 //     CHECK(count_p[instrumented_base::destructor] == 0);
 // }
@@ -1050,9 +1050,9 @@
 //     auto ret = rotate_left_by_one(begin(a), end(a));
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == n - 1);
 //     CHECK(count_p[instrumented_base::destructor] == 0);
 // }
@@ -1071,7 +1071,7 @@
 //     auto ret = rotate_left_by_one_n(begin(a), a.size());
 //     CHECK(a == vector<T>{1});
 //     CHECK(ret == std::next(begin(a), a.size() - 1));
-    
+
 // }
 
 // TEST_CASE("[rotate] testing rotate_left_by_one_n 2 elements random access") {
@@ -1241,9 +1241,9 @@
 //     auto ret = rotate_left_by_one_n(begin(a), a.size());
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 //     CHECK(count_p[instrumented_base::destructor] == 0);
 // }
@@ -1256,9 +1256,9 @@
 //     auto ret = rotate_left_by_one_n(begin(a), a.size());
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == a.size() - 1);
 //     CHECK(count_p[instrumented_base::destructor] == 0);
 // }
@@ -1272,9 +1272,9 @@
 //     auto ret = rotate_left_by_one_n(begin(a), n);
 
 //     double* count_p = instrumented<int>::counts;
-//     CHECK(count_p[instrumented_base::copy_ctor] + 
-//           count_p[instrumented_base::copy_assignment] + 
-//           count_p[instrumented_base::move_ctor] + 
+//     CHECK(count_p[instrumented_base::copy_ctor] +
+//           count_p[instrumented_base::copy_assignment] +
+//           count_p[instrumented_base::move_ctor] +
 //           count_p[instrumented_base::move_assignment] == n - 1);
 //     CHECK(count_p[instrumented_base::destructor] == 0);
 // }

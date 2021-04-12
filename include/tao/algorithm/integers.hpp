@@ -1,7 +1,7 @@
 //! \file tao/algorithm/integers.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -16,31 +16,31 @@
 namespace tao { namespace algorithm {
 
 template <Integer I>
-inline constexpr 
+inline constexpr
 bool even(I const& a) { return (a & I(1)) == I(0); }
 
 template <Integer I>
-inline constexpr 
+inline constexpr
 bool odd(I const& a) { return (a & I(1)) != I(0); }
 
 template <Integer N>
-inline constexpr 
+inline constexpr
 N half(N n) { return n >> 1; }
 
 template <Integer I>
-inline constexpr 
+inline constexpr
 bool positive(I const& a) { return I(0) < a; }
 
 template <Integer I>
-inline constexpr 
+inline constexpr
 bool negative(I const& a) { return a < I(0); }
 
 template <Integer I>
-inline constexpr 
+inline constexpr
 bool zero(I const& a) { return a == I(0); }
 
 template <Integer I>
-inline constexpr 
+inline constexpr
 bool one(I const& a) { return a == I(1); }
 
 template <Regular T>

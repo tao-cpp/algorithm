@@ -1,7 +1,7 @@
 //! \file tao/algorithm/selection/min_max_element.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -36,14 +36,14 @@ template <StrictWeakOrdering R>
 struct min_max {
     R r;
 
-    template <Regular T> 
+    template <Regular T>
         requires(Domain<R, T>)
     T const& min(T const& x, T const& y) const {
         if (r(y, x)) return y;
         return x;
     }
 
-    template <Regular T> 
+    template <Regular T>
         requires(Domain<R, T>)
     T const& max(T const& x, T const& y) const {
         if (r(y, x)) return x;
@@ -55,7 +55,7 @@ struct min_max {
     std::pair<T, T> construct(T const& x, T const& y) const {
         if (r(y, x)) return {y, x};
         return {x, y};
-    }   
+    }
 
     template <Regular T>
         requires(Domain<R, T>)
@@ -69,8 +69,8 @@ struct min_max {
         if (r(val, x.first)) return {val, x.second};
         if (r(val, x.second)) return x;
         return {x.first, val};
-    }    
-}; 
+    }
+};
 
 template <StrictWeakOrdering R>
 struct compare_dereference {
@@ -153,7 +153,7 @@ std::pair<I, I> min_max_element(I f, I l, R r, std::forward_iterator_tag) {
         prev = f;
         // if (++f == l) return op.combine(result, {prev, prev});
         if (++f == l) return op.combine(result, prev);
-    
+
         result = op.combine(result, op.construct(prev, f));
     }
     return result;
@@ -271,10 +271,10 @@ TEST_CASE("[min_max_element] testing min_max_element selection algorithm, instru
     CHECK(count_p[instrumented_base::comparison] <= (3 * a.size()) / 2 - 2);
 
     // for (size_t i = 0; i < instrumented_base::number_ops; ++i) {
-    //     std::cout << instrumented_base::counter_names[i] << ": " 
-    //                 << count_p[i] 
+    //     std::cout << instrumented_base::counter_names[i] << ": "
+    //                 << count_p[i]
     //                 << std::endl;
-    // }    
+    // }
 
     // CHECK(1 == 0);
 }

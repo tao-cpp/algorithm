@@ -1,7 +1,7 @@
 //! \file tao/algorithm/for_each.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 //
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -18,7 +18,7 @@
 
 namespace tao { namespace algorithm {
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:     ???
@@ -39,7 +39,7 @@ Proc for_each(I f, I l, Proc proc) {
 
 //Note: for_each_n was added in C++17
 
-//Complexity: 
+//Complexity:
 //      Runtime:
 //          Amortized: O(n)
 //          Exact:     ???

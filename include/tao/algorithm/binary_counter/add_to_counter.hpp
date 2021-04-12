@@ -1,7 +1,7 @@
 //! \file tao/algorithm/binary_counter/add_to_counter.hpp
 // Tao.Algorithm
 //
-// Copyright (c) 2016-2020 Fernando Pelliccioni.
+// Copyright (c) 2016-2021 Fernando Pelliccioni.
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -13,9 +13,9 @@
 
 namespace tao::algorithm {
 
-// TODO: requires associativity on Op? 
+// TODO: requires associativity on Op?
 template <ForwardIterator I, BinaryOperation Op>
-    requires(Mutable<I> && ValueType<I> == Domain<Op>) 
+    requires(Mutable<I> && ValueType<I> == Domain<Op>)
 ValueType<I> add_to_counter_nonzeroes(I f, I l, Op op, ValueType<I> x, ValueType<I> const& z) {
     // precondition: x != z
     while (f != l) {
@@ -31,15 +31,15 @@ ValueType<I> add_to_counter_nonzeroes(I f, I l, Op op, ValueType<I> x, ValueType
 }
 
 template <ForwardIterator I, BinaryOperation Op>
-    requires(Mutable<I> && ValueType<I> == Domain<Op>) 
+    requires(Mutable<I> && ValueType<I> == Domain<Op>)
 ValueType<I> add_to_counter(I f, I l, Op op, ValueType<I> x, ValueType<I> const& z) {
     if (x == z) return z;
     return add_to_counter_nonzeroes(f, l, op, x, z);
 }
 
-// TODO: requires associativity on Op? 
+// TODO: requires associativity on Op?
 template <ForwardIterator I, BinaryOperation Op>
-    requires(Mutable<I> && ValueType<I> == Domain<Op>) 
+    requires(Mutable<I> && ValueType<I> == Domain<Op>)
 void add_to_counter_unguarded_nonzeroes(I f, Op op, ValueType<I> x, ValueType<I> const& z) {
     // precondition: x != z
     while (true) {
@@ -54,7 +54,7 @@ void add_to_counter_unguarded_nonzeroes(I f, Op op, ValueType<I> x, ValueType<I>
 }
 
 template <ForwardIterator I, BinaryOperation Op>
-    requires(Mutable<I> && ValueType<I> == Domain<Op>) 
+    requires(Mutable<I> && ValueType<I> == Domain<Op>)
 void add_to_counter_unguarded(I f, Op op, ValueType<I> x, ValueType<I> const& z) {
     if (x == z) return;
     add_to_counter_unguarded_nonzeroes(f, op, x, z);
