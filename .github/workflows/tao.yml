@@ -177,6 +177,9 @@ jobs:
           REPO_NAME=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')
           echo "My repo name is $REPO_NAME"
 
+          export TAO_BRANCH=$(echo '${{ github.ref }}' | awk -F '/' '{print $3}')
+          echo "My branch name is $TAO_BRANCH"
+
           eval $(python ci_utils/set_envvars_and_files.py)
           # conan remote add upload_repo https://taocpp.jfrog.io/artifactory/api/conan/tao
           # conan user
