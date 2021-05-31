@@ -12,8 +12,8 @@ Tao.Algorithm
 [![Try it online](https://img.shields.io/badge/try%20it-online-orange.svg)](https://wandbox.org/permlink/Jcmj4Eqb7IeFgIZr) -->
 
 <a target="_blank" href="https://badge.fury.io/gh/tao-cpp%2Falgorithm">![GitHub version][badge.Version]</a>
-<a target="_blank" href="https://travis-ci.org/tao-cpp/algorithm">![Travis Build Status][badge.Travis]</a>
-<a target="_blank" href="https://ci.appveyor.com/project/fpelliccioni/algorithm">![Appveyor Build Status][badge.Appveyor]</a>
+<!-- <a target="_blank" href="https://travis-ci.org/tao-cpp/algorithm">![Travis Build Status][badge.Travis]</a> -->
+<!-- <a target="_blank" href="https://ci.appveyor.com/project/fpelliccioni/algorithm">![Appveyor Build Status][badge.Appveyor]</a> -->
 <a target="_blank" href="https://gitter.im/tao-cpp/algorithms">![Gitter Chat][badge.Gitter]</a>
 <!-- <a target="_blank" href="https://codeclimate.com/github/tao-cpp/algorithm">![Code Climate][badge.Codeclimate]</a> -->
 <!-- <a target="_blank" href="http://melpon.org/wandbox/permlink/MZqKhMF7tiaNZdJg">![Try it online][badge.wandbox]</a> -->
